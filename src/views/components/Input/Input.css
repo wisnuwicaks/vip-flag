@@ -1,0 +1,25 @@
+:root {
+  --accent-yellow-default: #fff7c5;
+  --accent-yellow-dark: #fff8d1;
+  --accent-yellow-light: #fffbe4;
+}
+
+.custom-input {
+  background-color: #fff7c5;
+  border: #fff7c5;
+  width: 100%;
+  padding: 5px 18px;
+  font-size: 14px;
+  outline: none;
+  transition: all ease-in-out 200ms;
+}
+
+.custom-input:hover {
+  background-color: #fff8d1;
+  border: #fff8d1;
+}
+
+.custom-input:active {
+  background-color: #fff8d1;
+  border: #fff8d1;
+}

@@ -1,38 +1,116 @@
-.App {
-  text-align: center;
+body {
+  font-family: Roboto !important;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h1 {
+  font-family: Roboto;
+  font-weight: bold !important;
+  font-size: 53px !important;
+  line-height: 72px;
+  letter-spacing: 0.2px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+h2 {
+  font-family: Roboto;
+  font-weight: bold !important;
+  font-size: 45px !important;
+  line-height: 56px;
+  letter-spacing: 0.2px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+h3 {
+  font-family: Roboto;
+  font-weight: bold !important;
+  font-size: 37px !important;
+  line-height: 40px;
+  letter-spacing: 0.1px;
 }
 
-.App-link {
-  color: #61dafb;
+h4 {
+  font-family: Roboto;
+  font-weight: bold !important;
+  font-size: 29px !important;
+  line-height: 32px;
+  letter-spacing: 0.2px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+h5 {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold !important;
+  font-size: 25px !important;
+  line-height: 26px;
+  letter-spacing: 0.1px;
+}
+
+h6 {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold !important;
+  font-size: 21px !important;
+  line-height: 24px;
+  letter-spacing: 0.1px;
+}
+
+.subtitle-lg {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 600 !important;
+  font-size: 19px;
+  line-height: 25px;
+  letter-spacing: 0.2px;
+}
+
+.subtitle-md {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 600 !important;
+  font-size: 16px;
+  line-height: 21px;
+  letter-spacing: 0.2px;
+}
+
+.subtitle-sm {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 600 !important;
+  font-size: 14px;
+  line-height: 19px;
+  letter-spacing: 0.2px;
+}
+
+.content-lg {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal !important;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 0.2px;
+}
+
+.content-md {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal !important;
+  font-size: 14px;
+  line-height: 19px;
+  letter-spacing: 0.2px;
+}
+
+.content-sm {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal !important;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0.2px;
+}
+
+caption {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 800 !important;
+  font-size: 30px;
+  line-height: 32px;
+  letter-spacing: 0.4px;
 }

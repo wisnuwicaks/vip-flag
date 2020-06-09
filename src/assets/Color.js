@@ -1,0 +1,18 @@
+export default {
+  white: "#FFFFFF",
+  black: "#000000",
+  deepRed: "#7E1712",
+  red: "#DA1F26",
+  lighRed: "#DD4B39",
+  lighGray: "#EAEAEA",
+  gray: "#C4C4C4",
+  pink: "#FFE0DC",
+  lightPink: "#FFF3F1",
+  accentRedDefault: "#DD4B39",
+  accentRedDark: "#C04C3E",
+  accentRedLight: "#EB786A",
+  //   accentRedLight: "#FF7B6A",
+  accentYellowDefault: "#FFF7C5",
+  accentYellowDark: "#FFF8D1",
+  accentYellowLight: "#FFFBE4",
+};
