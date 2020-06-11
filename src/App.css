@@ -1,5 +1,7 @@
 body {
   font-family: Roboto !important;
+  background-color: #eaeaea !important;
+  overflow-x: hidden;
 }
 
 h1 {

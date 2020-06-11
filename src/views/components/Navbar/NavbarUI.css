@@ -1,16 +1,16 @@
 :root {
-    --accent-red-default: #dd4b39;
-    --accent-red-dark: #c04c3e;
-    --accent-red-light: #eb786a;
-  }
-
-.navtitle{
-    color :white;
-    
-    background-color: #BD000A;
-    height: 35px;
+  --accent-red-default: #dd4b39;
+  --accent-red-dark: #c04c3e;
+  --accent-red-light: #eb786a;
 }
 
-.navlogo{
-    border-bottom: 1px solid gray;
+.navtitle {
+  color: white;
+
+  background-color: #bd000a;
+  height: 35px;
+}
+
+.navlogo {
+  /* border-bottom: 1px solid gray; */
 }
