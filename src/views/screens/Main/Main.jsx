@@ -32,7 +32,7 @@ class Main extends Component {
             </>
           ) : (
             <>
-              <div className="main-body-show-head">
+              {/* <div className="main-body-show-head">
                 <div className="mr-3">Export data</div>
                 <div className="mr-3">
                   <InputUI />
@@ -43,7 +43,7 @@ class Main extends Component {
                     Cancel
                   </ButtonUI>
                 </div>
-              </div>
+              </div> */}
               <div className="main-body-show-body">
                 <Table striped bordered hover responsive>
                   <thead>

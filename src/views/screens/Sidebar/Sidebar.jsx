@@ -4,7 +4,7 @@ import ButtonUI from "../../components/Button/Button";
 
 class Sidebar extends React.Component {
   state = {
-    user_role: "checker",
+    user_role: "maker",
   };
   render() {
     return (
@@ -22,8 +22,10 @@ class Sidebar extends React.Component {
           ) : (
             <>
               {/* menu for checker */}
-              <ButtonUI type="text">Create Data</ButtonUI>
-              <ButtonUI type="text">View Data</ButtonUI>
+              <ButtonUI type="text">Upload Data</ButtonUI>
+              {/* Upload data: mainnya tampil untuk import data */}
+              <ButtonUI type="text">Upload Log</ButtonUI>
+              <ButtonUI type="text">Approval Status</ButtonUI>
             </>
           )}
         </div>

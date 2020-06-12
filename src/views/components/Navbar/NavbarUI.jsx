@@ -18,7 +18,7 @@ class NavbarUI extends React.Component {
       <div>
         <div className="container-fluid navtitle my-auto">
           <div className="d-flex-column pt-1">
-            <h6>VIP Downgrade</h6>
+            <h6>VIP Downgrade/Upgrade</h6>
           </div>
         </div>
         <div className="container-fluid navlogo p-0">
@@ -33,13 +33,11 @@ class NavbarUI extends React.Component {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <div className="d-flex justify-content-end w-100">
-              
-                  <div className="px-2">UserID : user</div>
-                  <div className="px-2">Group Menu : administrator</div>
-                  <div>
-                    <button onClick={()=>alert("asd")}> Logout</button>
-                  </div>
-               
+                <div className="px-2">UserID : user</div>
+                <div className="px-2">Group Menu : administrator</div>
+                <div>
+                  <button onClick={() => alert("asd")}> Logout</button>
+                </div>
               </div>
             </Navbar.Collapse>
           </Navbar>
