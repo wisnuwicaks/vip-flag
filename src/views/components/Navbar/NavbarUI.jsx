@@ -1,5 +1,9 @@
 import React from "react";
 import "./NavbarUI.css";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { logoutHandler} from "../../../redux/actions"
+
 import {
   Navbar,
   NavbarBrand,
@@ -13,6 +17,13 @@ import {
 } from "react-bootstrap";
 
 class NavbarUI extends React.Component {
+
+  logoutBtnHandler = () => {
+    this.props.onLogout();
+   
+    return <Redirect to="/" />;
+    
+  };
   render() {
     return (
       <div>
@@ -36,7 +47,9 @@ class NavbarUI extends React.Component {
                 <div className="px-2">UserID : user</div>
                 <div className="px-2">Group Menu : administrator</div>
                 <div>
-                  <button onClick={() => alert("asd")}> Logout</button>
+                  {/* <Link to="/"> */}
+                  <button onClick={this.logoutBtnHandler}> Logout</button>
+                  {/* </Link> */}
                 </div>
               </div>
             </Navbar.Collapse>
@@ -47,4 +60,14 @@ class NavbarUI extends React.Component {
   }
 }
 
-export default NavbarUI;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  
+  };
+};
+const mapDispatchToProps = {
+  onLogout: logoutHandler,
+
+};
+export default connect(mapStateToProps, mapDispatchToProps)(NavbarUI);
