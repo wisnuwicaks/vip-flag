@@ -15,7 +15,7 @@ import { connect } from "react-redux";
 import Cookie from "universal-cookie";
 
 import { userKeepLogin, cookieChecker } from "./redux/actions";
-import Sidebar from "./views/screens/Sidebar/Sidebar";
+import Sidebar from "./views/screens/Sidebar/sidebar";
 import Main from "./views/screens/Main/Main";
 
 const cookieObj = new Cookie();

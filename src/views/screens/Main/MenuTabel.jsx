@@ -8,7 +8,11 @@ class MenuTabel extends Component {
   render() {
     return (
       <>
-        {/* <div className="main-body-show-head">
+        <div className="main-header">
+          <h5>Title</h5>
+        </div>
+        <div className="main-body">
+          {/* <div className="main-body-show-head">
                 <div className="mr-3">Export data</div>
                 <div className="mr-3">
                   <InputUI />
@@ -20,49 +24,50 @@ class MenuTabel extends Component {
                   </ButtonUI>
                 </div>
               </div> */}
-        <div className="main-body-show-body">
-          <Table striped bordered hover responsive>
-            <thead>
-              <tr>
-                <td>#</td>
-                <td>Column Name</td>
-                <td>Column Name</td>
-                <td>Column Name</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Data</td>
-                <td>Data</td>
-                <td>Data</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Data</td>
-                <td>Data</td>
-                <td>Data</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Data</td>
-                <td>Data</td>
-                <td>Data</td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>Data</td>
-                <td>Data</td>
-                <td>Data</td>
-              </tr>
-            </tbody>
-          </Table>
-        </div>
-        <div className="main-body-show-foot">
-          <ButtonUI className="m-3">Save</ButtonUI>
-          <ButtonUI type="outline" className="m-3">
-            Cancel
-          </ButtonUI>
+          <div className="main-body-show-body">
+            <Table striped bordered hover responsive>
+              <thead>
+                <tr>
+                  <td>#</td>
+                  <td>Column Name</td>
+                  <td>Column Name</td>
+                  <td>Column Name</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Data</td>
+                  <td>Data</td>
+                  <td>Data</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Data</td>
+                  <td>Data</td>
+                  <td>Data</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Data</td>
+                  <td>Data</td>
+                  <td>Data</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>Data</td>
+                  <td>Data</td>
+                  <td>Data</td>
+                </tr>
+              </tbody>
+            </Table>
+          </div>
+          <div className="main-body-show-foot">
+            <ButtonUI className="m-3">Save</ButtonUI>
+            <ButtonUI type="outline" className="m-3">
+              Cancel
+            </ButtonUI>
+          </div>
         </div>
       </>
     );

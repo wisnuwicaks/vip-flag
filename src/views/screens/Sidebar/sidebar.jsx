@@ -1,5 +1,5 @@
 import React from "react";
-import "./Sidebar.css";
+import "./sidebar.css";
 import ButtonUI from "../../components/Button/Button";
 import { Link } from "react-router-dom";
 
