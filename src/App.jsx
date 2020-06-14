@@ -15,8 +15,9 @@ import { connect } from "react-redux";
 import Cookie from "universal-cookie";
 
 import { userKeepLogin, cookieChecker } from "./redux/actions";
-import Sidebar from "./views/screens/Sidebar/Sidebar";
 import Main from "./views/screens/Main/Main";
+import Sidebar from "./views/screens/Sidebar/Sidebar";
+import Welcome from "./views/screens/Main/Welcome";
 
 const cookieObj = new Cookie();
 
@@ -66,14 +67,14 @@ class App extends Component {
                 </div>
                 <div className="col pl-0">
                   <Switch>
+                    <Route exact path="/welcome" component={Welcome} />
                     <Route exact path="/input" component={MenuInput} />
                     <Route exact path="/tabel" component={MenuTabel} />
+                    <Route exact path="*" component={PageNotFound} />
                   </Switch>
                 </div>
               </div>
               {/* <Switch>
-                <Route exact path="/home" component={Home} />
-                <Route exact path="*" component={PageNotFound} />
                 {this.adminRoutes()}
                 {this.userRoutes()}
               </Switch> */}
@@ -81,6 +82,7 @@ class App extends Component {
           ) : (
             <Switch>
               <Route exact path="/" component={Login} />
+              <Route exact path="*" component={PageNotFound} />
             </Switch>
           )}
         </>

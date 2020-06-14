@@ -1,5 +1,5 @@
 import React from "react";
-import "./sidebar.css";
+import "./Sidebar.css";
 import ButtonUI from "../../components/Button/Button";
 import { Link } from "react-router-dom";
 
@@ -16,7 +16,7 @@ class Sidebar extends React.Component {
         <div className="sb-body">
           {this.state.user_role === "checker" ? (
             <>
-              {/* Menu for creator */}
+              {/* Menu for maker */}
               <ButtonUI type="text">Waiting for approval</ButtonUI>
               <ButtonUI type="text">Approval Log</ButtonUI>
             </>
@@ -27,7 +27,9 @@ class Sidebar extends React.Component {
                 <ButtonUI type="text">Upload Data</ButtonUI>
               </Link>
               {/* Upload data: mainnya tampil untuk import data */}
-              <ButtonUI type="text">Upload Log</ButtonUI>
+              <Link to="/tabel">
+                <ButtonUI type="text">Upload Log</ButtonUI>
+              </Link>
               <ButtonUI type="text">Approval Status</ButtonUI>
             </>
           )}

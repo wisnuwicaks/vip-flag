@@ -29,9 +29,9 @@ class MenuTabel extends Component {
               <thead>
                 <tr>
                   <td>#</td>
-                  <td>Column Name</td>
-                  <td>Column Name</td>
-                  <td>Column Name</td>
+                  <td>CIF Number</td>
+                  <td>VIP Code</td>
+                  <td>Sub VIP</td>
                 </tr>
               </thead>
               <tbody>

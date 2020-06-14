@@ -64,7 +64,7 @@ class Login extends React.Component {
             />
             <p className="mt-3 content-sm">Forget Password</p>
 
-            <Link to="/home">
+            <Link to="/welcome">
               <ButtonUI className="mt-1 " onClick={this.onLoginHandler}>
                 Sign In
               </ButtonUI>
