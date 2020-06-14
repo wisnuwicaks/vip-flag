@@ -16,18 +16,26 @@ class Sidebar extends React.Component {
         <div className="sb-body">
           {this.state.user_role === "checker" ? (
             <>
-              {/* Menu for creator */}
+              {/* Menu for maker */}
               <ButtonUI type="text">Waiting for approval</ButtonUI>
               <ButtonUI type="text">Approval Log</ButtonUI>
             </>
           ) : (
             <>
               {/* menu for checker */}
-              <Link to="/input">
+              <Link
+                to="/upload"
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
                 <ButtonUI type="text">Upload Data</ButtonUI>
               </Link>
               {/* Upload data: mainnya tampil untuk import data */}
-              <ButtonUI type="text">Upload Log</ButtonUI>
+              <Link
+                to="/tabel"
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                <ButtonUI type="text">Upload Log</ButtonUI>
+              </Link>
               <ButtonUI type="text">Approval Status</ButtonUI>
             </>
           )}
