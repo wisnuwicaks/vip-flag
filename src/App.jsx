@@ -7,12 +7,16 @@ import Login from "./views/screens/Login/Login";
 import NavbarUI from "./views/components/Navbar/NavbarUI";
 // import NavbarUI from "./views/components/Navbar/NavbarUI";
 import Home from "./views/screens/Home/Home";
+import MenuInput from "./views/screens/Main/MenuInput";
+import MenuTabel from "./views/screens/Main/MenuTabel";
 import PageNotFound from "./views/screens/PageNotFound/PageNotFound";
 
 import { connect } from "react-redux";
 import Cookie from "universal-cookie";
 
 import { userKeepLogin, cookieChecker } from "./redux/actions";
+import Sidebar from "./views/screens/Sidebar/Sidebar";
+import Main from "./views/screens/Main/Main";
 
 const cookieObj = new Cookie();
 
@@ -20,7 +24,7 @@ class App extends Component {
   componentDidMount() {
     let cookieResult = cookieObj.get("authData");
     if (cookieResult) {
-      alert("asda");
+      alert(this.props.user.id);
       this.props.keepLogin(cookieResult);
     } else {
       this.props.cookieChecker();
@@ -36,7 +40,7 @@ class App extends Component {
   };
 
   userRoutes = () => {
-    if (this.props.user.id && this.props.user.role == "user") {
+    if (this.props.user.id && this.props.user.role === "user") {
       return (
         <>
           <Route exact path="/" component={Login} />
@@ -53,18 +57,36 @@ class App extends Component {
     if (this.props.user.cookieChecked) {
       return (
         <>
-          {this.props.user.userId > 0 ? <NavbarUI /> : null}
-          <Switch>
-            <Route exact path="/" component={Login} />
-            <Route exact path="/home" component={Home} />
-            <Route exact path="*" component={PageNotFound} />
-            {this.adminRoutes()}
-            {this.userRoutes()}
-          </Switch>
+          {this.props.user.id > 0 ? (
+            <>
+              <NavbarUI />
+              <div className="row">
+                <div className="col-3 pr-2">
+                  <Sidebar />
+                </div>
+                <div className="col pl-0">
+                  <Switch>
+                    <Route exact path="/input" component={MenuInput} />
+                    <Route exact path="/tabel" component={MenuTabel} />
+                  </Switch>
+                </div>
+              </div>
+              {/* <Switch>
+                <Route exact path="/home" component={Home} />
+                <Route exact path="*" component={PageNotFound} />
+                {this.adminRoutes()}
+                {this.userRoutes()}
+              </Switch> */}
+            </>
+          ) : (
+            <Switch>
+              <Route exact path="/" component={Login} />
+            </Switch>
+          )}
         </>
       );
     } else {
-      return <div>Loading ...</div>;
+      return <div>Loadingggg ...</div>;
     }
   }
 }

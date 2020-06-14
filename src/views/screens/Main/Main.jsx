@@ -17,7 +17,7 @@ class Main extends Component {
         <div className="main-body">
           {this.state.menuOption === "input data" ? (
             <>
-              <div className="main-body-input">
+              <div className="main-body-input" id="import">
                 <div style={{ flex: "1" }}>Import data</div>
                 <div style={{ flex: "9" }}>
                   <InputUI />

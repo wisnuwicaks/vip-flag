@@ -1,6 +1,7 @@
 import React from "react";
 import "./Sidebar.css";
 import ButtonUI from "../../components/Button/Button";
+import { Link } from "react-router-dom";
 
 class Sidebar extends React.Component {
   state = {
@@ -22,7 +23,9 @@ class Sidebar extends React.Component {
           ) : (
             <>
               {/* menu for checker */}
-              <ButtonUI type="text">Upload Data</ButtonUI>
+              <Link to="/input">
+                <ButtonUI type="text">Upload Data</ButtonUI>
+              </Link>
               {/* Upload data: mainnya tampil untuk import data */}
               <ButtonUI type="text">Upload Log</ButtonUI>
               <ButtonUI type="text">Approval Status</ButtonUI>

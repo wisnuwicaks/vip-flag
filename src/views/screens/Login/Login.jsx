@@ -6,7 +6,7 @@ import ButtonUI from "../../components/Button/Button";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginHandler } from "../../../redux/actions";
-import Cookies from "universal-cookie"
+import Cookies from "universal-cookie";
 
 class Login extends React.Component {
   state = {
@@ -19,7 +19,6 @@ class Login extends React.Component {
     if (this.props.user.id) {
       const cookie = new Cookies();
       cookie.set("authData", JSON.stringify(this.props.user), { path: "/" });
-   
     }
   }
 
@@ -41,8 +40,8 @@ class Login extends React.Component {
   };
   render() {
     if (this.props.user.userId > 0) {
-      alert(this.props.user.userId)
-      return <Redirect to="/home"/>;
+      alert(this.props.user.userId);
+      return <Redirect to="/home" />;
     } else {
       return (
         <div className="row" style={{ paddingTop: "11%" }}>
@@ -65,11 +64,11 @@ class Login extends React.Component {
             />
             <p className="mt-3 content-sm">Forget Password</p>
 
-            {/* <Link to="/home"> */}
-            <ButtonUI className="mt-1 " onClick={this.onLoginHandler}>
-              Sign In
-            </ButtonUI>
-            {/* </Link> */}
+            <Link to="/home">
+              <ButtonUI className="mt-1 " onClick={this.onLoginHandler}>
+                Sign In
+              </ButtonUI>
+            </Link>
           </div>
           <div className="col"></div>
         </div>
