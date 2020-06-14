@@ -7,12 +7,15 @@ import Login from "./views/screens/Login/Login";
 import NavbarUI from "./views/components/Navbar/NavbarUI";
 // import NavbarUI from "./views/components/Navbar/NavbarUI";
 import Home from "./views/screens/Home/Home";
+import MenuInput from "./views/screens/Main/MenuInput";
+import MenuTabel from "./views/screens/Main/MenuTabel";
 import PageNotFound from "./views/screens/PageNotFound/PageNotFound";
 
 import { connect } from "react-redux";
 import Cookie from "universal-cookie";
 
 import { userKeepLogin, cookieChecker } from "./redux/actions";
+import Sidebar from "./views/screens/Sidebar/Sidebar";
 
 const cookieObj = new Cookie();
 
@@ -20,7 +23,7 @@ class App extends Component {
   componentDidMount() {
     let cookieResult = cookieObj.get("authData");
     if (cookieResult) {
-      alert("asda")
+      alert("asda");
       this.props.keepLogin(cookieResult);
     } else {
       this.props.cookieChecker();
@@ -53,11 +56,18 @@ class App extends Component {
     if (this.props.user.cookieChecked) {
       return (
         <>
-          {this.props.user.userId > 0 ? <NavbarUI /> : null}
+          {this.props.user.userId > 0 ? (
+            <>
+              <NavbarUI />
+              <Sidebar />
+            </>
+          ) : null}
           <Switch>
-          <Route exact path="/" component={Login} />
-          <Route exact path="/home" component={Home} />
-          <Route exact path="*" component={PageNotFound} />
+            <Route exact path="/" component={Login} />
+            <Route exact path="/home" component={Home} />
+            <Route exact path="/input" component={MenuInput} />
+            <Route exact path="/tabel" component={MenuTabel} />
+            <Route exact path="*" component={PageNotFound} />
             {this.adminRoutes()}
             {this.userRoutes()}
           </Switch>

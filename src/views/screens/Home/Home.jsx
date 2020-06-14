@@ -8,11 +8,9 @@ class Home extends Component {
   render() {
     return (
       <>
-        <NavbarUI />
+        {/* <NavbarUI /> */}
         <div className="row">
-          <div className="col-3 pr-2">
-            <Sidebar />
-          </div>
+          <div className="col-3 pr-2">{/* <Sidebar /> */}</div>
           <div className="col pl-0">
             <Main />
           </div>
