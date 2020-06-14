@@ -1,11 +1,16 @@
 import Axios from "axios";
-import {API_URL} from "../../constants/API";
+import { API_URL } from "../../constants/API";
 import Cookie from "universal-cookie";
 import userTypes from "../types/user";
 import swal from "sweetalert";
 
-const { ON_LOGIN_FAIL, ON_LOGIN_SUCCESS,ON_REGISTER_SUCCESS,ON_REGISTER_FAIL, 
-  ON_LOGOUT_SUCCESS} = userTypes;
+const {
+  ON_LOGIN_FAIL,
+  ON_LOGIN_SUCCESS,
+  ON_REGISTER_SUCCESS,
+  ON_REGISTER_FAIL,
+  ON_LOGOUT_SUCCESS,
+} = userTypes;
 
 const cookieObj = new Cookie();
 
@@ -25,9 +30,8 @@ export const loginHandler = (userData) => {
             type: ON_LOGIN_SUCCESS,
             payload: res.data[0],
           });
-      
         } else {
-          swal('Login Failed','Username or password was wrong',"error")
+          swal("Login Failed", "Username or password was wrong", "error");
           dispatch({
             type: ON_LOGIN_FAIL,
             payload: "Username or password was wrong",
@@ -67,7 +71,6 @@ export const userKeepLogin = (userData) => {
 };
 
 export const logoutHandler = () => {
-  alert("log")
   cookieObj.remove("authData", { path: "/" });
   return {
     type: ON_LOGOUT_SUCCESS,
@@ -90,7 +93,7 @@ export const registerHandler = (userData) => {
         } else {
           Axios.post(`${API_URL}/users`, { ...userData, role: "user" })
             .then((res) => {
-              swal('Regitration Success','You can login now',"success")
+              swal("Regitration Success", "You can login now", "success");
               console.log(userData);
               dispatch({
                 type: ON_REGISTER_SUCCESS,
@@ -113,4 +116,3 @@ export const cookieChecker = () => {
     type: "COOKIE_CHECK",
   };
 };
-

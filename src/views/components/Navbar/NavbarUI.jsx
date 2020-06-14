@@ -2,7 +2,7 @@ import React from "react";
 import "./NavbarUI.css";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { logoutHandler} from "../../../redux/actions"
+import { logoutHandler } from "../../../redux/actions";
 
 import {
   Navbar,
@@ -15,14 +15,13 @@ import {
   FormControl,
   Button,
 } from "react-bootstrap";
+import ButtonUI from "../Button/Button";
 
 class NavbarUI extends React.Component {
-
   logoutBtnHandler = () => {
     this.props.onLogout();
-   
+
     return <Redirect to="/" />;
-    
   };
   render() {
     return (
@@ -44,12 +43,17 @@ class NavbarUI extends React.Component {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <div className="d-flex justify-content-end w-100">
-                <div className="px-2">UserID : user</div>
-                <div className="px-2">Group Menu : administrator</div>
+                <div className="px-2">UserID : {this.props.user.id}</div>
+                <div className="px-2">
+                  Group Menu : {this.props.user.role.toUpperCase()}
+                </div>
                 <div>
-                  {/* <Link to="/"> */}
-                  <button onClick={this.logoutBtnHandler}> Logout</button>
-                  {/* </Link> */}
+                  <Link to="/">
+                    <ButtonUI className="ml-2" onClick={this.logoutBtnHandler}>
+                      Logout
+                    </ButtonUI>
+                    {/* <button onClick={this.logoutBtnHandler}> Logout</button> */}
+                  </Link>
                 </div>
               </div>
             </Navbar.Collapse>
@@ -63,11 +67,9 @@ class NavbarUI extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
-  
   };
 };
 const mapDispatchToProps = {
   onLogout: logoutHandler,
-
 };
 export default connect(mapStateToProps, mapDispatchToProps)(NavbarUI);
