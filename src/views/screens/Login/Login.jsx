@@ -64,7 +64,10 @@ class Login extends React.Component {
             />
             <p className="mt-3 content-sm">Forget Password</p>
 
-            <Link to="/welcome">
+            <Link
+              to="/welcome"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
               <ButtonUI className="mt-1 " onClick={this.onLoginHandler}>
                 Sign In
               </ButtonUI>

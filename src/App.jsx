@@ -5,19 +5,18 @@ import "bootstrap/dist/css/bootstrap.css";
 import { Switch, Route, withRouter, Redirect } from "react-router-dom";
 import Login from "./views/screens/Login/Login";
 import NavbarUI from "./views/components/Navbar/NavbarUI";
-// import NavbarUI from "./views/components/Navbar/NavbarUI";
-import Home from "./views/screens/Home/Home";
-import MenuInput from "./views/screens/Main/MenuInput";
-import MenuTabel from "./views/screens/Main/MenuTabel";
 import PageNotFound from "./views/screens/PageNotFound/PageNotFound";
 
 import { connect } from "react-redux";
 import Cookie from "universal-cookie";
 
 import { userKeepLogin, cookieChecker } from "./redux/actions";
-import Main from "./views/screens/Main/Main";
 import Sidebar from "./views/screens/Sidebar/Sidebar";
 import Welcome from "./views/screens/Main/Welcome";
+import MenuUploadData from "./views/screens/Main/MenuUploadData";
+import MenuUploadLog from "./views/screens/Main/MenuUploadLog";
+import MenuApprovalStatus from "./views/screens/Main/MenuApprovalStatus";
+import MenuApproval from "./views/screens/Main/MenuApproval";
 
 const cookieObj = new Cookie();
 
@@ -45,7 +44,6 @@ class App extends Component {
       return (
         <>
           <Route exact path="/" component={Login} />
-          <Route exact path="/home" component={Home} />
           <Route exact path="*" component={PageNotFound} />
         </>
       );
@@ -68,8 +66,14 @@ class App extends Component {
                 <div className="col pl-0">
                   <Switch>
                     <Route exact path="/welcome" component={Welcome} />
-                    <Route exact path="/input" component={MenuInput} />
-                    <Route exact path="/tabel" component={MenuTabel} />
+                    <Route exact path="/upload" component={MenuUploadData} />
+                    <Route exact path="/upload/log" component={MenuUploadLog} />
+                    <Route
+                      exact
+                      path="/approval/status"
+                      component={MenuApprovalStatus}
+                    />
+                    <Route exact path="/approval" component={MenuApproval} />
                     <Route exact path="*" component={PageNotFound} />
                   </Switch>
                 </div>

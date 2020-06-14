@@ -23,11 +23,17 @@ class Sidebar extends React.Component {
           ) : (
             <>
               {/* menu for checker */}
-              <Link to="/input">
+              <Link
+                to="/upload"
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
                 <ButtonUI type="text">Upload Data</ButtonUI>
               </Link>
               {/* Upload data: mainnya tampil untuk import data */}
-              <Link to="/tabel">
+              <Link
+                to="/tabel"
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
                 <ButtonUI type="text">Upload Log</ButtonUI>
               </Link>
               <ButtonUI type="text">Approval Status</ButtonUI>

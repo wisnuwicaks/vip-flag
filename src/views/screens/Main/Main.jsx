@@ -67,18 +67,6 @@ class Main extends Component {
                       <td>Data</td>
                       <td>Data</td>
                     </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Data</td>
-                      <td>Data</td>
-                      <td>Data</td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>Data</td>
-                      <td>Data</td>
-                      <td>Data</td>
-                    </tr>
                   </tbody>
                 </Table>
               </div>
