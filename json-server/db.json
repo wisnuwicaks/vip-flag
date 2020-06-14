@@ -1,0 +1,29 @@
+{
+  "posts": [],
+  "comments": [],
+  "users": [
+    {
+      "username": "admin",
+      "password": "admin",
+      "email": "denver@gmail.com",
+      "role": "admin",
+      "id": 1
+    },
+    {
+      "username": "maker",
+      "password": "maker",
+      "email": "sergio@gmail.com",
+      "role": "maker",
+      "id": 2
+    },
+    {
+      "username": "checker",
+      "password": "checker",
+      "email": "nairobi@gmail.com",
+      "role": "checker",
+      "id": 3
+    }
+    
+  ]
+  
+}

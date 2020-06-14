@@ -23,3 +23,8 @@
   background-color: #fff8d1;
   border: #fff8d1;
 }
+
+.custom-input:focus {
+  background-color: #fff8d1;
+  border: #fff8d1;
+}

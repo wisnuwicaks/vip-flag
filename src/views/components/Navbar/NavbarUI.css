@@ -1,0 +1,17 @@
+:root {
+  --accent-red-default: #dd4b39;
+  --accent-red-dark: #c04c3e;
+  --accent-red-light: #eb786a;
+}
+
+.navtitle {
+  color: white;
+
+  background-color: #bd000a;
+  height: 35px;
+}
+
+.navlogo {
+  /* border-bottom: 1px solid gray; */
+  border-bottom: transparent;
+}
