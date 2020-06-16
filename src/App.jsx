@@ -17,6 +17,9 @@ import MenuUploadData from "./views/screens/Main/MenuUploadData";
 import MenuUploadLog from "./views/screens/Main/MenuUploadLog";
 import MenuApprovalStatus from "./views/screens/Main/MenuApprovalStatus";
 import MenuApproval from "./views/screens/Main/MenuApproval";
+import ViewUser from "./views/screens/Main/ViewUser";
+import MenuApprovalLog from "./views/screens/Main/MenuApprovalLog";
+import CreateUser from "./views/screens/Main/CreateUser";
 
 const cookieObj = new Cookie();
 
@@ -33,22 +36,31 @@ class App extends Component {
 
   adminRoutes = () => {
     if (this.props.user.role === "admin") {
-      return <></>;
-    } else {
-      return <></>;
+      return (
+        <>
+          <Route exact path="/viewuser" component={ViewUser} />
+          <Route exact path="/Createuser" component={CreateUser} />
+        </>
+      );
     }
   };
 
   userRoutes = () => {
-    if (this.props.user.id && this.props.user.role === "user") {
+    if (this.props.user.id && this.props.user.role === "maker") {
       return (
         <>
-          <Route exact path="/" component={Login} />
-          <Route exact path="*" component={PageNotFound} />
+          <Route exact path="/upload" component={MenuUploadData} />
+          <Route exact path="/upload/log" component={MenuUploadLog} />
+          <Route exact path="/approval/status" component={MenuApprovalStatus} />
         </>
       );
     } else {
-      return <Redirect to="/pagenotfound" />;
+      return (
+        <>
+          <Route exact path="/approval" component={MenuApproval} />
+          <Route exact path="/approval/log" component={MenuApprovalLog} />
+        </>
+      );
     }
   };
 
@@ -66,28 +78,21 @@ class App extends Component {
                 <div className="col pl-0">
                   <Switch>
                     <Route exact path="/welcome" component={Welcome} />
-                    <Route exact path="/upload" component={MenuUploadData} />
-                    <Route exact path="/upload/log" component={MenuUploadLog} />
-                    <Route
-                      exact
-                      path="/approval/status"
-                      component={MenuApprovalStatus}
-                    />
-                    <Route exact path="/approval" component={MenuApproval} />
+                    {this.adminRoutes()}
+                    {this.userRoutes()}
                     <Route exact path="*" component={PageNotFound} />
                   </Switch>
                 </div>
               </div>
-              {/* <Switch>
-                {this.adminRoutes()}
-                {this.userRoutes()}
-              </Switch> */}
             </>
           ) : (
-            <Switch>
-              <Route exact path="/" component={Login} />
-              <Route exact path="*" component={PageNotFound} />
-            </Switch>
+            <>
+              <Redirect to="/" />
+              <Switch>
+                <Route exact path="/" component={Login} />
+                {/* <Route exact path="*" component={PageNotFound} /> */}
+              </Switch>
+            </>
           )}
         </>
       );
