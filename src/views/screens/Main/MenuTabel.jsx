@@ -12,18 +12,6 @@ class MenuTabel extends Component {
           <h5>Title</h5>
         </div>
         <div className="main-body">
-          {/* <div className="main-body-show-head">
-                <div className="mr-3">Export data</div>
-                <div className="mr-3">
-                  <InputUI />
-                </div>
-                <div className="d-flex justify-content-center align-items-center">
-                  <ButtonUI className="m-1">Export</ButtonUI>
-                  <ButtonUI type="outline" className="m-1">
-                    Cancel
-                  </ButtonUI>
-                </div>
-              </div> */}
           <div className="main-body-show-body">
             <Table striped bordered hover responsive>
               <thead>
