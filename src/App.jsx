@@ -11,7 +11,6 @@ import { connect } from "react-redux";
 import Cookie from "universal-cookie";
 
 import { userKeepLogin, cookieChecker } from "./redux/actions";
-import Sidebar from "./views/screens/Sidebar/Sidebar";
 import Welcome from "./views/screens/Main/Welcome";
 import MenuUploadData from "./views/screens/Main/MenuUploadData";
 import MenuUploadLog from "./views/screens/Main/MenuUploadLog";
@@ -20,6 +19,7 @@ import MenuApproval from "./views/screens/Main/MenuApproval";
 import ViewUser from "./views/screens/Main/ViewUser";
 import MenuApprovalLog from "./views/screens/Main/MenuApprovalLog";
 import CreateUser from "./views/screens/Main/CreateUser";
+import Sidebar from "./views/screens/Sidebar/Side";
 
 const cookieObj = new Cookie();
 
@@ -72,7 +72,7 @@ class App extends Component {
             <>
               <NavbarUI />
               <div className="row">
-                <div className="col-3 pr-2">
+                <div className="col-2 pr-2">
                   <Sidebar />
                 </div>
                 <div className="col pl-0">

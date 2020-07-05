@@ -17,6 +17,7 @@ class Login extends React.Component {
 
   componentDidUpdate() {
     if (this.props.user.id) {
+      alert("masuk");
       const cookie = new Cookies();
       cookie.set("authData", JSON.stringify(this.props.user), { path: "/" });
     }
@@ -31,13 +32,13 @@ class Login extends React.Component {
   };
 
   onLoginHandler = () => {
-    let newData = {
+    let userData = {
       username: this.state.username,
       password: this.state.password,
     };
-    this.props.onLogin(newData);
-    console.log(newData);
+    this.props.onLogin(userData);
   };
+
   render() {
     if (this.props.user.userId > 0) {
       alert(this.props.user.userId);
