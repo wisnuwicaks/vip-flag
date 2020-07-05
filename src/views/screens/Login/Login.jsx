@@ -16,6 +16,8 @@ class Login extends React.Component {
   };
 
   componentDidUpdate() {
+    console.log("masukdid");
+    
     if (this.props.user.id) {
       alert("masuk");
       const cookie = new Cookies();

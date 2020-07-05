@@ -12,7 +12,7 @@ import Cookie from "universal-cookie";
 
 import { userKeepLogin, cookieChecker } from "./redux/actions";
 import Welcome from "./views/screens/Main/Welcome";
-import MenuUploadData from "./views/screens/Main/MenuUploadData";
+import MenuUpload from "./views/screens/Main/MenuUpload";
 import MenuUploadLog from "./views/screens/Main/MenuUploadLog";
 import MenuApprovalStatus from "./views/screens/Main/MenuApprovalStatus";
 import MenuApproval from "./views/screens/Main/MenuApproval";
@@ -21,14 +21,16 @@ import MenuApprovalLog from "./views/screens/Main/MenuApprovalLog";
 import CreateUser from "./views/screens/Main/CreateUser";
 import Sidebar from "./views/screens/Sidebar/Side";
 
-const cookieObj = new Cookie();
+const cookie = new Cookie();
 
 class App extends Component {
   componentDidMount() {
-    let cookieResult = cookieObj.get("authData");
+    let cookieResult = cookie.get("authData");
     if (cookieResult) {
-      alert(this.props.user.id);
+    
+      console.log(cookieResult);
       this.props.keepLogin(cookieResult);
+
     } else {
       this.props.cookieChecker();
     }
@@ -49,8 +51,8 @@ class App extends Component {
     if (this.props.user.id && this.props.user.role === "maker") {
       return (
         <>
-          <Route exact path="/upload" component={MenuUploadData} />
-          <Route exact path="/upload/log" component={MenuUploadLog} />
+         <Route exact path="/upload/log" component={MenuUploadLog} />
+          <Route exact path="/upload" component={MenuUpload} />
           <Route exact path="/approval/status" component={MenuApprovalStatus} />
         </>
       );

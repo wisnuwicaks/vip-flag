@@ -15,13 +15,16 @@ const init_state = {
   username: "",
   role: "",
   errMsg: "",
-
+  cookieChecked: true,
 };  
 
 export default (state = init_state, action) => {
   switch (action.type) {
     case ON_LOGIN_SUCCESS:
+      
+      console.log("action,payload:" + action.payload);
       const { username,email, fullName, role, id,password } = action.payload;
+      console.log("username:" + username);
       return {
         ...state,
         username,

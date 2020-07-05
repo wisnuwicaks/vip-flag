@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./Main.css";
 import Table from "react-bootstrap/Table";
+import {Button} from "react-bootstrap"
 
 class MenuUploadLog extends Component {
   render() {
@@ -18,6 +19,7 @@ class MenuUploadLog extends Component {
                   <td>Upload File Name</td>
                   <td>Upload Time</td>
                   <td>Status</td>
+                  <td>Action</td>
                 </tr>
               </thead>
               <tbody>
@@ -26,6 +28,7 @@ class MenuUploadLog extends Component {
                   <td>File 1</td>
                   <td>2020-06-12 11:00:00</td>
                   <td>Success</td>
+                  <td><Button className="btn-danger">View Data</Button></td>
                 </tr>
                 <tr>
                   <td>2</td>

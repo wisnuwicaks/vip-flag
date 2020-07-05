@@ -2,8 +2,41 @@ import React, { Component } from "react";
 import "./Main.css";
 import InputUI from "../../components/Input/Input";
 import ButtonUI from "../../components/Button/Button";
+import { ExcelRenderer, OutTable } from "react-excel-renderer";
 
-class MenuUploadData extends Component {
+class MenuUpload extends Component {
+  state = {
+    selectedFile: null,
+    cols : [] ,
+    rows :[]
+  };
+
+  // fileUploadHandler = (e) => {
+  //   this.setState({ selectedFile: e.target.files[0] });
+  //   console.log(this.state.selectedFile);
+  // };
+
+  fileUploadHandler = (event) => {
+    let fileObj = event.target.files[0];
+    
+    //just pass the fileObj as parameter
+    ExcelRenderer(fileObj, (err, resp) => {
+      if(err){
+        console.log(err);            
+      }
+      else{
+        console.log("err :"+err);
+
+        console.log(resp);
+        console.log(resp.cols);
+        this.setState({
+          cols: resp.cols,
+          rows: resp.rows
+        });
+      }
+    });               
+    
+    }
   render() {
     return (
       <>
@@ -14,10 +47,12 @@ class MenuUploadData extends Component {
           <div className="main-body-input" id="import">
             <div style={{ flex: "1" }}>Import data</div>
             <div style={{ flex: "9" }}>
-              {/* <InputUI /> */}
               <div className="input-group">
                 <div className="custom-file">
                   <input
+                    // value ={this.state.selectedFile}
+                    
+                    onChange={(e) => this.fileUploadHandler(e)}
                     type="file"
                     className="custom-file-input"
                     id="inputGroupFile01"
@@ -27,15 +62,20 @@ class MenuUploadData extends Component {
                     className="custom-file-label"
                     htmlFor="inputGroupFile01"
                   >
-                    Choose file
+                    {this.state.selectedFile
+                      ? this.state.selectedFile.name
+                      : null}
                   </label>
                 </div>
               </div>
             </div>
-            {/* <div style={{ flex: "1" }}> */}
-            {/* <ButtonUI className="m-3">Browse</ButtonUI> */}
-            {/* </div> */}
           </div>
+          <OutTable
+            data={this.state.rows}
+            columns={this.state.cols}
+            tableClassName="ExcelTable2007"
+            tableHeaderRowClass="heading"
+          />
           <div className="d-flex justify-content-center align-items-center">
             <ButtonUI className="m-3">Upload</ButtonUI>
             <ButtonUI type="outline" className="m-3">
@@ -48,4 +88,4 @@ class MenuUploadData extends Component {
   }
 }
 
-export default MenuUploadData;
+export default MenuUpload;

@@ -25,6 +25,8 @@ export const loginHandler = (userData) => {
       },
     })
       .then((res) => {
+        console.log(res.data);
+        
         if (res.data.length > 0) {
           dispatch({
             type: ON_LOGIN_SUCCESS,
@@ -45,13 +47,20 @@ export const loginHandler = (userData) => {
 };
 
 export const userKeepLogin = (userData) => {
+
+  console.log(userData.id);
+  
   return (dispatch) => {
+    const {id} = userData
+    console.log(id);
+    
     Axios.get(`${API_URL}/users`, {
       params: {
-        id: userData.id,
+        id,
       },
     })
       .then((res) => {
+        console.log("ini then : "+res.data[0]);
         if (res.data.length > 0) {
           dispatch({
             type: ON_LOGIN_SUCCESS,
@@ -65,6 +74,7 @@ export const userKeepLogin = (userData) => {
         }
       })
       .catch((err) => {
+        alert("err")
         console.log(err);
       });
   };
