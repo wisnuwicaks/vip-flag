@@ -4,12 +4,11 @@ import { loginHandler } from "../../../redux/actions";
 import { connect } from "react-redux";
 import Cookie from "universal-cookie";
 
-
 class Welcome extends React.Component {
   componentDidMount() {
-    console.log("idku :"+this.props.user.id);
+    // console.log("idku :"+this.props.user.id);
     if (this.props.user.id) {
-      alert("masuk");
+      // alert("masuk");
       const cookie = new Cookie();
       cookie.set("authData", JSON.stringify(this.props.user), { path: "/" });
     }
@@ -27,7 +26,7 @@ class Welcome extends React.Component {
     return (
       <>
         <div className="main-header">
-        <h5>Welcome {this.props.user.id}</h5>
+          <h5>Welcome {this.props.user.username}</h5>
         </div>
         <div className="main-body"></div>
       </>
