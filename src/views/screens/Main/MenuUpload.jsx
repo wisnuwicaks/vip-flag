@@ -40,23 +40,27 @@ class MenuUpload extends Component {
   };
 
   renderUploadData = () => {
-    return this.state.data.map((val, idx) => {
+    let minLength = 0;
+    return this.state.data.map((val, idx, arr) => {
       if (idx === 0) {
-        return (
-          <thead>
-            <tr>
-              {val.map((val) => {
-                return <td>{val}</td>;
-              })}
-            </tr>
-          </thead>
-        );
-      } else {
+        minLength = val.length;
         return (
           <tr>
             {val.map((val) => {
-              return <td>{val}</td>;
+              return <th>{val}</th>;
             })}
+            <th>Status</th>
+          </tr>
+        );
+      } else {
+        let count = 0;
+        return (
+          <tr>
+            {val.map((val, index) => {
+              if (val !== "") count++;
+              return <td>{val === "" ? "null" : val}</td>;
+            })}
+            <td>{count < minLength ? "invalid" : "valid"}</td>
           </tr>
         );
       }
@@ -76,8 +80,6 @@ class MenuUpload extends Component {
               <div className="input-group">
                 <div className="custom-file">
                   <input
-                    // value ={this.state.selectedFile}
-
                     onChange={(e) => this.fileUploadHandler(e)}
                     type="file"
                     className="custom-file-input"
@@ -103,7 +105,6 @@ class MenuUpload extends Component {
             tableHeaderRowClass="heading"
           /> */}
           <Table striped bordered hover responsive>
-            <thead>{this.renderUploadData()}</thead>
             <tbody>{this.renderUploadData()}</tbody>
           </Table>
           <div className="d-flex justify-content-center align-items-center">
