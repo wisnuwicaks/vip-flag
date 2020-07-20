@@ -11,6 +11,8 @@ class MenuUpload extends Component {
     cols: [],
     rows: [],
     data: [],
+
+
   };
 
   // fileUploadHandler = (e) => {
@@ -20,7 +22,15 @@ class MenuUpload extends Component {
 
   fileUploadHandler = (event) => {
     let fileObj = event.target.files[0];
+    console.log(fileObj);
 
+    let fileType=fileObj.name.substring(fileObj.name.lastIndexOf(".")+1)
+    if(fileType!=="xlsx"){
+      return alert("extensi file tidak sesuai")
+    }
+    // console.log(fileObj.name);
+    
+    
     //just pass the fileObj as parameter
     ExcelRenderer(fileObj, (err, resp) => {
       if (err) {
@@ -82,6 +92,7 @@ class MenuUpload extends Component {
                   <input
                     onChange={(e) => this.fileUploadHandler(e)}
                     type="file"
+                    accept=".xlsx"
                     className="custom-file-input"
                     id="inputGroupFile01"
                     aria-describedby="inputGroupFileAddon01"

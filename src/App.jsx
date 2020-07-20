@@ -80,8 +80,9 @@ class App extends Component {
                 <div className="col pl-0">
                   <Switch>
                     <Route exact path="/welcome" component={Welcome} />
-                    {this.adminRoutes()}
                     {this.userRoutes()}
+                    {this.adminRoutes()}
+                 
                     <Route exact path="*" component={PageNotFound} />
                   </Switch>
                 </div>
