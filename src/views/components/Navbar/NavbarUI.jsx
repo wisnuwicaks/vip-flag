@@ -20,7 +20,6 @@ import ButtonUI from "../Button/Button";
 class NavbarUI extends React.Component {
   logoutBtnHandler = () => {
     this.props.onLogout();
-
     return <Redirect to="/" />;
   };
   render() {
@@ -43,9 +42,9 @@ class NavbarUI extends React.Component {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <div className="d-flex justify-content-end w-100">
-                <div className="px-2">UserID : {this.props.user.id}</div>
+                <div className="px-2">UserID : {this.props.user.userId}</div>
                 <div className="px-2">
-                  Group Menu : {this.props.user.role.toUpperCase()}
+                  Group Menu : {this.props.user.userRole["roleName"].toUpperCase()}
                 </div>
                 <div>
                   <Link to="/">

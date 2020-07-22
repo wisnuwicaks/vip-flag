@@ -5,23 +5,9 @@ import { connect } from "react-redux";
 import Cookie from "universal-cookie";
 
 class Welcome extends React.Component {
-  componentDidMount() {
-    // console.log("idku :"+this.props.user.id);
-    if (this.props.user.id) {
-      // alert("masuk");
-      const cookie = new Cookie();
-      cookie.set("authData", JSON.stringify(this.props.user), { path: "/" });
-    }
-  }
-
-  // componentDidUpdate() {
-  //   console.log("idku :"+this.props.user.id);
-  //   if (this.props.user.id) {
-  //     alert("masuk");
-  //     const cookie = new Cookie();
-  //     cookie.set("authData", JSON.stringify(this.props.user), { path: "/" });
-  //   }
-  // }
+// componentDidMount(){
+//   alert("welcome")
+// }
   render() {
     return (
       <>

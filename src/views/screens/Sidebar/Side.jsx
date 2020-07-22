@@ -15,18 +15,18 @@ class Sidebar extends React.Component {
           <h5>Actions</h5>
         </div>
         <div className="sb-body">
-          {this.props.user.role === "admin" ? (
+          {this.props.user.userRole["roleName"] === "admin" ? (
             <>
               <Link to="/viewuser">
                 <ButtonUI type="text">View user</ButtonUI>
               </Link>
-              <Link to="/Createuser">
+              <Link to="/createuser">
                 <ButtonUI type="text">Create user</ButtonUI>
               </Link>
             </>
           ) : (
             <>
-              {this.props.user.role === "maker" ? (
+              {this.props.user.userRole["roleName"] === "maker" ? (
                 <>
                   <Link
                     to="/upload"

@@ -20,7 +20,7 @@ class Sidebar extends React.Component {
               <Link to="/viewuser">
                 <ButtonUI type="text">View user</ButtonUI>
               </Link>
-              <Link to="/Createuser">
+              <Link to="/createuser">
                 <ButtonUI type="text">Create user</ButtonUI>
               </Link>
             </>

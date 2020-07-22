@@ -15,10 +15,11 @@ const {
 const cookieObj = new Cookie();
 
 export const loginHandler = (userData) => {
+  alert("masuk")
   return (dispatch) => {
     const { username, password } = userData;
 
-    Axios.get(`${API_URL}/users`, {
+    Axios.get(`${API_URL}/users/login`, {
       params: {
         username,
         password,
@@ -27,10 +28,12 @@ export const loginHandler = (userData) => {
       .then((res) => {
         console.log(res.data);
         
-        if (res.data.length > 0) {
+        if (res.data !== null) {
+          console.log("data login");
+          console.log(res.data);
           dispatch({
             type: ON_LOGIN_SUCCESS,
-            payload: res.data[0],
+            payload: res.data,
           });
         } else {
           swal("Login Failed", "Username or password was wrong", "error");
@@ -51,20 +54,18 @@ export const userKeepLogin = (userData) => {
   console.log(userData.id);
   
   return (dispatch) => {
-    const {id} = userData
-    console.log(id);
+    const {userId} = userData
+    console.log(userId);
     
-    Axios.get(`${API_URL}/users`, {
-      params: {
-        id,
-      },
-    })
+    Axios.get(`${API_URL}/users/${userId}`)
       .then((res) => {
-        console.log("ini then : "+res.data[0]);
-        if (res.data.length > 0) {
+        console.log("ini then : ");
+        console.log(res.data);
+        
+        if (res.data !== null) {
           dispatch({
             type: ON_LOGIN_SUCCESS,
-            payload: res.data[0],
+            payload: res.data,
           });
         } else {
           dispatch({
@@ -81,6 +82,7 @@ export const userKeepLogin = (userData) => {
 };
 
 export const logoutHandler = () => {
+  alert("logout")
   cookieObj.remove("authData", { path: "/" });
   return {
     type: ON_LOGOUT_SUCCESS,

@@ -6,7 +6,9 @@ import ButtonUI from "../../components/Button/Button";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginHandler } from "../../../redux/actions";
-import Cookies from "universal-cookie";
+import Cookie from "universal-cookie";
+
+const cookie = new Cookie();
 
 class Login extends React.Component {
   state = {
@@ -15,15 +17,24 @@ class Login extends React.Component {
     password: "",
   };
 
-  componentDidUpdate() {
-    console.log("masukdid");
+  // componentDidMount() {
+  //   let cookieResult = cookie.get("authData");
+  //   if (cookieResult) {
+  //     console.log(cookieResult);
+  //     this.props.keepLogin(cookieResult);
+  //   } else {
+  //     this.props.cookieChecker();
+  //   }
+  // }
+  // componentDidUpdate() {
+  //   console.log("masukdid");
     
-    if (this.props.user.id) {
-      alert("masuk");
-      const cookie = new Cookies();
-      cookie.set("authData", JSON.stringify(this.props.user), { path: "/" });
-    }
-  }
+  //   if (this.props.user.userId) {
+  //     alert("masuk");
+  //     const cookie = new Cookies();
+  //     cookie.set("authData", JSON.stringify(this.props.user), { path: "/" });
+  //   }
+  // }
 
   inputHandler = (e, field) => {
     const { value } = e.target;
@@ -43,8 +54,9 @@ class Login extends React.Component {
 
   render() {
     if (this.props.user.userId > 0) {
+
       alert(this.props.user.userId);
-      return <Redirect to="/home" />;
+      return <Redirect to="/welcome" />;
     } else {
       return (
         <div className="row" style={{ paddingTop: "11%" }}>

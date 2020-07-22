@@ -11,8 +11,6 @@ class MenuUpload extends Component {
     cols: [],
     rows: [],
     data: [],
-
-
   };
 
   // fileUploadHandler = (e) => {

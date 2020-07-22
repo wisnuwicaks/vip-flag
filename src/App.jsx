@@ -27,31 +27,39 @@ class App extends Component {
   componentDidMount() {
     let cookieResult = cookie.get("authData");
     if (cookieResult) {
-    
       console.log(cookieResult);
       this.props.keepLogin(cookieResult);
-
     } else {
       this.props.cookieChecker();
     }
   }
 
+  componentDidUpdate() {
+    if (this.props.user.userId) {
+      cookie.set("authData", JSON.stringify(this.props.user), { path: "/" });
+    }
+  }
+
   adminRoutes = () => {
-    if (this.props.user.role === "admin") {
+    if (this.props.user.userRole["roleName"] === "admin") {
       return (
         <>
           <Route exact path="/viewuser" component={ViewUser} />
-          <Route exact path="/Createuser" component={CreateUser} />
+          <Route exact path="/createuser" component={CreateUser} />
         </>
       );
     }
   };
 
   userRoutes = () => {
-    if (this.props.user.id && this.props.user.role === "maker") {
+    if (
+      this.props.user.userId &&
+      this.props.user.userRole["roleName"] === "maker"
+    ) {
       return (
         <>
-         <Route exact path="/upload/log" component={MenuUploadLog} />
+          {/* <Route exact path="/welcome" component={Welcome} /> */}
+          <Route exact path="/upload/log" component={MenuUploadLog} />
           <Route exact path="/upload" component={MenuUpload} />
           <Route exact path="/approval/status" component={MenuApprovalStatus} />
         </>
@@ -59,6 +67,7 @@ class App extends Component {
     } else {
       return (
         <>
+          {/* <Route exact path="/welcome" component={Welcome} /> */}
           <Route exact path="/approval" component={MenuApproval} />
           <Route exact path="/approval/log" component={MenuApprovalLog} />
         </>
@@ -68,9 +77,10 @@ class App extends Component {
 
   render() {
     if (this.props.user.cookieChecked) {
+      // alert("asdsa")
       return (
         <>
-          {this.props.user.id > 0 ? (
+          {this.props.user.userId > 0 ? (
             <>
               <NavbarUI />
               <div className="row">
@@ -82,7 +92,7 @@ class App extends Component {
                     <Route exact path="/welcome" component={Welcome} />
                     {this.userRoutes()}
                     {this.adminRoutes()}
-                 
+            
                     <Route exact path="*" component={PageNotFound} />
                   </Switch>
                 </div>
@@ -90,11 +100,12 @@ class App extends Component {
             </>
           ) : (
             <>
-              <Redirect to="/" />
-              <Switch>
-                <Route exact path="/" component={Login} />
-                {/* <Route exact path="*" component={PageNotFound} /> */}
-              </Switch>
+              {/* <Redirect to="/" /> */}
+              <Login/>
+              {/* <Switch>
+                <Route exact path="/login" component={Login} />
+                <Route exact path="*" component={PageNotFound} />
+              </Switch> */}
             </>
           )}
         </>

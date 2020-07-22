@@ -11,9 +11,9 @@ const { ON_LOGIN_FAIL,
 } = userTypes;
 
 const init_state = {
-  id: 0,
+  userId: 0,
   username: "",
-  role: "",
+  role: {},
   errMsg: "",
   cookieChecked: true,
 };  
@@ -23,14 +23,14 @@ export default (state = init_state, action) => {
     case ON_LOGIN_SUCCESS:
       
       console.log("action,payload:" + action.payload);
-      const { username,email, fullName, role, id,password } = action.payload;
+      const { username,firstName,lastName, userRole,userId,password } = action.payload;
       console.log("username:" + username);
       return {
         ...state,
+        userId,
         username,
-        password,
-        role,
-        id,
+        userRole,
+        userId,
         cookieChecked: true,
       };
       
