@@ -104,12 +104,9 @@ class App extends Component {
             </>
           ) : (
             <>
-              {/* <Redirect to="/" /> */}
+
               <Login/>
-              {/* <Switch>
-                <Route exact path="/login" component={Login} />
-                <Route exact path="*" component={PageNotFound} />
-              </Switch> */}
+      
             </>
           )}
         </>
