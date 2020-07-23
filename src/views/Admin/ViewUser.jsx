@@ -1,5 +1,5 @@
 import React from "react";
-import "./Main.css";
+
 
 class ViewUser extends React.Component {
   render() {

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import "./Main.css";
-import InputUI from "../../components/Input/Input";
-import ButtonUI from "../../components/Button/Button";
+import "../Main.css";
+import InputUI from "../components/Input/Input";
+import ButtonUI from "../components/Button/Button";
 import { ExcelRenderer, OutTable } from "react-excel-renderer";
 import Table from "react-bootstrap/Table";
-import "./MenuUpload.css"
+import "./MakerUpload.css"
 class MenuUpload extends Component {
   state = {
     selectedFile: null,
@@ -75,9 +75,9 @@ class MenuUpload extends Component {
         return (
           <tr>
             {val.map((val) => {
-              return <th>{val}</th>;
+              return <th className="table">{val}</th>;
             })}
-            <th>Status</th>
+         
           </tr>
         );
       } else {
@@ -106,7 +106,7 @@ class MenuUpload extends Component {
               </>
               );
             })}
-               <td>Not</td>
+           
           </tr>
         );
       
@@ -151,7 +151,7 @@ class MenuUpload extends Component {
             <tbody >{this.renderUploadData()}</tbody>
           </Table>
           </div>
-          <div style={{ height: "300px", overflow: "auto" }}>
+          <div style={{ height: "300px", overflow: "auto", padding:"20px" }}>
           <Table striped bordered hover responsive>
             <tbody>{this.renderDataInvalid()}</tbody>
           </Table>

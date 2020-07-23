@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./Main.css";
 import InputUI from "../../components/Input/Input";
-import ButtonUI from "../../components/Button/Button";
+import ButtonUI from "./components/Button/Button";
 import Table from "react-bootstrap/Table";
 
 class MenuTabel extends Component {

@@ -3,23 +3,24 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 
 import { Switch, Route, withRouter, Redirect } from "react-router-dom";
-import Login from "./views/screens/Login/Login";
+import Login from "./views/Login/Login";
 import NavbarUI from "./views/components/Navbar/NavbarUI";
-import PageNotFound from "./views/screens/PageNotFound/PageNotFound";
+import PageNotFound from "./views/PageNotFound/PageNotFound";
 
 import { connect } from "react-redux";
 import Cookie from "universal-cookie";
 
 import { userKeepLogin, cookieChecker } from "./redux/actions";
-import Welcome from "./views/screens/Main/Welcome";
-import MenuUpload from "./views/screens/Main/MenuUpload";
-import MenuUploadLog from "./views/screens/Main/MenuUploadLog";
-import MenuApprovalStatus from "./views/screens/Main/MenuApprovalStatus";
-import MenuApproval from "./views/screens/Main/MenuApproval";
-import ViewUser from "./views/screens/Main/ViewUser";
-import MenuApprovalLog from "./views/screens/Main/MenuApprovalLog";
-import CreateUser from "./views/screens/Main/CreateUser";
-import Sidebar from "./views/screens/Sidebar/Side";
+import Welcome from "./views/Welcome";
+import MakerUpload from "./views/Maker/MakerUpload";
+import FileUploaded from "./views/Maker/FileUploaded";
+import FileApproved from "./views/Maker/FileApproved";
+import CheckerToApprove from "./views/Checker/CheckerToApprove";
+import CheckerFileApproved from "./views/Checker/CheckerFileApproved";
+
+import ViewUser from "./views/Admin/ViewUser";
+import CreateUser from "./views/Admin/CreateUser";
+import Sidebar from "./views/Sidebar/Side";
 
 const cookie = new Cookie();
 
@@ -63,17 +64,17 @@ class App extends Component {
       return (
         <>
           {/* <Route exact path="/welcome" component={Welcome} /> */}
-          <Route exact path="/upload/log" component={MenuUploadLog} />
-          <Route exact path="/upload" component={MenuUpload} />
-          <Route exact path="/approval/status" component={MenuApprovalStatus} />
+          <Route exact path="/maker/upload" component={MakerUpload} />
+          <Route exact path="/maker/upload/log" component={FileUploaded} />
+          <Route exact path="/maker/approval/status" component={FileApproved} />
         </>
       );
     } else {
       return (
         <>
           {/* <Route exact path="/welcome" component={Welcome} /> */}
-          <Route exact path="/approval" component={MenuApproval} />
-          <Route exact path="/approval/log" component={MenuApprovalLog} />
+          <Route exact path="/checker/toApprove" component={CheckerToApprove} />
+          <Route exact path="/checker/approved" component={CheckerFileApproved} />
         </>
       );
     }

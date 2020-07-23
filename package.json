@@ -23,7 +23,8 @@
     "redux-thunk": "^2.3.0",
     "sweetalert": "^2.1.2",
     "typescript": "^3.9.5",
-    "universal-cookie": "^4.0.3"
+    "universal-cookie": "^4.0.3",
+    "xlsx": "^0.16.4"
   },
   "scripts": {
     "start": "react-scripts start",

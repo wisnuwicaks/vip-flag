@@ -1,6 +1,6 @@
 import React from "react";
 import "./Main.css";
-import { loginHandler } from "../../../redux/actions";
+import { loginHandler } from "../redux/actions";
 import { connect } from "react-redux";
 import Cookie from "universal-cookie";
 

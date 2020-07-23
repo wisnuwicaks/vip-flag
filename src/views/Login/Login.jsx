@@ -1,11 +1,11 @@
 import React from "react";
 import "./Login.css";
-import LogoCimb from "../../../assets/logo-cimb.png";
-import InputUI from "../../components/Input/Input";
-import ButtonUI from "../../components/Button/Button";
+import LogoCimb from "../../assets/logo-cimb.png";
+import InputUI from "../components/Input/Input";
+import ButtonUI from "../components/Button/Button";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { loginHandler } from "../../../redux/actions";
+import { loginHandler } from "../../redux/actions";
 import Cookie from "universal-cookie";
 
 const cookie = new Cookie();
