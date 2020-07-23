@@ -41,13 +41,17 @@ class App extends Component {
   }
 
   adminRoutes = () => {
-    if (this.props.user.userRole["roleName"] === "admin") {
+
+    if (this.props.user.userId && this.props.user.userRole["roleName"] === "admin") {
       return (
         <>
           <Route exact path="/viewuser" component={ViewUser} />
           <Route exact path="/createuser" component={CreateUser} />
         </>
       );
+    }
+    else{
+      return null
     }
   };
 
@@ -90,8 +94,8 @@ class App extends Component {
                 <div className="col pl-0">
                   <Switch>
                     <Route exact path="/welcome" component={Welcome} />
-                    {this.userRoutes()}
                     {this.adminRoutes()}
+                    {this.userRoutes()}
             
                     <Route exact path="*" component={PageNotFound} />
                   </Switch>

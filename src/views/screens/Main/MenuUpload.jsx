@@ -4,13 +4,15 @@ import InputUI from "../../components/Input/Input";
 import ButtonUI from "../../components/Button/Button";
 import { ExcelRenderer, OutTable } from "react-excel-renderer";
 import Table from "react-bootstrap/Table";
-
+import "./MenuUpload.css"
 class MenuUpload extends Component {
   state = {
     selectedFile: null,
     cols: [],
     rows: [],
     data: [],
+
+    invalidData :[]
   };
 
   // fileUploadHandler = (e) => {
@@ -22,13 +24,12 @@ class MenuUpload extends Component {
     let fileObj = event.target.files[0];
     console.log(fileObj);
 
-    let fileType=fileObj.name.substring(fileObj.name.lastIndexOf(".")+1)
-    if(fileType!=="xlsx"){
-      return alert("extensi file tidak sesuai")
+    let fileType = fileObj.name.substring(fileObj.name.lastIndexOf(".") + 1);
+    if (fileType !== "xlsx") {
+      return alert("extensi file tidak sesuai");
     }
     // console.log(fileObj.name);
-    
-    
+
     //just pass the fileObj as parameter
     ExcelRenderer(fileObj, (err, resp) => {
       if (err) {
@@ -48,10 +49,29 @@ class MenuUpload extends Component {
   };
 
   renderUploadData = () => {
-    let minLength = 0;
-    return this.state.data.map((val, idx, arr) => {
+    const { data, invalidData } = this.state;
+    let arr = [1, , 3];
+    let arrBaru = [...data];
+    let invalidDataTemp =[]
+    
+    for (let rowArr of arrBaru) {
+      for (let cel of rowArr) {
+        if (cel == undefined) {
+          arrBaru[arrBaru.indexOf(rowArr)][
+            rowArr.findIndex((cel) => cel == undefined)
+          ] = "Invalid/Empty row";
+          invalidDataTemp.push(rowArr)
+          this.setState({invalidData:invalidDataTemp})
+        }
+      }
+    }
+
+    console.log("ini arr baru");
+
+    console.log(arrBaru);
+
+    return arrBaru.map((val, idx, arr) => {
       if (idx === 0) {
-        minLength = val.length;
         return (
           <tr>
             {val.map((val) => {
@@ -61,19 +81,37 @@ class MenuUpload extends Component {
           </tr>
         );
       } else {
-        let count = 0;
         return (
           <tr>
             {val.map((val, index) => {
-              if (val !== "") count++;
-              return <td>{val === "" ? "null" : val}</td>;
+              return <td>{val}</td>;
             })}
-            <td>{count < minLength ? "invalid" : "valid"}</td>
           </tr>
         );
       }
     });
   };
+
+  renderDataInvalid =()=>{
+    const { data, invalidData } = this.state;
+    return invalidData.map((val, idx, arr) => {
+
+        return (
+          <tr>
+            {val.map((val, index) => {
+              return (
+                <>
+              <td>{val}</td>
+           
+              </>
+              );
+            })}
+               <td>Not</td>
+          </tr>
+        );
+      
+    });
+  }
 
   render() {
     return (
@@ -107,15 +145,17 @@ class MenuUpload extends Component {
               </div>
             </div>
           </div>
-          {/* <OutTable
-            data={this.state.rows}
-            columns={this.state.cols}
-            tableClassName="ExcelTable2007"
-            tableHeaderRowClass="heading"
-          /> */}
-          <Table striped bordered hover responsive>
-            <tbody>{this.renderUploadData()}</tbody>
+ 
+          <div style={{ height: "400px", overflow: "auto", padding:"20px" }}>
+          <Table striped bordered hover responsive style={{position:"relative"}}>
+            <tbody >{this.renderUploadData()}</tbody>
           </Table>
+          </div>
+          <div style={{ height: "300px", overflow: "auto" }}>
+          <Table striped bordered hover responsive>
+            <tbody>{this.renderDataInvalid()}</tbody>
+          </Table>
+          </div>
           <div className="d-flex justify-content-center align-items-center">
             <ButtonUI className="m-3">Upload</ButtonUI>
             <ButtonUI type="outline" className="m-3">
