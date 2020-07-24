@@ -5,11 +5,13 @@ import ButtonUI from "../components/Button/Button";
 import { ExcelRenderer, OutTable } from "react-excel-renderer";
 import Table from "react-bootstrap/Table";
 import {API_URL} from "../../constants/API"
+import {connect} from "react-redux"
+import {cifDataState} from "../../redux/actions"
 import Axios from "axios";
 import swal from "sweetalert";
 
 import "./MakerUpload.css"
-class MenuUpload extends Component {
+class MakerUpload extends Component {
   state = {
     selectedFile: null,
     cols: [],
@@ -59,19 +61,20 @@ class MenuUpload extends Component {
     }
     }
     this.setState({cifToUpload:arrObj})
-    Axios.post(`${API_URL}/cifchecksum/post_data`,arrObj)
-    .then(res=>{
-      console.log(res.data);
-      swal("Success Upload","Thankyou","success")
-    })
-    .catch(err=>{
-      console.log(err);
+    this.props.cifDataState(arrObj)
+    // Axios.post(`${API_URL}/cifchecksum/post_data`,arrObj)
+    // .then(res=>{
+    //   console.log(res.data);
+    //   swal("Success Upload","Thankyou","success")
+    // })
+    // .catch(err=>{
+    //   console.log(err);
       
-    })
+    // })
   }
   renderUploadData = () => {
     const { data, invalidData } = this.state;
-    let arr = [1, , 3];
+
     let arrBaru = [...data];
     let invalidDataTemp =[]
     
@@ -190,4 +193,15 @@ class MenuUpload extends Component {
   }
 }
 
-export default MenuUpload;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+    cif :state.cifData
+  };
+};
+
+const mapDispatchToProps = {
+  cifDataState
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MakerUpload);

@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import Axios from "axios";
 import { API_URL } from "../../constants/API";
 
-class MenuUploadLog extends Component {
+class FileUploaded extends Component {
   state = {
     file: [],
   };
@@ -54,7 +54,7 @@ class MenuUploadLog extends Component {
     return (
       <>
         <div className="main-header">
-          <h5>Upload Log</h5>
+    <h5>Upload Log {this.props.cif.cifData.length}</h5>
         </div>
         <div className="main-body">
           <div className="main-body-show-body">
@@ -83,9 +83,10 @@ class MenuUploadLog extends Component {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
+    cif: state.cif,
   };
 };
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(MenuUploadLog);
+export default connect(mapStateToProps, mapDispatchToProps)(FileUploaded);

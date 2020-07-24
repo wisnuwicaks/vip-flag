@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import Axios from "axios";
 import { API_URL } from "../../constants/API";
 
-class MenuApprovedFile extends Component {
+class FileApproved extends Component {
   state = {
     file: [],
   };
@@ -84,4 +84,4 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(MenuApprovedFile);
+export default connect(mapStateToProps, mapDispatchToProps)(FileApproved);
