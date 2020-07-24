@@ -27,7 +27,7 @@ class NavbarUI extends React.Component {
       <div>
         <div className="container-fluid navtitle my-auto">
           <div className="d-flex-column pt-1">
-            <h6>VIP Downgrade/Upgrade</h6>
+            <h6>VIP Flag Maintenance</h6>
           </div>
         </div>
         <div className="container-fluid navlogo p-0">

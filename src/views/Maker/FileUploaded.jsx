@@ -16,7 +16,7 @@ class MenuUploadLog extends Component {
   }
 
   getFile = () => {
-    Axios.get(`${API_URL}/files/maker/${this.props.user.userId}/No`)
+    Axios.get(`${API_URL}/files/maker/${this.props.user.userId}`)
       .then((res) => {
         this.setState({ file: res.data });
       })

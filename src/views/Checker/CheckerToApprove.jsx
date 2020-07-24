@@ -21,7 +21,7 @@ class CheckerToApprove extends Component {
 
 
   getFile = () => {
-    Axios.get(`${API_URL}/files/checker/${this.props.user.userId}/No`)
+    Axios.get(`${API_URL}/files/checker/${this.props.user.userId}`)
       .then((res) => {
         this.setState({ file: res.data });
       })
@@ -39,10 +39,15 @@ class CheckerToApprove extends Component {
     req.responseType = "arraybuffer";
 
     req.onload = function(e) {
-      var data = new Uint8Array(req.response);
-      var workbook = XLSX.read(data, {type:"array"});
-
-    console.log(workbook);
+    //   var data = new Uint8Array(req.response);
+    //   // var workbook = XLSX.read(data, {type:"array"});
+    //   const wsname = wb.SheetNames[0];
+    //   const ws = wb.Sheets[wsname];
+    //   /* Convert array of arrays */
+    //   const data = XLSX.utils.sheet_to_csv(ws, {header:1});
+    //   /* Update state */
+    //   console.log("Data>>>"+data);
+    // // console.log(workbook);
     
     }
 
@@ -50,7 +55,7 @@ class CheckerToApprove extends Component {
   }
 
   approveBtnHandler = (val)=>{
-    Axios.post(`${API_URL}/files/approve/${val.fileId}`)
+    Axios.post(`${API_URL}/files/approve/${val.fileId}/${this.props.user.userId}`)
     .then((res) => {
       console.log(res.data);
       swal("Approval Succes", "Thankyou", "success");
@@ -87,10 +92,12 @@ class CheckerToApprove extends Component {
             <td>
               <a href={val.linkDirectory}>{val.fileName}</a>
             </td>
+            <td>{val.createdBy}</td>
+            <td>{val.approvedBy}</td>
             <td>{val.createdDate}</td>
             <td>{val.approvalDate}</td>
             <td>
-              {val.approvalStatus=="No"?"No Status":null}
+              {val.approvalStatus==""?"No Status":val.approvalStatus}
               </td>
             <td>
               <ButtonUI type="text" onClick={() => this.detailBtnHander(val)}>
@@ -127,6 +134,8 @@ class CheckerToApprove extends Component {
                 <tr>
                   <td>No</td>
                   <td>File Name</td>
+                  <td>CreatedBy</td>
+                  <td>ApprovedBy</td>
                   <td>Created Date</td>
                   <td>Approval Date</td>
                   <td>Approval Status</td>

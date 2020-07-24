@@ -28,26 +28,21 @@ class MenuUpload extends Component {
     if (fileType !== "xlsx") {
       return alert("extensi file tidak sesuai");
     }
-    // console.log(fileObj.name);
-
-    //just pass the fileObj as parameter
+    
     ExcelRenderer(fileObj, (err, resp) => {
       if (err) {
         console.log(err);
       } else {
-        // console.log("err :" + err);
-
-        // console.log(resp);
-        // console.log(resp.cols);
         this.setState({
-          // cols: resp.cols,
-          // rows: resp.rows,
           data: resp.rows,
         });
       }
     });
   };
 
+  uploadBtnHandler = ()=>{
+    
+  }
   renderUploadData = () => {
     const { data, invalidData } = this.state;
     let arr = [1, , 3];
@@ -157,7 +152,9 @@ class MenuUpload extends Component {
           </Table>
           </div>
           <div className="d-flex justify-content-center align-items-center">
-            <ButtonUI className="m-3">Upload</ButtonUI>
+            <ButtonUI 
+            onClick={this.uploadBtnHandler()}
+            className="m-3">Upload</ButtonUI>
             <ButtonUI type="outline" className="m-3">
               Cancel
             </ButtonUI>

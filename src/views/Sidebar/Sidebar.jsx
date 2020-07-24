@@ -50,7 +50,7 @@ class Sidebar extends React.Component {
                     <ButtonUI type="text">Waiting for approval</ButtonUI>
                   </Link>
                   <Link to="/checker/approved">
-                    <ButtonUI type="text">Approval Log</ButtonUI>
+                    <ButtonUI type="text">History Log</ButtonUI>
                   </Link>
                 </>
               )}
