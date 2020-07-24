@@ -15,7 +15,7 @@ class CheckerFileApproved extends Component {
   }
 
   getFile = () => {
-    Axios.get(`${API_URL}/files/checker/${this.props.user.userId}/Approved`)
+    Axios.get(`${API_URL}/files/checker/${this.props.user.userId}/Approved/Rejected`)
       .then((res) => {
         this.setState({ file: res.data });
       })

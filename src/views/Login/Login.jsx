@@ -17,24 +17,7 @@ class Login extends React.Component {
     password: "",
   };
 
-  // componentDidMount() {
-  //   let cookieResult = cookie.get("authData");
-  //   if (cookieResult) {
-  //     console.log(cookieResult);
-  //     this.props.keepLogin(cookieResult);
-  //   } else {
-  //     this.props.cookieChecker();
-  //   }
-  // }
-  // componentDidUpdate() {
-  //   console.log("masukdid");
-    
-  //   if (this.props.user.userId) {
-  //     alert("masuk");
-  //     const cookie = new Cookies();
-  //     cookie.set("authData", JSON.stringify(this.props.user), { path: "/" });
-  //   }
-  // }
+ 
 
   inputHandler = (e, field) => {
     const { value } = e.target;

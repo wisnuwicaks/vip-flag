@@ -27,7 +27,6 @@ export const loginHandler = (userData) => {
     })
       .then((res) => {
         console.log(res.data);
-        
         if (res.data !== null) {
           console.log("data login");
           console.log(res.data);
@@ -90,29 +89,30 @@ export const logoutHandler = () => {
 };
 
 export const registerHandler = (userData) => {
+ 
   return (dispatch) => {
-    Axios.get(`${API_URL}/users`, {
-      params: {
-        username: userData.username,
-      },
-    })
+    Axios.get(`${API_URL}/users/username/${userData.username}`)
       .then((res) => {
-        if (res.data.length > 0) {
+        if (res.data !=="") {
+          swal("Regitration Failed", "Username already used", "success");
+
           dispatch({
             type: ON_REGISTER_FAIL,
             payload: "Username already used",
           });
         } else {
-          Axios.post(`${API_URL}/users`, { ...userData, role: "user" })
+          Axios.post(`${API_URL}/users/add/role/${userData.role}`, userData)
             .then((res) => {
-              swal("Regitration Success", "You can login now", "success");
+              swal("Regitration Success", "New User has been added", "success");
               console.log(userData);
-              dispatch({
-                type: ON_REGISTER_SUCCESS,
-                payload: userData,
-              });
+              // dispatch({
+              //   type: ON_REGISTER_SUCCESS,
+              //   payload: userData,
+              // });
             })
             .catch((err) => {
+              console.log("ini err register");
+              
               console.log(err);
             });
         }

@@ -5,6 +5,10 @@ import ButtonUI from "../../views/components/Button/Button";
 import { connect } from "react-redux";
 import Axios from "axios";
 import { API_URL } from "../../constants/API";
+import swal from "sweetalert";
+
+
+import * as XLSX from 'xlsx';
 
 class CheckerToApprove extends Component {
   state = {
@@ -13,6 +17,8 @@ class CheckerToApprove extends Component {
   componentDidMount() {
     this.getFile();
   }
+
+
 
   getFile = () => {
     Axios.get(`${API_URL}/files/checker/${this.props.user.userId}/No`)
@@ -26,6 +32,51 @@ class CheckerToApprove extends Component {
       });
   };
 
+
+  detailBtnHander = (val)=>{
+    var req = new XMLHttpRequest();
+    req.open("GET", val.linkDirectory, true);
+    req.responseType = "arraybuffer";
+
+    req.onload = function(e) {
+      var data = new Uint8Array(req.response);
+      var workbook = XLSX.read(data, {type:"array"});
+
+    console.log(workbook);
+    
+    }
+
+    req.send();
+  }
+
+  approveBtnHandler = (val)=>{
+    Axios.post(`${API_URL}/files/approve/${val.fileId}`)
+    .then((res) => {
+      console.log(res.data);
+      swal("Approval Succes", "Thankyou", "success");
+      this.getFile()
+
+    })
+    .catch((err) => {
+      console.log("ini err approve");
+
+      console.log(err);
+    });
+  }
+
+  rejectBtnHandler = (val)=>{
+    Axios.post(`${API_URL}/files/reject/${val.fileId}`)
+    .then((res) => {
+      console.log(res.data);
+      swal("Reject Success", "File Has been Rejected", "success");
+      this.getFile()
+    })
+    .catch((err) => {
+      console.log("ini err reject");
+
+      console.log(err);
+    });
+  }
   renderLog = () => {
     const { file } = this.state;
     return file.map((val, idx) => {
@@ -38,22 +89,23 @@ class CheckerToApprove extends Component {
             </td>
             <td>{val.createdDate}</td>
             <td>{val.approvalDate}</td>
-
-            <td>{val.approvalStatus}</td>
             <td>
-              <ButtonUI type="text" onClick={() => alert("detail")}>
+              {val.approvalStatus=="No"?"No Status":null}
+              </td>
+            <td>
+              <ButtonUI type="text" onClick={() => this.detailBtnHander(val)}>
                 Detail
               </ButtonUI>
             </td>
 
             <td>
-              <ButtonUI type="contain" onClick={() => alert("approve")}>
+              <ButtonUI type="contain" onClick={() => this.approveBtnHandler(val)}>
                 Approve
               </ButtonUI>
             </td>
 
             <td>
-              <ButtonUI type="outline" onClick={() => alert("reject")}>
+              <ButtonUI type="outline" onClick={() => this.rejectBtnHandler(val)}>
                 Reject
               </ButtonUI>
             </td>
