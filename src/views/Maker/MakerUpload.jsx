@@ -4,6 +4,10 @@ import InputUI from "../components/Input/Input";
 import ButtonUI from "../components/Button/Button";
 import { ExcelRenderer, OutTable } from "react-excel-renderer";
 import Table from "react-bootstrap/Table";
+import {API_URL} from "../../constants/API"
+import Axios from "axios";
+import swal from "sweetalert";
+
 import "./MakerUpload.css"
 class MenuUpload extends Component {
   state = {
@@ -11,7 +15,7 @@ class MenuUpload extends Component {
     cols: [],
     rows: [],
     data: [],
-
+    cifToUpload :[],
     invalidData :[]
   };
 
@@ -41,7 +45,29 @@ class MenuUpload extends Component {
   };
 
   uploadBtnHandler = ()=>{
-    
+    const {data, cifToUpload} = this.state
+    let cifObj = {}
+    let arrObj = []
+      
+    for (let rowArr of data) {
+      if (data.indexOf(rowArr) !==0) {
+        arrObj = [...arrObj,{
+          cfcifn:rowArr[0],
+          cfvipi:rowArr[1],
+          cfvipc:rowArr[2],
+        }]
+    }
+    }
+    this.setState({cifToUpload:arrObj})
+    Axios.post(`${API_URL}/cifchecksum/post_data`,arrObj)
+    .then(res=>{
+      console.log(res.data);
+      swal("Success Upload","Thankyou","success")
+    })
+    .catch(err=>{
+      console.log(err);
+      
+    })
   }
   renderUploadData = () => {
     const { data, invalidData } = this.state;
@@ -97,7 +123,6 @@ class MenuUpload extends Component {
               return (
                 <>
               <td>{val}</td>
-           
               </>
               );
             })}
@@ -153,7 +178,7 @@ class MenuUpload extends Component {
           </div>
           <div className="d-flex justify-content-center align-items-center">
             <ButtonUI 
-            onClick={this.uploadBtnHandler()}
+            onClick={this.uploadBtnHandler}
             className="m-3">Upload</ButtonUI>
             <ButtonUI type="outline" className="m-3">
               Cancel
