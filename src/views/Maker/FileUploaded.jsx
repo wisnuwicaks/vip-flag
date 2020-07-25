@@ -38,7 +38,7 @@ class FileUploaded extends Component {
               <a href={val.linkDirectory}>{val.fileName}</a>
             </td>
             <td>{val.createdDate}</td>
-            {val.approvalStatus ? <td>{val.approvalStatus}</td> : <td>No</td>}
+            {val.approvalStatus ? <td>{val.approvalStatus}</td> : <td>No Status</td>}
             <td>
               <ButtonUI type="text" onClick={() => alert("detail")}>
                 Detail

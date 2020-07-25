@@ -15,8 +15,8 @@ import Welcome from "./views/Welcome";
 import MakerUpload from "./views/Maker/MakerUpload";
 import FileUploaded from "./views/Maker/FileUploaded";
 import FileApproved from "./views/Maker/FileApproved";
-import CheckerToApprove from "./views/Checker/CheckerToApprove";
-import CheckerFileApproved from "./views/Checker/CheckerFileApproved";
+import NeedToApprove from "./views/Checker/NeedToApprove";
+import CheckerApprovalLog from "./views/Checker/CheckerApprovalLog";
 
 import ViewUser from "./views/Admin/ViewUser";
 import CreateUser from "./views/Admin/CreateUser";
@@ -73,8 +73,8 @@ class App extends Component {
       return (
         <>
           {/* <Route exact path="/welcome" component={Welcome} /> */}
-          <Route exact path="/checker/toApprove" component={CheckerToApprove} />
-          <Route exact path="/checker/approved" component={CheckerFileApproved} />
+          <Route exact path="/checker/toApprove" component={NeedToApprove} />
+          <Route exact path="/checker/approved" component={CheckerApprovalLog} />
         </>
       );
     }

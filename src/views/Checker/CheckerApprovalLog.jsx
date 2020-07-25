@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import Axios from "axios";
 import { API_URL } from "../../constants/API";
 
-class CheckerFileApproved extends Component {
+class CheckerApprovalLog extends Component {
   state = {
     file: [],
   };
@@ -15,7 +15,7 @@ class CheckerFileApproved extends Component {
   }
 
   getFile = () => {
-    Axios.get(`${API_URL}/files/checker/${this.props.user.userId}/Approved/Rejected`)
+    Axios.get(`${API_URL}/files/not_null_status/${this.props.user.userId}/`)
       .then((res) => {
         this.setState({ file: res.data });
       })
@@ -85,4 +85,4 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(CheckerFileApproved);
+export default connect(mapStateToProps, mapDispatchToProps)(CheckerApprovalLog);

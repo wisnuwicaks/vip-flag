@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Table from "react-bootstrap/Table";
 import { Button } from "react-bootstrap";
-import ButtonUI from "../../views/components/Button/Button";
+import ButtonUI from "../components/Button/Button";
 import { connect } from "react-redux";
 import Axios from "axios";
 import { API_URL } from "../../constants/API";
@@ -10,7 +10,7 @@ import swal from "sweetalert";
 
 import * as XLSX from 'xlsx';
 
-class CheckerToApprove extends Component {
+class NeedToApprove extends Component {
   state = {
     file: [],
   };
@@ -21,7 +21,7 @@ class CheckerToApprove extends Component {
 
 
   getFile = () => {
-    Axios.get(`${API_URL}/files/checker/${this.props.user.userId}`)
+    Axios.get(`${API_URL}/files/null_status/${this.props.user.userId}/`)
       .then((res) => {
         this.setState({ file: res.data });
       })
@@ -55,7 +55,7 @@ class CheckerToApprove extends Component {
   }
 
   approveBtnHandler = (val)=>{
-    Axios.post(`${API_URL}/files/approve/${val.fileId}/${this.props.user.userId}`)
+    Axios.post(`${API_URL}/cifapprove/file/${this.props.user.userId}`,val)
     .then((res) => {
       console.log(res.data);
       swal("Approval Succes", "Thankyou", "success");
@@ -139,7 +139,7 @@ class CheckerToApprove extends Component {
                   <td>Created Date</td>
                   <td>Approval Date</td>
                   <td>Approval Status</td>
-                  <td colSpan="3">Action</td>
+                  <td colSpan="3" className="text-center">Action</td>
                 </tr>
               </thead>
               <tbody>{this.renderLog()}</tbody>
@@ -159,4 +159,4 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(CheckerToApprove);
+export default connect(mapStateToProps, mapDispatchToProps)(NeedToApprove);

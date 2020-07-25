@@ -14,7 +14,6 @@ import "./MakerUpload.css"
 class MakerUpload extends Component {
   state = {
     selectedFile: null,
-    cols: [],
     rows: [],
     data: [],
     cifToUpload :[],
@@ -28,6 +27,7 @@ class MakerUpload extends Component {
 
   fileUploadHandler = (event) => {
     let fileObj = event.target.files[0];
+    this.setState({selectedFile:event.target.files[0]})
     console.log(fileObj);
 
     let fileType = fileObj.name.substring(fileObj.name.lastIndexOf(".") + 1);
@@ -47,10 +47,13 @@ class MakerUpload extends Component {
   };
 
   uploadBtnHandler = ()=>{
-    const {data, cifToUpload} = this.state
+    const {data, cifToUpload,selectedFile} = this.state
     let cifObj = {}
     let arrObj = []
-      
+    
+    if(selectedFile == null){
+      return swal("Select File First","Browse file in your directory","error")
+    }
     for (let rowArr of data) {
       if (data.indexOf(rowArr) !==0) {
         arrObj = [...arrObj,{
@@ -69,8 +72,27 @@ class MakerUpload extends Component {
     // })
     // .catch(err=>{
     //   console.log(err);
-      
     // })
+
+    let formData = new FormData();
+  
+      formData.append(
+        "file",
+        selectedFile,
+        selectedFile.name
+      );
+    Axios.post(`${API_URL}/files/uploadExcelFile/${this.props.user.userId}`,formData)
+    .then(res=>{
+      console.log(res.data);
+      this.setState({selectedFile:null})
+      this.setState({data:[]})
+      this.setState({rows:[]})
+
+      swal("Success Upload","Thankyou","success")
+    })
+    .catch(err=>{
+      console.log(err);
+    })
   }
   renderUploadData = () => {
     const { data, invalidData } = this.state;
