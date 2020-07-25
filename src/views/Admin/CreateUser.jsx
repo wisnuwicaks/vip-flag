@@ -113,11 +113,12 @@ class CreateUser extends React.Component {
               </div>
             </div>
 
-            <div className="main-body-input">
-              <div style={{ flex: "9" }}>Role</div>
-              <div style={{ flex: "100" }}>
+            <div className="main-body-input w-50">
+              <div style={{ flex: "1" ,alignItems:"center"}}>Role</div>
+              <div style={{ flex: "9" }}>
                 <FormGroup>
                   <Input
+                  size="sm"
                     onChange={(e) =>
                       this.inputHandler(e, "role", "registerForm")
                     }

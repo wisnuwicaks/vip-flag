@@ -20,7 +20,7 @@ import CheckerApprovalLog from "./views/Checker/CheckerApprovalLog";
 
 import ViewUser from "./views/Admin/ViewUser";
 import CreateUser from "./views/Admin/CreateUser";
-import Sidebar from "./views/Sidebar/Side";
+import Sidebar from "./views/Sidebar/Sidebar";
 
 const cookie = new Cookie();
 

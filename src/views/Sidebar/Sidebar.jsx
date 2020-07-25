@@ -8,6 +8,7 @@ class Sidebar extends React.Component {
   state = {
     user_role: "maker",
   };
+  
   render() {
     return (
       <>
@@ -15,7 +16,7 @@ class Sidebar extends React.Component {
           <h5>Actions</h5>
         </div>
         <div className="sb-body">
-          {this.props.user.role === "admin" ? (
+          {this.props.user.userRole["roleName"] === "admin" ? (
             <>
               <Link to="/viewuser">
                 <ButtonUI type="text">View user</ButtonUI>
@@ -26,33 +27,33 @@ class Sidebar extends React.Component {
             </>
           ) : (
             <>
-              {this.props.user.role === "maker" ? (
-                <>
-                  <Link
-                    to="/maker/upload"
-                    style={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    <ButtonUI type="text">Upload Data</ButtonUI>
-                  </Link>
-                  <Link
-                    to="/maker/upload/log"
-                    style={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    <ButtonUI type="text">Upload Log</ButtonUI>
-                  </Link>
-                  <Link to="/maker/approval/status">
-                    <ButtonUI type="text">Approval Status</ButtonUI>
-                  </Link>
-                </>
+              {this.props.user.userRole["roleName"] === "maker" ? (
+               <>
+               <Link
+                 to="/maker/upload"
+                 style={{ textDecoration: "none", color: "inherit" }}
+               >
+                 <ButtonUI type="text">Upload Data</ButtonUI>
+               </Link>
+               <Link
+                 to="/maker/upload/log"
+                 style={{ textDecoration: "none", color: "inherit" }}
+               >
+                 <ButtonUI type="text">Upload Log</ButtonUI>
+               </Link>
+               <Link to="/maker/approval/status">
+                 <ButtonUI type="text">Approval Status</ButtonUI>
+               </Link>
+             </>
               ) : (
                 <>
-                  <Link to="/checker/toApprove">
-                    <ButtonUI type="text">Waiting for approval</ButtonUI>
-                  </Link>
-                  <Link to="/checker/approved">
-                    <ButtonUI type="text">History Log</ButtonUI>
-                  </Link>
-                </>
+                <Link to="/checker/toApprove">
+                  <ButtonUI type="text">Waiting for approval</ButtonUI>
+                </Link>
+                <Link to="/checker/approved">
+                  <ButtonUI type="text">Approval Log</ButtonUI>
+                </Link>
+              </>
               )}
             </>
           )}

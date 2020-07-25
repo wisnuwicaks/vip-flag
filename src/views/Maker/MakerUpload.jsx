@@ -4,20 +4,25 @@ import InputUI from "../components/Input/Input";
 import ButtonUI from "../components/Button/Button";
 import { ExcelRenderer, OutTable } from "react-excel-renderer";
 import Table from "react-bootstrap/Table";
-import {API_URL} from "../../constants/API"
-import {connect} from "react-redux"
-import {cifDataState} from "../../redux/actions"
+import { InputGroup, InputGroupAddon, Input, InputGroupText } from "reactstrap";
+import Pagination from "react-bootstrap/Pagination";
+import { Form } from "react-bootstrap";
+import { API_URL } from "../../constants/API";
+import { connect } from "react-redux";
+import { cifDataState } from "../../redux/actions";
 import Axios from "axios";
 import swal from "sweetalert";
 
-import "./MakerUpload.css"
+import "./MakerUpload.css";
 class MakerUpload extends Component {
   state = {
     selectedFile: null,
     rows: [],
     data: [],
-    cifToUpload :[],
-    invalidData :[]
+    activePage: 1,
+    lastPage:"",
+    cifToUpload: [],
+    invalidData: [],
   };
 
   // fileUploadHandler = (e) => {
@@ -25,16 +30,23 @@ class MakerUpload extends Component {
   //   console.log(this.state.selectedFile);
   // };
 
+  handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      this.setState({ activePage: parseInt(e.target.value) });
+    }
+  };
+
   fileUploadHandler = (event) => {
+    this.setState({activePage:1})
     let fileObj = event.target.files[0];
-    this.setState({selectedFile:event.target.files[0]})
+    this.setState({ selectedFile: event.target.files[0] });
     console.log(fileObj);
 
     let fileType = fileObj.name.substring(fileObj.name.lastIndexOf(".") + 1);
     if (fileType !== "xlsx") {
       return alert("extensi file tidak sesuai");
     }
-    
+
     ExcelRenderer(fileObj, (err, resp) => {
       if (err) {
         console.log(err);
@@ -46,25 +58,32 @@ class MakerUpload extends Component {
     });
   };
 
-  uploadBtnHandler = ()=>{
-    const {data, cifToUpload,selectedFile} = this.state
-    let cifObj = {}
-    let arrObj = []
-    
-    if(selectedFile == null){
-      return swal("Select File First","Browse file in your directory","error")
+  uploadBtnHandler = () => {
+    const { data, cifToUpload, selectedFile } = this.state;
+    let cifObj = {};
+    let arrObj = [];
+
+    if (selectedFile == null) {
+      return swal(
+        "Select File First",
+        "Browse file in your directory",
+        "error"
+      );
     }
     for (let rowArr of data) {
-      if (data.indexOf(rowArr) !==0) {
-        arrObj = [...arrObj,{
-          cfcifn:rowArr[0],
-          cfvipi:rowArr[1],
-          cfvipc:rowArr[2],
-        }]
+      if (data.indexOf(rowArr) !== 0) {
+        arrObj = [
+          ...arrObj,
+          {
+            cfcifn: rowArr[0],
+            cfvipi: rowArr[1],
+            cfvipc: rowArr[2],
+          },
+        ];
+      }
     }
-    }
-    this.setState({cifToUpload:arrObj})
-    this.props.cifDataState(arrObj)
+    this.setState({ cifToUpload: arrObj });
+    this.props.cifDataState(arrObj);
     // Axios.post(`${API_URL}/cifchecksum/post_data`,arrObj)
     // .then(res=>{
     //   console.log(res.data);
@@ -75,88 +94,84 @@ class MakerUpload extends Component {
     // })
 
     let formData = new FormData();
-  
-      formData.append(
-        "file",
-        selectedFile,
-        selectedFile.name
-      );
-    Axios.post(`${API_URL}/files/uploadExcelFile/${this.props.user.userId}`,formData)
-    .then(res=>{
-      console.log(res.data);
-      this.setState({selectedFile:null})
-      this.setState({data:[]})
-      this.setState({rows:[]})
 
-      swal("Success Upload","Thankyou","success")
-    })
-    .catch(err=>{
-      console.log(err);
-    })
-  }
+    formData.append("file", selectedFile, selectedFile.name);
+    Axios.post(
+      `${API_URL}/files/uploadExcelFile/${this.props.user.userId}`,
+      formData
+    )
+      .then((res) => {
+        console.log(res.data);
+        this.setState({ selectedFile: null });
+        this.setState({ data: [] });
+        this.setState({ rows: [] });
+
+        swal("Success Upload", "Thankyou", "success");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   renderUploadData = () => {
-    const { data, invalidData } = this.state;
+    const { data, invalidData, activePage, selectedFile } = this.state;
 
     let arrBaru = [...data];
-    let invalidDataTemp =[]
-    
+    let arrPage = [];
+    let invalidDataTemp = [];
+
     for (let rowArr of arrBaru) {
       for (let cel of rowArr) {
         if (cel == undefined) {
           arrBaru[arrBaru.indexOf(rowArr)][
             rowArr.findIndex((cel) => cel == undefined)
           ] = "Invalid/Empty row";
-          invalidDataTemp.push(rowArr)
-          this.setState({invalidData:invalidDataTemp})
+          invalidDataTemp.push(rowArr);
+          this.setState({ invalidData: invalidDataTemp });
         }
       }
     }
 
     console.log("ini arr baru");
-
+    data.shift();
     console.log(arrBaru);
+    if(selectedFile){
+      // this.setState({lastPage:data.length/10})
 
-    return arrBaru.map((val, idx, arr) => {
-      if (idx === 0) {
-        return (
-          <tr>
-            {val.map((val) => {
-              return <th className="table">{val}</th>;
-            })}
-         
-          </tr>
-        );
-      } else {
-        return (
-          <tr>
-            {val.map((val, index) => {
-              return <td>{val}</td>;
-            })}
-          </tr>
-        );
+    }
+    let startIdx = activePage * 10 - 10;
+    let lastIdx = activePage * 10 - 1;
+    data.forEach((val, idx) => {
+      if (idx >= startIdx && idx <= lastIdx) {
+        arrPage.push(val);
       }
+    });
+    return arrPage.map((val, idx, arr) => {
+      return (
+        <tr>
+          {val.map((val, index) => {
+            return <td>{val}</td>;
+          })}
+        </tr>
+      );
     });
   };
 
-  renderDataInvalid =()=>{
+  renderDataInvalid = () => {
     const { data, invalidData } = this.state;
     return invalidData.map((val, idx, arr) => {
-
-        return (
-          <tr>
-            {val.map((val, index) => {
-              return (
-                <>
-              <td>{val}</td>
+      return (
+        <tr>
+          {val.map((val, index) => {
+            return (
+              <>
+                <td>{val}</td>
               </>
-              );
-            })}
-           
-          </tr>
-        );
-      
+            );
+          })}
+        </tr>
+      );
     });
-  }
+  };
 
   render() {
     return (
@@ -190,21 +205,72 @@ class MakerUpload extends Component {
               </div>
             </div>
           </div>
- 
-          <div style={{ height: "400px", overflow: "auto", padding:"20px" }}>
-          <Table striped bordered hover responsive style={{position:"relative"}}>
-            <tbody >{this.renderUploadData()}</tbody>
-          </Table>
+          <div style={{ paddingLeft: "20px",paddingRight: "20px" }}>
+            <Table className="tableWidth">
+              {this.state.selectedFile ? (
+                <thead>
+                  <tr>
+                    <th>CFCIFN</th>
+                    <th>CFVIPI</th>
+                    <th>CFVIPC</th>
+                  </tr>
+                </thead>
+              ) : null}
+            </Table>
           </div>
-          <div style={{ height: "300px", overflow: "auto", padding:"20px" }}>
-          <Table striped bordered hover responsive>
-            <tbody>{this.renderDataInvalid()}</tbody>
-          </Table>
+          <div
+            style={{
+              height: "400px",
+              overflow: "auto",
+              paddingLeft: "20px",
+              paddingRight: "20px",
+            }}
+          >
+            <Table className="tableWidth" striped bordered hover responsive>
+              <tbody>{this.renderUploadData()}</tbody>
+            </Table>
           </div>
+          <div className="justify-content-center d-flex border">
+            <Pagination>
+              <Pagination.Prev
+              onClick={()=>this.setState({activePage:this.state.activePage-1})}
+              />
+
+              <Pagination.Item>
+                {/* <Form.Control 
+                size="sm"
+                // value={this.state.activePage}
+                className="page"
+                onKeyPress={(e) => this.handleKeyPress(e)}
+                type="text" placeholder="page" 
+                />  */}
+                Page{" "}{ this.state.activePage} {" "} 
+                <input
+                  // value={this.state.activePage}
+                  onKeyPress={(e) => this.handleKeyPress(e)}
+                  className="page"
+                  type=""
+                  name=""
+                  id=""
+                />
+                
+              </Pagination.Item>
+
+              <Pagination.Next 
+              onClick={()=>this.setState({activePage:this.state.activePage+1})}
+              
+              />
+            </Pagination>
+          </div>
+          {/* <div style={{ height: "300px", overflow: "auto", padding: "20px" }}>
+            <Table striped bordered hover responsive>
+              <tbody>{this.renderDataInvalid()}</tbody>
+            </Table>
+          </div> */}
           <div className="d-flex justify-content-center align-items-center">
-            <ButtonUI 
-            onClick={this.uploadBtnHandler}
-            className="m-3">Upload</ButtonUI>
+            <ButtonUI onClick={this.uploadBtnHandler} className="m-3">
+              Upload
+            </ButtonUI>
             <ButtonUI type="outline" className="m-3">
               Cancel
             </ButtonUI>
@@ -218,12 +284,12 @@ class MakerUpload extends Component {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
-    cif :state.cifData
+    cif: state.cifData,
   };
 };
 
 const mapDispatchToProps = {
-  cifDataState
+  cifDataState,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MakerUpload);
