@@ -10,33 +10,39 @@ import swal from "sweetalert";
 
 class ViewUser extends React.Component {
   state = {
-    userGroup: [],
+    users: [],
     addFormToggle :false,
   };
   componentDidMount() {
-    this.getUserGroup();
+    this.getusers();
   }
 
-  getUserGroup = () => {
-    Axios.get(`${API_URL}/usergroup/group_name/Group1`)
+  getusers = () => {
+    Axios.get(`${API_URL}/users/all_users`)
       .then((res) => {
         console.log(res.data);
-        this.setState({ userGroup: res.data });
+        this.setState({ users: res.data });
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  renderGroupMember = () => {
-    const { userGroup } = this.state;
-    return userGroup.map((val) => {
+  renderListUser = () => {
+    const { users } = this.state;
+    return users.map((val,idx) => {
       return (
         <>
           <tr>
-            <td>{val.groupName}</td>
-            <td>{val.maker["username"]}</td>
-            <td>{val.checker["username"]}</td>
+          <td>{idx+1}</td>
+            <td>{val.userId}</td>
+            <td>{val.username}</td>
+            <td>{val.firstName}</td>
+            <td>{val.lastName}</td>
+            <td>{val.lastEntry}</td>
+            <td>{val.userRole["roleName"]}</td>
+            <td>{val.userRole["id"]}</td>
+
           </tr>
         </>
       );
@@ -79,14 +85,20 @@ class ViewUser extends React.Component {
           <Table>
             <thead>
               <tr>
-                <th>User Group Name</th>
-                <th>Maker</th>
-                <th>Checker</th>
+                <th>No</th>
+                <th>User ID</th>
+                <th>Username</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Last Entry</th>
+                <th>Role Name</th>
+                <th>Role ID</th>
+
               </tr>
             </thead>
-            <tbody>{this.renderGroupMember()}</tbody>
+            <tbody>{this.renderListUser()}</tbody>
           </Table>
-          <h6 
+          {/* <h6 
           onClick={()=>this.setState({addFormToggle:!this.state.addFormToggle})}
           style={{cursor:"pointer"}}>
             <Badge>
@@ -99,7 +111,7 @@ class ViewUser extends React.Component {
           
           this.renderAddForm()
           
-        }
+        } */}
         </div>
       </>
     );

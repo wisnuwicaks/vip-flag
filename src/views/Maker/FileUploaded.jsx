@@ -22,7 +22,6 @@ class FileUploaded extends Component {
       })
       .catch((err) => {
         console.log("ini err");
-
         console.log(err);
       });
   };

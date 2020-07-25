@@ -59,22 +59,23 @@ class App extends Component {
   userRoutes = () => {
     if (
       this.props.user.userId &&
-      this.props.user.userRole["roleName"] === "maker"
+      this.props.user.userRole["roleName"] === "user"
     ) {
       return (
         <>
-          {/* <Route exact path="/welcome" component={Welcome} /> */}
-          <Route exact path="/maker/upload" component={MakerUpload} />
-          <Route exact path="/maker/upload/log" component={FileUploaded} />
-          <Route exact path="/maker/approval/status" component={FileApproved} />
+      
+          <Route exact path="/upload" component={MakerUpload} />
+          <Route exact path="/upload/log" component={FileUploaded} />
+          <Route exact path="/approval" component={NeedToApprove} />
         </>
       );
     } else {
       return (
         <>
-          {/* <Route exact path="/welcome" component={Welcome} /> */}
-          <Route exact path="/checker/toApprove" component={NeedToApprove} />
-          <Route exact path="/checker/approved" component={CheckerApprovalLog} />
+        
+          {/* <Route exact path="/checker/toApprove" component={NeedToApprove} />
+          <Route exact path="/checker/approved" component={CheckerApprovalLog} /> */}
+          null
         </>
       );
     }

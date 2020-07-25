@@ -13,7 +13,7 @@ class CreateUser extends React.Component {
       lastName: "",
       username: "",
       password: "",
-      role: "maker",
+      role: "user",
 
     },
   };
@@ -26,7 +26,7 @@ class CreateUser extends React.Component {
         lastName: "",
         username: "",
         password: "",
-        role: "maker",
+        role: "user",
      
       }
     })
@@ -126,8 +126,8 @@ class CreateUser extends React.Component {
                     name="select"
                     id="exampleSelect"
                   >
-                    <option value="maker">Maker</option>
-                    <option value="checker">Checker</option>
+                    <option value="user">user</option>
+                    <option value="admin">Admin</option>
                   </Input>
                 </FormGroup>
               </div>

@@ -244,7 +244,7 @@ class MakerUpload extends Component {
                 onKeyPress={(e) => this.handleKeyPress(e)}
                 type="text" placeholder="page" 
                 />  */}
-                Page{" "}{ this.state.activePage} {" "} 
+                Page{" "}{this.state.activePage} {" "} 
                 <input
                   // value={this.state.activePage}
                   onKeyPress={(e) => this.handleKeyPress(e)}

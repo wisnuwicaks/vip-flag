@@ -8,7 +8,7 @@ class Sidebar extends React.Component {
   state = {
     user_role: "maker",
   };
-  
+
   render() {
     return (
       <>
@@ -27,34 +27,30 @@ class Sidebar extends React.Component {
             </>
           ) : (
             <>
-              {this.props.user.userRole["roleName"] === "maker" ? (
-               <>
-               <Link
-                 to="/maker/upload"
-                 style={{ textDecoration: "none", color: "inherit" }}
-               >
-                 <ButtonUI type="text">Upload Data</ButtonUI>
-               </Link>
-               <Link
-                 to="/maker/upload/log"
-                 style={{ textDecoration: "none", color: "inherit" }}
-               >
-                 <ButtonUI type="text">Upload Log</ButtonUI>
-               </Link>
-               <Link to="/maker/approval/status">
-                 <ButtonUI type="text">Approval Status</ButtonUI>
-               </Link>
-             </>
-              ) : (
-                <>
+              <Link
+                to="/upload"
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                <ButtonUI type="text">Upload Data</ButtonUI>
+              </Link>
+              <Link
+                to="/upload/log"
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                <ButtonUI type="text">Upload Log</ButtonUI>
+              </Link>
+              <Link to="/approval">
+                <ButtonUI type="text">Approval</ButtonUI>
+              </Link>
+
+              {/* <>
                 <Link to="/checker/toApprove">
                   <ButtonUI type="text">Waiting for approval</ButtonUI>
                 </Link>
                 <Link to="/checker/approved">
                   <ButtonUI type="text">Approval Log</ButtonUI>
                 </Link>
-              </>
-              )}
+              </> */}
             </>
           )}
         </div>
