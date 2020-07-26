@@ -53,7 +53,9 @@ class FileUploaded extends Component {
     return (
       <>
         <div className="main-header">
-    <h5>Upload Log {this.props.cif.cifData.length}</h5>
+    {/* <h5>Upload Log {this.props.cif.cifData.length}</h5> */}
+    <h5>Upload Log</h5>
+
         </div>
         <div className="main-body">
           <div className="main-body-show-body">

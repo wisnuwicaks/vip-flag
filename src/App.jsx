@@ -15,8 +15,8 @@ import Welcome from "./views/Welcome";
 import MakerUpload from "./views/Maker/MakerUpload";
 import FileUploaded from "./views/Maker/FileUploaded";
 import FileApproved from "./views/Maker/FileApproved";
-import NeedToApprove from "./views/Checker/NeedToApprove";
-import CheckerApprovalLog from "./views/Checker/CheckerApprovalLog";
+import NeedToApprove from "./views/Maker/NeedToApprove";
+
 
 import ViewUser from "./views/Admin/ViewUser";
 import CreateUser from "./views/Admin/CreateUser";

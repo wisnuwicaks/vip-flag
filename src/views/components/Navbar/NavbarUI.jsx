@@ -42,7 +42,7 @@ class NavbarUI extends React.Component {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <div className="d-flex justify-content-end w-100">
-                <div className="px-2">UserID : {this.props.user.userId}</div>
+                <div className="px-2">User : {this.props.user.username}</div>
                 <div className="px-2">
                   Group Menu : {this.props.user.userRole["roleName"].toUpperCase()}
                 </div>
