@@ -15,7 +15,7 @@ const {
 const cookieObj = new Cookie();
 
 export const loginHandler = (userData) => {
-  alert("masuk")
+  // alert("masuk")
   return (dispatch) => {
     const { username, password } = userData;
 
@@ -81,7 +81,7 @@ export const userKeepLogin = (userData) => {
 };
 
 export const logoutHandler = () => {
-  alert("logout")
+  // alert("logout")
   cookieObj.remove("authData", { path: "/" });
   return {
     type: ON_LOGOUT_SUCCESS,

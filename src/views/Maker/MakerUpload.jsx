@@ -20,7 +20,7 @@ class MakerUpload extends Component {
     rows: [],
     data: [],
     activePage: 1,
-    lastPage:"",
+    lastPage: "",
     cifToUpload: [],
     invalidData: [],
   };
@@ -37,7 +37,7 @@ class MakerUpload extends Component {
   };
 
   fileUploadHandler = (event) => {
-    this.setState({activePage:1})
+    this.setState({ activePage: 1 });
     let fileObj = event.target.files[0];
     this.setState({ selectedFile: event.target.files[0] });
     console.log(fileObj);
@@ -134,9 +134,8 @@ class MakerUpload extends Component {
     console.log("ini arr baru");
     data.shift();
     console.log(arrBaru);
-    if(selectedFile){
+    if (selectedFile) {
       // this.setState({lastPage:data.length/10})
-
     }
     let startIdx = activePage * 10 - 10;
     let lastIdx = activePage * 10 - 1;
@@ -181,31 +180,41 @@ class MakerUpload extends Component {
         </div>
         <div className="main-body">
           <div className="main-body-input" id="import">
-            <div style={{ flex: "1" }}>Import data</div>
-            <div style={{ flex: "9" }}>
-              <div className="input-group">
-                <div className="custom-file">
-                  <input
-                    onChange={(e) => this.fileUploadHandler(e)}
-                    type="file"
-                    accept=".xlsx"
-                    className="custom-file-input"
-                    id="inputGroupFile01"
-                    aria-describedby="inputGroupFileAddon01"
-                  />
-                  <label
-                    className="custom-file-label"
-                    htmlFor="inputGroupFile01"
-                  >
-                    {this.state.selectedFile
-                      ? this.state.selectedFile.name
-                      : null}
-                  </label>
+            <div className="row">
+              <div className="text-center pt-2" style={{ flex: "1"}}>Import data</div>
+              <div style={{ flex: "9"}}>
+                <div className="input-group">
+                  <div className="custom-file">
+                    <input
+                      onChange={(e) => this.fileUploadHandler(e)}
+                      type="file"
+                      accept=".xlsx"
+                      className="custom-file-input"
+                      id="inputGroupFile01"
+                      aria-describedby="inputGroupFileAddon01"
+                    />
+                    <label
+                      className="custom-file-label"
+                      htmlFor="inputGroupFile01"
+                    >
+                      {this.state.selectedFile
+                        ? this.state.selectedFile.name
+                        : null}
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
+            <div className="row pt-2">
+              <a 
+              style={{paddingLeft:"120px"}}
+              href="http://localhost:8080/files/download/excel_template.xlsx">
+                {" "}
+                Export Excel Template
+              </a>
+            </div>
           </div>
-          <div style={{ paddingLeft: "20px",paddingRight: "20px" }}>
+          <div style={{ paddingLeft: "20px", paddingRight: "20px" }}>
             <Table className="tableWidth">
               {this.state.selectedFile ? (
                 <thead>
@@ -233,7 +242,9 @@ class MakerUpload extends Component {
           <div className="justify-content-center d-flex border">
             <Pagination>
               <Pagination.Prev
-              onClick={()=>this.setState({activePage:this.state.activePage-1})}
+                onClick={() =>
+                  this.setState({ activePage: this.state.activePage - 1 })
+                }
               />
 
               <Pagination.Item>
@@ -244,7 +255,7 @@ class MakerUpload extends Component {
                 onKeyPress={(e) => this.handleKeyPress(e)}
                 type="text" placeholder="page" 
                 />  */}
-                Page{" "}{this.state.activePage} {" "} 
+                Page {this.state.activePage}{" "}
                 <input
                   // value={this.state.activePage}
                   onKeyPress={(e) => this.handleKeyPress(e)}
@@ -253,12 +264,12 @@ class MakerUpload extends Component {
                   name=""
                   id=""
                 />
-                
               </Pagination.Item>
 
-              <Pagination.Next 
-              onClick={()=>this.setState({activePage:this.state.activePage+1})}
-              
+              <Pagination.Next
+                onClick={() =>
+                  this.setState({ activePage: this.state.activePage + 1 })
+                }
               />
             </Pagination>
           </div>

@@ -16,6 +16,8 @@ import MakerUpload from "./views/Maker/MakerUpload";
 import FileUploaded from "./views/Maker/FileUploaded";
 import FileApproved from "./views/Maker/FileApproved";
 import NeedToApprove from "./views/Maker/NeedToApprove";
+import CifReport from "./views/Maker/CifReport";
+
 
 
 import ViewUser from "./views/Admin/ViewUser";
@@ -67,6 +69,8 @@ class App extends Component {
           <Route exact path="/upload" component={MakerUpload} />
           <Route exact path="/upload/log" component={FileUploaded} />
           <Route exact path="/approval" component={NeedToApprove} />
+          <Route exact path="/cifreport" component={CifReport} />
+
         </>
       );
     } else {

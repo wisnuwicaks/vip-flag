@@ -42,6 +42,9 @@ class Sidebar extends React.Component {
               <Link to="/approval">
                 <ButtonUI type="text">Approval</ButtonUI>
               </Link>
+              <Link to="/cifreport">
+                <ButtonUI type="text">CIF Report</ButtonUI>
+              </Link>
 
               {/* <>
                 <Link to="/checker/toApprove">

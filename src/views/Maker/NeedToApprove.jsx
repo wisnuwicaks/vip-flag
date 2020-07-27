@@ -95,11 +95,16 @@ class NeedToApprove extends Component {
       });
   };
 
-  storeDataToTable = (val) => {
+  storeDataToTable = (fileApproved) => {
+    const {createdDate,createdBy} = fileApproved
+    let myFile = {createdDate}
     var oReq = new XMLHttpRequest();
-    oReq.open("GET", val.linkDirectory, true);
+    oReq.open("GET", fileApproved.linkDirectory, true);
     oReq.responseType = "arraybuffer";
     let arrDetail = [];
+
+    let formData = new FormData();
+
 
     oReq.onload = function (e) {
       var arraybuffer = oReq.response;
@@ -122,16 +127,16 @@ class NeedToApprove extends Component {
         var fieldsObjs = XLSX.utils.sheet_to_json(cfb.Sheets[sheetName]);
         // console.log(JSON.stringify(fieldsObjs));
         let lowerArr = []
-        for(let val of fieldsObjs){
+        for(let fileApproved of fieldsObjs){
           let newObj = {}
 
-          for(let key in val){
+          for(let key in fileApproved){
             // console.log(key);
             
             let keyLower = key.toLowerCase()
           // console.log(keyLower);
-            newObj[key.toLowerCase()]=val[key]
-            console.log(newObj);
+            newObj[key.toLowerCase()]=fileApproved[key]
+            // console.log(newObj);
           
           }       
           
@@ -140,11 +145,22 @@ class NeedToApprove extends Component {
         console.log("inninn");
         
         console.log(lowerArr);
-   
+
+        // formData.append(
+        //   "fileData",
+        //   JSON.stringify(myFile)
+        // )
+        // formData.append(
+        //   "listData",
+        //   JSON.stringify(lowerArr)
+        // )
+          
+        console.log(formData);
+        
         
 
         Axios.post(
-          `${API_URL}/cifapprove/cif_storetable`,lowerArr
+          `${API_URL}/cifapprove/cif_storetable/${createdDate}`,lowerArr
           // JSON.stringify(fieldsObjs)
         )
           .then((res) => {
@@ -198,7 +214,9 @@ class NeedToApprove extends Component {
               </ButtonUI>
             </td> */}
 
-            {val.approvalStatus ? null : (
+            {val.approvalStatus ? <td colSpan="2">
+              Approve
+            </td> : (
               <>
                 <td>
                   <ButtonUI
