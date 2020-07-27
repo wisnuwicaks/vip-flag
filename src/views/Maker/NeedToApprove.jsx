@@ -49,36 +49,32 @@ class NeedToApprove extends Component {
 
     // req.send();
 
-
-
     var oReq = new XMLHttpRequest();
-    oReq.open("GET",  val.linkDirectory, true);
+    oReq.open("GET", val.linkDirectory, true);
     oReq.responseType = "arraybuffer";
 
-    oReq.onload = function(e) {
-        var arraybuffer = oReq.response;
+    oReq.onload = function (e) {
+      var arraybuffer = oReq.response;
 
-        /* convert data to binary string */
-        var data = new Uint8Array(arraybuffer);
+      /* convert data to binary string */
+      var data = new Uint8Array(arraybuffer);
 
-        var arr = new Array();
-        for (var i = 0; i != data.length; ++i) {
-            arr[i] = String.fromCharCode(data[i]);
-        }
+      var arr = new Array();
+      for (var i = 0; i != data.length; ++i) {
+        arr[i] = String.fromCharCode(data[i]);
+      }
 
-        var bstr = arr.join("");
+      var bstr = arr.join("");
 
-        var cfb = XLSX.read(bstr, { type: 'binary' });
+      var cfb = XLSX.read(bstr, { type: "binary" });
 
-        cfb.SheetNames.forEach(function(sheetName, index) {
-
-            // Obtain The Current Row As CSV
-            var fieldsObjs = XLSX.utils.sheet_to_json(cfb.Sheets[sheetName]);
-            console.log(fieldsObjs);
-            // setState({detailFile:fieldsObjs})
-
-        });
-    }
+      cfb.SheetNames.forEach(function (sheetName, index) {
+        // Obtain The Current Row As CSV
+        var fieldsObjs = XLSX.utils.sheet_to_json(cfb.Sheets[sheetName]);
+        console.log(fieldsObjs);
+        // setState({detailFile:fieldsObjs})
+      });
+    };
 
     oReq.send();
   };
@@ -88,7 +84,7 @@ class NeedToApprove extends Component {
       .then((res) => {
         console.log(res.data);
         swal("Approval Succes", "Thankyou", "success");
-        this.storeDataToTable(val)
+        this.storeDataToTable(val);
 
         this.getFile();
       })
@@ -99,55 +95,72 @@ class NeedToApprove extends Component {
       });
   };
 
-  storeDataToTable = (val)=>{
+  storeDataToTable = (val) => {
     var oReq = new XMLHttpRequest();
-    oReq.open("GET",  val.linkDirectory, true);
+    oReq.open("GET", val.linkDirectory, true);
     oReq.responseType = "arraybuffer";
-    let arrDetail = []
+    let arrDetail = [];
 
-    oReq.onload = function(e) {
-        var arraybuffer = oReq.response;
+    oReq.onload = function (e) {
+      var arraybuffer = oReq.response;
 
-        /* convert data to binary string */
-        var data = new Uint8Array(arraybuffer);
+      /* convert data to binary string */
+      var data = new Uint8Array(arraybuffer);
 
-        var arr = new Array();
-        for (var i = 0; i != data.length; ++i) {
-            arr[i] = String.fromCharCode(data[i]);
-        }
+      var arr = new Array();
+      for (var i = 0; i != data.length; ++i) {
+        arr[i] = String.fromCharCode(data[i]);
+      }
 
-        var bstr = arr.join("");
+      var bstr = arr.join("");
 
-        var cfb = XLSX.read(bstr, { type: 'binary' });
-        cfb.SheetNames.forEach((sheetName, index)=> {
+      var cfb = XLSX.read(bstr, { type: "binary" });
 
-            // Obtain The Current Row As CSV
-            var fieldsObjs = XLSX.utils.sheet_to_json(cfb.Sheets[sheetName]);
-            console.log(fieldsObjs);
-    //         arrDetail = [...arrDetail,fieldsObjs]
-    //         alert("123")
-    // console.log(arrDetail);
-
-            Axios.post(`${API_URL}/cifapprove/cif_storetable`, fieldsObjs)
-            .then((res) => {
-              console.log(res.data);
-              swal("Insert to table", "File Has been Rejected", "success");
-         
-            })
-            .catch((err) => {
-              console.log("ini err reject");
-      
-              console.log(err);
-            });
-      
-
-        });
+      cfb.SheetNames.forEach((sheetName, index) => {
         
-    }
+        // Obtain The Current Row As CSV
+        var fieldsObjs = XLSX.utils.sheet_to_json(cfb.Sheets[sheetName]);
+        // console.log(JSON.stringify(fieldsObjs));
+        let lowerArr = []
+        for(let val of fieldsObjs){
+          let newObj = {}
+
+          for(let key in val){
+            // console.log(key);
+            
+            let keyLower = key.toLowerCase()
+          // console.log(keyLower);
+            newObj[key.toLowerCase()]=val[key]
+            console.log(newObj);
+          
+          }       
+          
+          lowerArr = [...lowerArr, newObj]
+        }
+        console.log("inninn");
+        
+        console.log(lowerArr);
+   
+        
+
+        Axios.post(
+          `${API_URL}/cifapprove/cif_storetable`,lowerArr
+          // JSON.stringify(fieldsObjs)
+        )
+          .then((res) => {
+            console.log(res.data);
+            // swal("Insert to table", "File Has been Rejected", "success");
+          })
+          .catch((err) => {
+            console.log("ini err reject");
+
+            console.log(err);
+          });
+      });
+    };
 
     oReq.send();
-
-  }
+  };
 
   rejectBtnHandler = (val) => {
     Axios.post(`${API_URL}/files/reject/${val.fileId}`)
@@ -179,11 +192,11 @@ class NeedToApprove extends Component {
             <td>
               {val.approvalStatus == "" ? "No Status" : val.approvalStatus}
             </td>
-            <td>
+            {/* <td>
               <ButtonUI type="text" onClick={() => this.storeDataToTable(val)}>
                 Detail
               </ButtonUI>
-            </td>
+            </td> */}
 
             {val.approvalStatus ? null : (
               <>
