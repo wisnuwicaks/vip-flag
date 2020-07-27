@@ -41,7 +41,6 @@ class MakerUpload extends Component {
     let fileObj = event.target.files[0];
     this.setState({ selectedFile: event.target.files[0] });
     console.log(fileObj);
-
     let fileType = fileObj.name.substring(fileObj.name.lastIndexOf(".") + 1);
     if (fileType !== "xlsx") {
       return alert("extensi file tidak sesuai");
@@ -56,6 +55,7 @@ class MakerUpload extends Component {
         });
       }
     });
+
   };
 
   uploadBtnHandler = () => {
@@ -97,7 +97,7 @@ class MakerUpload extends Component {
 
     formData.append("file", selectedFile, selectedFile.name);
     Axios.post(
-      `${API_URL}/files/uploadExcelFile/${this.props.user.userId}`,
+      `${API_URL}/files/uploadExcelFile/${data.length}/${this.props.user.userId}`,
       formData
     )
       .then((res) => {
