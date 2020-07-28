@@ -39,7 +39,7 @@ class CifReport extends Component {
 
   renderCifList = () => {
     const { cifApproved, activePage } = this.state;
-    let startIdx = activePage * 10 - 10;
+    let startIdx = activePage * 10 - 20;
     let lastIdx = activePage * 10 - 1;
     let arrRender = [];
 
@@ -88,13 +88,14 @@ class CifReport extends Component {
           <div className="main-body-show-body">
             <div
               style={{
+                overflow: "auto",
                 paddingLeft: "10px",
                 paddingRight: "10px",
-                minHeight: "560px",
+                height: "300px",
               }}
             >
               <Table striped bordered hover responsive>
-                <thead>
+                <thead style={{position:"sticky"}}>
                   <tr>
                     <td>No</td>
                     <td>CFCIFN</td>

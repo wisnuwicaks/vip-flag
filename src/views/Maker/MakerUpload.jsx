@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "../Main.css";
+import "./MakerUpload.css";
+
 import InputUI from "../components/Input/Input";
 import ButtonUI from "../components/Button/Button";
 import { ExcelRenderer, OutTable } from "react-excel-renderer";
@@ -13,7 +15,6 @@ import { cifDataState } from "../../redux/actions";
 import Axios from "axios";
 import swal from "sweetalert";
 
-import "./MakerUpload.css";
 class MakerUpload extends Component {
   state = {
     selectedFile: null,
@@ -43,10 +44,8 @@ class MakerUpload extends Component {
     console.log(fileObj);
     let fileType = fileObj.name.substring(fileObj.name.lastIndexOf(".") + 1);
     if (fileType !== "xlsx") {
-      return swal("Ekstensi File tidak Valid","","error");
+      return swal("Ekstensi File tidak Valid", "", "error");
     }
-
-
 
     ExcelRenderer(fileObj, (err, resp) => {
       if (err) {
@@ -57,7 +56,6 @@ class MakerUpload extends Component {
         });
       }
     });
-
   };
 
   uploadBtnHandler = () => {
@@ -99,7 +97,9 @@ class MakerUpload extends Component {
 
     formData.append("file", selectedFile, selectedFile.name);
     Axios.post(
-      `${API_URL}/files/uploadExcelFile/${data.length +1}/${this.props.user.userId}`,
+      `${API_URL}/files/uploadExcelFile/${data.length + 1}/${
+        this.props.user.userId
+      }`,
       formData
     )
       .then((res) => {
@@ -141,14 +141,20 @@ class MakerUpload extends Component {
     let lastIdx = activePage * 10 - 1;
     arrBaru.forEach((val, idx) => {
       if (idx >= startIdx && idx <= lastIdx) {
-        arrPage = [...arrPage,val];
+        arrPage = [...arrPage, val];
       }
     });
     return arrPage.map((val, idx, arr) => {
       return (
         <tr>
+            <td className="noTable">{activePage * 10 - 10 + idx + 1}</td>
+
           {val.map((val, index) => {
-            return <td>{val}</td>;
+            return (
+            <>
+            <td>{val}</td>
+            </>
+            )
           })}
         </tr>
       );
@@ -172,24 +178,22 @@ class MakerUpload extends Component {
     });
   };
 
-  cancelBtnHandler = ()=>{
-    this.setState({selectedFile:null})
-    this.renderUploadData()
-    this.setState({data:[]})
-  }
+  cancelBtnHandler = () => {
+    this.setState({ selectedFile: null });
+    this.renderUploadData();
+    this.setState({ data: [] });
+  };
 
-  prevNextPage = (nextorprev)=>{
-  
-  if(nextorprev=="prev"){
-    if(this.state.activePage==1){
-      return null
+  prevNextPage = (nextorprev) => {
+    if (nextorprev == "prev") {
+      if (this.state.activePage == 1) {
+        return null;
+      }
+      this.setState({ activePage: this.state.activePage - 1 });
+    } else {
+      this.setState({ activePage: this.state.activePage + 1 });
     }
-    this.setState({activePage:this.state.activePage-1})
-  }
-  else{
-    this.setState({activePage:this.state.activePage+1})
-  }
-  }
+  };
   render() {
     return (
       <>
@@ -199,8 +203,10 @@ class MakerUpload extends Component {
         <div className="main-body">
           <div className="main-body-input" id="import">
             <div className="row">
-              <div className="text-center pt-2" style={{ flex: "1"}}>Import data</div>
-              <div style={{ flex: "9"}}>
+              <div className="text-center pt-2" style={{ flex: "1" }}>
+                Import data
+              </div>
+              <div style={{ flex: "9" }}>
                 <div className="input-group">
                   <div className="custom-file">
                     <input
@@ -224,19 +230,21 @@ class MakerUpload extends Component {
               </div>
             </div>
             <div className="row pt-2">
-              <a 
-              style={{paddingLeft:"120px"}}
-              href="http://localhost:8080/files/download/excel_template.xlsx">
+              <a
+                style={{ paddingLeft: "120px" }}
+                href="http://localhost:8080/files/download/excel_template.xlsx"
+              >
                 {" "}
                 Export Excel Template
               </a>
             </div>
           </div>
-          <div style={{ paddingLeft: "20px", paddingRight: "20px"}}>
+          <div style={{ paddingLeft: "20px", paddingRight: "20px" }}>
             <Table className="tableWidth">
               {this.state.selectedFile ? (
                 <thead>
                   <tr>
+                    <th className="noTable">No</th>
                     <th>CFCIFN</th>
                     <th>CFVIPI</th>
                     <th>CFVIPC</th>
@@ -251,53 +259,49 @@ class MakerUpload extends Component {
               overflow: "auto",
               paddingLeft: "20px",
               paddingRight: "20px",
-              minHeight:"560px"
+              minHeight: "560px",
             }}
           >
             <Table className="tableWidth" striped bordered hover responsive>
               <tbody>{this.renderUploadData()}</tbody>
             </Table>
           </div>
-          {this.state.selectedFile?
-          <>
-          <div className="justify-content-center d-flex border">
-            <Pagination>
-              <Pagination.Prev
-                onClick={() => this.prevNextPage("prev")}
-              />
+          {this.state.selectedFile ? (
+            <>
+              <div className="justify-content-center d-flex border">
+                <Pagination>
+                  <Pagination.Prev onClick={() => this.prevNextPage("prev")} />
 
-              <Pagination.Item>
-               
-                Page {this.state.activePage}{" "}
-                <input
-                  // value={this.state.activePage}
-                  onKeyPress={(e) => this.handleKeyPress(e)}
-                  className="pageInput"
-                  type=""
-                  name=""
-                  id=""
-                />
-              </Pagination.Item>
+                  <Pagination.Item>
+                    Page {this.state.activePage}{" "}
+                    <input
+                      // value={this.state.activePage}
+                      onKeyPress={(e) => this.handleKeyPress(e)}
+                      className="pageInput"
+                      type=""
+                      name=""
+                      id=""
+                    />
+                  </Pagination.Item>
 
-              <Pagination.Next
-                onClick={() => this.prevNextPage("next")}
-              />
-            </Pagination>
-          </div>
-       
-          <div className="d-flex justify-content-center align-items-center">
-            <ButtonUI onClick={this.uploadBtnHandler} className="m-3">
-              Upload
-            </ButtonUI>
-            <ButtonUI onClick={()=>this.cancelBtnHandler()} type="outline" className="m-3">
-              Cancel
-            </ButtonUI>
-          </div>
-          </>
-          :
-          null
-          }
-          
+                  <Pagination.Next onClick={() => this.prevNextPage("next")} />
+                </Pagination>
+              </div>
+
+              <div className="d-flex justify-content-center align-items-center">
+                <ButtonUI onClick={this.uploadBtnHandler} className="m-3">
+                  Upload
+                </ButtonUI>
+                <ButtonUI
+                  onClick={() => this.cancelBtnHandler()}
+                  type="outline"
+                  className="m-3"
+                >
+                  Cancel
+                </ButtonUI>
+              </div>
+            </>
+          ) : null}
         </div>
       </>
     );

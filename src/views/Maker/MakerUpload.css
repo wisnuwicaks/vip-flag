@@ -1,7 +1,15 @@
 
 .tableWidth {
-  table-layout: fixed;
-  width: 100%;  
+  /* table-layout: fixed !important; */
+  /* width: fit-content !important; */
+  width: 100% !important;
+  /* box-sizing: content-box !important; */
+  /* background-color: aqua; */
+  /* empty-cells: show; */
+  /* width: 100%;   */
 }
 
+.noTable{
+  width: 100px !important;
+}
 
