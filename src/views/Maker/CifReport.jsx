@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "../Main.css";
+import "./CifReport.css";
+
 import Table from "react-bootstrap/Table";
 import { Button } from "react-bootstrap";
 import ButtonUI from "../components/Button/Button";
@@ -13,7 +15,6 @@ class CifReport extends Component {
   state = {
     cifApproved: [],
     activePage: 1,
-
   };
   componentDidMount() {
     this.getCifList();
@@ -37,23 +38,23 @@ class CifReport extends Component {
   };
 
   renderCifList = () => {
-    const { cifApproved,activePage } = this.state;
+    const { cifApproved, activePage } = this.state;
     let startIdx = activePage * 10 - 10;
     let lastIdx = activePage * 10 - 1;
-    let arrRender = []
-    
+    let arrRender = [];
+
     cifApproved.forEach((val, idx) => {
       if (idx >= startIdx && idx <= lastIdx) {
         arrRender.push(val);
       }
     });
     console.log(arrRender);
-    
+
     return arrRender.map((val, idx) => {
       return (
         <>
           <tr>
-            <td>{idx + 1}</td>
+            <td>{activePage * 10 - 10 + idx + 1}</td>
             <td>{val.cfcifn}</td>
             <td>{val.cfvipi}</td>
             <td>{val.cfvipc}</td>
@@ -65,59 +66,65 @@ class CifReport extends Component {
       );
     });
   };
+
+  prevNextPage = (nextorprev) => {
+    if (nextorprev == "prev") {
+      if (this.state.activePage == 1) {
+        return null;
+      }
+      this.setState({ activePage: this.state.activePage - 1 });
+    } else {
+      this.setState({ activePage: this.state.activePage + 1 });
+    }
+  };
   render() {
     return (
       <>
         <div className="main-header">
-    {/* <h5>Upload Log {this.props.cif.cifData.length}</h5> */}
-    <h5>Upload Log</h5>
-
+          {/* <h5>Upload Log {this.props.cif.cifData.length}</h5> */}
+          <h5>CIF Report</h5>
         </div>
         <div className="main-body">
           <div className="main-body-show-body">
-            <Table striped bordered hover responsive>
-              <thead>
-                <tr>
-                  <td>No</td>
-                  <td>CFCIFN</td>
-                  <td>CFVIPI</td>
-                  <td>CFVIPC</td>
-                  <td>Created Date</td>
-                  <td>Approval Date</td>
-                  <td>Approval Status</td>
-                </tr>
-              </thead>
-              <tbody>
-                {this.renderCifList()}
-              
-              </tbody>
-            </Table>
+            <div
+              style={{
+                paddingLeft: "10px",
+                paddingRight: "10px",
+                minHeight: "560px",
+              }}
+            >
+              <Table striped bordered hover responsive>
+                <thead>
+                  <tr>
+                    <td>No</td>
+                    <td>CFCIFN</td>
+                    <td>CFVIPI</td>
+                    <td>CFVIPC</td>
+                    <td>Created Date</td>
+                    <td>Approval Date</td>
+                    <td>Approval Status</td>
+                  </tr>
+                </thead>
+                <tbody>{this.renderCifList()}</tbody>
+              </Table>
+            </div>
           </div>
           <div className="justify-content-center d-flex border">
             <Pagination>
-              <Pagination.Prev
-                onClick={() =>
-                  this.setState({ activePage: this.state.activePage - 1 })
-                }
-              />
+              <Pagination.Prev onClick={() => this.prevNextPage("prev")} />
 
               <Pagination.Item>
-        
                 Page {this.state.activePage}{" "}
                 <input
                   onKeyPress={(e) => this.handleKeyPress(e)}
-                  className="page"
+                  className="pageInput"
                   type=""
                   name=""
                   id=""
                 />
               </Pagination.Item>
 
-              <Pagination.Next
-                onClick={() =>
-                  this.setState({ activePage: this.state.activePage + 1 })
-                }
-              />
+              <Pagination.Next onClick={() => this.prevNextPage("next")} />
             </Pagination>
           </div>
         </div>

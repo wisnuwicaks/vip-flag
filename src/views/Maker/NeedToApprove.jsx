@@ -205,6 +205,8 @@ class NeedToApprove extends Component {
             <td>{val.approvedBy}</td>
             <td>{val.createdDate}</td>
             <td>{val.approvalDate}</td>
+            <td>{val.rowCount}</td>
+
             <td>
               {val.approvalStatus == "" ? "No Status" : val.approvalStatus}
             </td>
@@ -258,6 +260,7 @@ class NeedToApprove extends Component {
                   <td>ApprovedBy</td>
                   <td>Created Date</td>
                   <td>Approval Date</td>
+                  <td>Row Count</td>
                   <td>Approval Status</td>
                   <td colSpan="3" className="text-center">
                     Action

@@ -33,7 +33,7 @@
 }
 
 .main-body-show-body {
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   align-items: center;
   padding: 10px 25px;
@@ -44,4 +44,14 @@
   justify-content: center;
   align-items: center;
   padding: 10px 25px;
+}
+
+.pageInput{
+  padding: 0px !important;
+  margin: 0px !important;
+  line-height: 2px;
+  height: 20px;
+  width: 25px;
+  border-radius: 2px;
+  border: 1px solid rgb(216, 210, 210);
 }

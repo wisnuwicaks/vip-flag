@@ -14,11 +14,9 @@ import { userKeepLogin, cookieChecker } from "./redux/actions";
 import Welcome from "./views/Welcome";
 import MakerUpload from "./views/Maker/MakerUpload";
 import FileUploaded from "./views/Maker/FileUploaded";
-import FileApproved from "./views/Maker/FileApproved";
+
 import NeedToApprove from "./views/Maker/NeedToApprove";
 import CifReport from "./views/Maker/CifReport";
-
-
 
 import ViewUser from "./views/Admin/ViewUser";
 import CreateUser from "./views/Admin/CreateUser";
@@ -44,17 +42,18 @@ class App extends Component {
   }
 
   adminRoutes = () => {
-
-    if (this.props.user.userId && this.props.user.userRole["roleName"] === "admin") {
+    if (
+      this.props.user.userId &&
+      this.props.user.userRole["roleName"] === "admin"
+    ) {
       return (
         <>
           <Route exact path="/viewuser" component={ViewUser} />
           <Route exact path="/createuser" component={CreateUser} />
         </>
       );
-    }
-    else{
-      return null
+    } else {
+      return null;
     }
   };
 
@@ -65,18 +64,15 @@ class App extends Component {
     ) {
       return (
         <>
-      
           <Route exact path="/upload" component={MakerUpload} />
           <Route exact path="/upload/log" component={FileUploaded} />
           <Route exact path="/approval" component={NeedToApprove} />
           <Route exact path="/cifreport" component={CifReport} />
-
         </>
       );
     } else {
       return (
         <>
-        
           {/* <Route exact path="/checker/toApprove" component={NeedToApprove} />
           <Route exact path="/checker/approved" component={CheckerApprovalLog} /> */}
           null
@@ -102,7 +98,7 @@ class App extends Component {
                     <Route exact path="/welcome" component={Welcome} />
                     {this.adminRoutes()}
                     {this.userRoutes()}
-            
+
                     <Route exact path="*" component={PageNotFound} />
                   </Switch>
                 </div>
@@ -110,9 +106,7 @@ class App extends Component {
             </>
           ) : (
             <>
-
-              <Login/>
-      
+              <Login />
             </>
           )}
         </>

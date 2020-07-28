@@ -43,8 +43,10 @@ class MakerUpload extends Component {
     console.log(fileObj);
     let fileType = fileObj.name.substring(fileObj.name.lastIndexOf(".") + 1);
     if (fileType !== "xlsx") {
-      return alert("extensi file tidak sesuai");
+      return swal("Ekstensi File tidak Valid","","error");
     }
+
+
 
     ExcelRenderer(fileObj, (err, resp) => {
       if (err) {
@@ -97,7 +99,7 @@ class MakerUpload extends Component {
 
     formData.append("file", selectedFile, selectedFile.name);
     Axios.post(
-      `${API_URL}/files/uploadExcelFile/${data.length}/${this.props.user.userId}`,
+      `${API_URL}/files/uploadExcelFile/${data.length +1}/${this.props.user.userId}`,
       formData
     )
       .then((res) => {
@@ -132,16 +134,14 @@ class MakerUpload extends Component {
     }
 
     console.log("ini arr baru");
-    data.shift();
+    arrBaru.shift();
     console.log(arrBaru);
-    if (selectedFile) {
-      // this.setState({lastPage:data.length/10})
-    }
+
     let startIdx = activePage * 10 - 10;
     let lastIdx = activePage * 10 - 1;
-    data.forEach((val, idx) => {
+    arrBaru.forEach((val, idx) => {
       if (idx >= startIdx && idx <= lastIdx) {
-        arrPage.push(val);
+        arrPage = [...arrPage,val];
       }
     });
     return arrPage.map((val, idx, arr) => {
@@ -172,6 +172,24 @@ class MakerUpload extends Component {
     });
   };
 
+  cancelBtnHandler = ()=>{
+    this.setState({selectedFile:null})
+    this.renderUploadData()
+    this.setState({data:[]})
+  }
+
+  prevNextPage = (nextorprev)=>{
+  
+  if(nextorprev=="prev"){
+    if(this.state.activePage==1){
+      return null
+    }
+    this.setState({activePage:this.state.activePage-1})
+  }
+  else{
+    this.setState({activePage:this.state.activePage+1})
+  }
+  }
   render() {
     return (
       <>
@@ -214,7 +232,7 @@ class MakerUpload extends Component {
               </a>
             </div>
           </div>
-          <div style={{ paddingLeft: "20px", paddingRight: "20px" }}>
+          <div style={{ paddingLeft: "20px", paddingRight: "20px"}}>
             <Table className="tableWidth">
               {this.state.selectedFile ? (
                 <thead>
@@ -233,33 +251,28 @@ class MakerUpload extends Component {
               overflow: "auto",
               paddingLeft: "20px",
               paddingRight: "20px",
+              minHeight:"560px"
             }}
           >
             <Table className="tableWidth" striped bordered hover responsive>
               <tbody>{this.renderUploadData()}</tbody>
             </Table>
           </div>
+          {this.state.selectedFile?
+          <>
           <div className="justify-content-center d-flex border">
             <Pagination>
               <Pagination.Prev
-                onClick={() =>
-                  this.setState({ activePage: this.state.activePage - 1 })
-                }
+                onClick={() => this.prevNextPage("prev")}
               />
 
               <Pagination.Item>
-                {/* <Form.Control 
-                size="sm"
-                // value={this.state.activePage}
-                className="page"
-                onKeyPress={(e) => this.handleKeyPress(e)}
-                type="text" placeholder="page" 
-                />  */}
+               
                 Page {this.state.activePage}{" "}
                 <input
                   // value={this.state.activePage}
                   onKeyPress={(e) => this.handleKeyPress(e)}
-                  className="page"
+                  className="pageInput"
                   type=""
                   name=""
                   id=""
@@ -267,25 +280,24 @@ class MakerUpload extends Component {
               </Pagination.Item>
 
               <Pagination.Next
-                onClick={() =>
-                  this.setState({ activePage: this.state.activePage + 1 })
-                }
+                onClick={() => this.prevNextPage("next")}
               />
             </Pagination>
           </div>
-          {/* <div style={{ height: "300px", overflow: "auto", padding: "20px" }}>
-            <Table striped bordered hover responsive>
-              <tbody>{this.renderDataInvalid()}</tbody>
-            </Table>
-          </div> */}
+       
           <div className="d-flex justify-content-center align-items-center">
             <ButtonUI onClick={this.uploadBtnHandler} className="m-3">
               Upload
             </ButtonUI>
-            <ButtonUI type="outline" className="m-3">
+            <ButtonUI onClick={()=>this.cancelBtnHandler()} type="outline" className="m-3">
               Cancel
             </ButtonUI>
           </div>
+          </>
+          :
+          null
+          }
+          
         </div>
       </>
     );
