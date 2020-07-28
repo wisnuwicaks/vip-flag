@@ -46,7 +46,7 @@ class MakerUpload extends Component {
     if (fileType !== "xlsx") {
       return swal("Ekstensi File tidak Valid", "", "error");
     }
-
+    //fungsi untuk baca excel
     ExcelRenderer(fileObj, (err, resp) => {
       if (err) {
         console.log(err);
@@ -54,12 +54,44 @@ class MakerUpload extends Component {
         this.setState({
           data: resp.rows,
         });
+        this.invalidRowCheck();
       }
     });
   };
 
+  invalidRowCheck = (dataToCheck) => {
+    const { data } = this.state;
+    let invalidIdxData = [];
+    console.log(data);
+    let arrNoHeader = [...data]
+    arrNoHeader.shift()
+
+    for (let rowArr of arrNoHeader) {
+      for (let cel of rowArr) {
+        if (cel == undefined) {
+          arrNoHeader[arrNoHeader.indexOf(rowArr)][
+            rowArr.findIndex((cel) => cel == undefined)
+          ] = "Empty row";
+          if (!invalidIdxData.includes(arrNoHeader.indexOf(rowArr))) {
+            invalidIdxData.push(arrNoHeader.indexOf(rowArr));
+            this.setState({ invalidData: invalidIdxData });
+          }
+        }
+      }
+      if (isNaN(rowArr[0]) || !isNaN(rowArr[1])) {
+        if (!invalidIdxData.includes(arrNoHeader.indexOf(rowArr))) {
+          invalidIdxData.push(arrNoHeader.indexOf(rowArr));
+          this.setState({ invalidData: invalidIdxData });
+        }
+        continue;
+      }
+    }
+    console.log("row salah");
+    console.log(invalidIdxData);
+  };
+
   uploadBtnHandler = () => {
-    const { data, cifToUpload, selectedFile } = this.state;
+    const { data, cifToUpload, selectedFile,invalidData } = this.state;
     let cifObj = {};
     let arrObj = [];
 
@@ -67,6 +99,13 @@ class MakerUpload extends Component {
       return swal(
         "Select File First",
         "Browse file in your directory",
+        "error"
+      );
+    }
+    if(invalidData.length>0){
+      return swal(
+        "Excel row not Valid",
+        "Please check row format",
         "error"
       );
     }
@@ -97,7 +136,7 @@ class MakerUpload extends Component {
 
     formData.append("file", selectedFile, selectedFile.name);
     Axios.post(
-      `${API_URL}/files/uploadExcelFile/${data.length + 1}/${
+      `${API_URL}/files/uploadExcelFile/${data.length - 1}/${
         this.props.user.userId
       }`,
       formData
@@ -119,45 +158,50 @@ class MakerUpload extends Component {
 
     let arrBaru = [...data];
     let arrPage = [];
-    let invalidDataTemp = [];
+    let arrPageIdx = [];
 
-    for (let rowArr of arrBaru) {
-      for (let cel of rowArr) {
-        if (cel == undefined) {
-          arrBaru[arrBaru.indexOf(rowArr)][
-            rowArr.findIndex((cel) => cel == undefined)
-          ] = "Invalid/Empty row";
-          invalidDataTemp.push(rowArr);
-          this.setState({ invalidData: invalidDataTemp });
-        }
-      }
-    }
-
-    console.log("ini arr baru");
     arrBaru.shift();
-    console.log(arrBaru);
 
     let startIdx = activePage * 10 - 10;
     let lastIdx = activePage * 10 - 1;
-    arrBaru.forEach((val, idx) => {
+    // arrBaru.forEach((val, idx) => {
+    //   if (idx >= startIdx && idx <= lastIdx) {
+    //     arrPageIdx = [...arrPageIdx, idx];
+    //   }
+    // });
+    return arrBaru.map((val, idx, arr) => {
       if (idx >= startIdx && idx <= lastIdx) {
-        arrPage = [...arrPage, val];
-      }
-    });
-    return arrPage.map((val, idx, arr) => {
-      return (
-        <tr>
-            <td className="noTable">{activePage * 10 - 10 + idx + 1}</td>
+        if (invalidData.includes(idx)) {
+          return (
+            // <tr className={invalidData.includes(idx)? "trInvalid":null}>
+            <tr style={{ color: "red" }}>
+              <td className="noTable">{idx + 1}</td>
 
-          {val.map((val, index) => {
-            return (
-            <>
-            <td>{val}</td>
-            </>
-            )
-          })}
-        </tr>
-      );
+              {val.map((val, index) => {
+                return (
+                  <>
+                    <td>{val}</td>
+                  </>
+                );
+              })}
+            </tr>
+          );
+        }
+        return (
+          // <tr className={invalidData.includes(idx)? "trInvalid":null}>
+          <tr>
+            <td className="noTable">{idx + 1}</td>
+
+            {val.map((val, index) => {
+              return (
+                <>
+                  <td>{val}</td>
+                </>
+              );
+            })}
+          </tr>
+        );
+      }
     });
   };
 
@@ -266,6 +310,8 @@ class MakerUpload extends Component {
               <tbody>{this.renderUploadData()}</tbody>
             </Table>
           </div>
+
+          
           {this.state.selectedFile ? (
             <>
               <div className="justify-content-center d-flex border">

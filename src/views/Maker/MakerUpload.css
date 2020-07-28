@@ -3,6 +3,7 @@
   /* table-layout: fixed !important; */
   /* width: fit-content !important; */
   width: 100% !important;
+  empty-cells: show;
   /* box-sizing: content-box !important; */
   /* background-color: aqua; */
   /* empty-cells: show; */
@@ -12,4 +13,10 @@
 .noTable{
   width: 100px !important;
 }
+
+.trInvalid{
+  color: red !important;
+  /* background: red; */
+}
+
 

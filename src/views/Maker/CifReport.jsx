@@ -39,7 +39,7 @@ class CifReport extends Component {
 
   renderCifList = () => {
     const { cifApproved, activePage } = this.state;
-    let startIdx = activePage * 10 - 20;
+    let startIdx = activePage * 10 - 10;
     let lastIdx = activePage * 10 - 1;
     let arrRender = [];
 
@@ -51,19 +51,22 @@ class CifReport extends Component {
     console.log(arrRender);
 
     return arrRender.map((val, idx) => {
-      return (
-        <>
-          <tr>
-            <td>{activePage * 10 - 10 + idx + 1}</td>
-            <td>{val.cfcifn}</td>
-            <td>{val.cfvipi}</td>
-            <td>{val.cfvipc}</td>
-            <td>{val.createdDate}</td>
-            <td>{val.approvalDate}</td>
-            <td>{val.approvalStatus}</td>
-          </tr>
-        </>
-      );
+      if(idx >= startIdx && idx <= lastIdx){
+        return (
+          <>
+            <tr>
+              <td>{idx + 1}</td>
+              <td>{val.cfcifn}</td>
+              <td>{val.cfvipi}</td>
+              <td>{val.cfvipc}</td>
+              <td>{val.createdDate}</td>
+              <td>{val.approvalDate}</td>
+              <td>{val.approvalStatus}</td>
+            </tr>
+          </>
+        );
+      }
+     
     });
   };
 
@@ -91,10 +94,10 @@ class CifReport extends Component {
                 overflow: "auto",
                 paddingLeft: "10px",
                 paddingRight: "10px",
-                height: "300px",
+                minHeight: "560px",
               }}
             >
-              <Table striped bordered hover responsive>
+              <Table >
                 <thead style={{position:"sticky"}}>
                   <tr>
                     <td>No</td>
