@@ -68,20 +68,14 @@ class MakerUpload extends Component {
 
     for (let rowArr of arrNoHeader) {
       for (let cel=0;cel<=2;cel++) {
-        if (rowArr[cel] == undefined) {
+        if (rowArr[cel] == undefined || rowArr[cel].toString().split(" ").length>1) {
           arrNoHeader[arrNoHeader.indexOf(rowArr)][cel] = "Empty row";
           if (!invalidIdxData.includes(arrNoHeader.indexOf(rowArr))) {
             invalidIdxData.push(arrNoHeader.indexOf(rowArr));
             this.setState({ invalidData: invalidIdxData });
           }
         }
-        else if(rowArr[cel].toString().split(" ").length>1){
-          arrNoHeader[arrNoHeader.indexOf(rowArr)][cel] = "Empty row";
-          if (!invalidIdxData.includes(arrNoHeader.indexOf(rowArr))) {
-            invalidIdxData.push(arrNoHeader.indexOf(rowArr));
-            this.setState({ invalidData: invalidIdxData });
-          }
-        }
+  
       }
       if (isNaN(rowArr[0]) || !isNaN(rowArr[1])) {
         if (!invalidIdxData.includes(arrNoHeader.indexOf(rowArr))) {
