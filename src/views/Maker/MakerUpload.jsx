@@ -67,11 +67,9 @@ class MakerUpload extends Component {
     arrNoHeader.shift()
 
     for (let rowArr of arrNoHeader) {
-      for (let cel of rowArr) {
-        if (cel == undefined) {
-          arrNoHeader[arrNoHeader.indexOf(rowArr)][
-            rowArr.findIndex((cel) => cel == undefined)
-          ] = "Empty row";
+      for (let cel=0;cel<=2;cel++) {
+        if (rowArr[cel] == undefined) {
+          arrNoHeader[arrNoHeader.indexOf(rowArr)][cel] = "Empty row";
           if (!invalidIdxData.includes(arrNoHeader.indexOf(rowArr))) {
             invalidIdxData.push(arrNoHeader.indexOf(rowArr));
             this.setState({ invalidData: invalidIdxData });
