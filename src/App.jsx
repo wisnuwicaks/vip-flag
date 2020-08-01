@@ -21,8 +21,12 @@ import CifReport from "./views/Maker/CifReport";
 import ViewUser from "./views/Admin/ViewUser";
 import CreateUser from "./views/Admin/CreateUser";
 import Sidebar from "./views/Sidebar/Sidebar";
+<<<<<<< HEAD
 import ChangePassword from "./views/Maker/ChangePassword";
 
+=======
+import changePassword from "../src/views/ChangePassword/changePassword"
+>>>>>>> 1c305ac1cfc8b32914597511a478ddb0a37e6c26
 
 const cookie = new Cookie();
 
