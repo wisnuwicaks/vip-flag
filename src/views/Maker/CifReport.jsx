@@ -43,14 +43,14 @@ class CifReport extends Component {
     let lastIdx = activePage * 10 - 1;
     let arrRender = [];
 
-    cifApproved.forEach((val, idx) => {
-      if (idx >= startIdx && idx <= lastIdx) {
-        arrRender.push(val);
-      }
-    });
+    // cifApproved.forEach((val, idx) => {
+    //   if (idx >= startIdx && idx <= lastIdx) {
+    //     arrRender.push(val);
+    //   }
+    // });
     console.log(arrRender);
 
-    return arrRender.map((val, idx) => {
+    return cifApproved.map((val, idx) => {
       if(idx >= startIdx && idx <= lastIdx){
         return (
           <>

@@ -21,7 +21,10 @@ class MakerUpload extends Component {
     rows: [],
     data: [],
     activePage: 1,
+    activePageInvalid: 1,
+
     lastPage: "",
+    // sameCif = [],
     cifToUpload: [],
     invalidData: [],
   };
@@ -39,7 +42,9 @@ class MakerUpload extends Component {
 
   fileUploadHandler = (event) => {
     this.setState({ activePage: 1 });
+    this.setState({ invalidData: [] });
     let fileObj = event.target.files[0];
+
     this.setState({ selectedFile: event.target.files[0] });
     console.log(fileObj);
     let fileType = fileObj.name.substring(fileObj.name.lastIndexOf(".") + 1);
@@ -63,19 +68,21 @@ class MakerUpload extends Component {
     const { data } = this.state;
     let invalidIdxData = [];
     console.log(data);
-    let arrNoHeader = [...data]
-    arrNoHeader.shift()
+    let arrNoHeader = [...data];
+    arrNoHeader.shift();
 
     for (let rowArr of arrNoHeader) {
-      for (let cel=0;cel<=2;cel++) {
-        if (rowArr[cel] == undefined || rowArr[cel].toString().split(" ").length>1) {
+      for (let cel = 0; cel <= 2; cel++) {
+        if (
+          rowArr[cel] == undefined ||
+          rowArr[cel].toString().split(" ").length > 1
+        ) {
           arrNoHeader[arrNoHeader.indexOf(rowArr)][cel] = "Empty row";
           if (!invalidIdxData.includes(arrNoHeader.indexOf(rowArr))) {
             invalidIdxData.push(arrNoHeader.indexOf(rowArr));
             this.setState({ invalidData: invalidIdxData });
           }
         }
-  
       }
       if (isNaN(rowArr[0]) || !isNaN(rowArr[1])) {
         if (!invalidIdxData.includes(arrNoHeader.indexOf(rowArr))) {
@@ -84,13 +91,17 @@ class MakerUpload extends Component {
         }
         continue;
       }
+
+      // arrNoHeader.find(val=>{
+      //   return val[0]==rowArr[0]
+      // })
     }
     console.log("row salah");
     console.log(invalidIdxData);
   };
 
   uploadBtnHandler = () => {
-    const { data, cifToUpload, selectedFile,invalidData } = this.state;
+    const { data, cifToUpload, selectedFile, invalidData } = this.state;
     let cifObj = {};
     let arrObj = [];
 
@@ -101,12 +112,8 @@ class MakerUpload extends Component {
         "error"
       );
     }
-    if(invalidData.length>0){
-      return swal(
-        "Excel row not Valid",
-        "Please check row format",
-        "error"
-      );
+    if (invalidData.length > 0) {
+      return swal("Excel row not Valid", "Please check row format", "error");
     }
     for (let rowArr of data) {
       if (data.indexOf(rowArr) !== 0) {
@@ -163,11 +170,7 @@ class MakerUpload extends Component {
 
     let startIdx = activePage * 10 - 10;
     let lastIdx = activePage * 10 - 1;
-    // arrBaru.forEach((val, idx) => {
-    //   if (idx >= startIdx && idx <= lastIdx) {
-    //     arrPageIdx = [...arrPageIdx, idx];
-    //   }
-    // });
+
     return arrBaru.map((val, idx, arr) => {
       if (idx >= startIdx && idx <= lastIdx) {
         if (invalidData.includes(idx)) {
@@ -205,19 +208,30 @@ class MakerUpload extends Component {
   };
 
   renderDataInvalid = () => {
-    const { data, invalidData } = this.state;
-    return invalidData.map((val, idx, arr) => {
-      return (
-        <tr>
-          {val.map((val, index) => {
-            return (
-              <>
-                <td>{val}</td>
-              </>
-            );
-          })}
-        </tr>
-      );
+    const { data, invalidData, activePageInvalid } = this.state;
+    let arrRender = [...data];
+    arrRender.shift();
+
+    let startIdx = activePageInvalid * 10 - 10;
+    let lastIdx = activePageInvalid * 10 - 1;
+
+    return arrRender.map((val, idx, arr) => {
+      if (idx >= startIdx && idx <= lastIdx){
+      if (invalidData.includes(idx)) {
+        return (
+          <tr>
+            <td className="noTable">{idx+1}</td>
+            {val.map((val, index) => {
+              return (
+                <>
+                  <td>{val}</td>
+                </>
+              );
+            })}
+          </tr>
+        );
+      }
+    }
     });
   };
 
@@ -233,9 +247,18 @@ class MakerUpload extends Component {
         return null;
       }
       this.setState({ activePage: this.state.activePage - 1 });
-    } else {
+    } else if(nextorprev == "next"){
       this.setState({ activePage: this.state.activePage + 1 });
     }
+    else if (nextorprev == "prevInvalid") {
+      if (this.state.activePageInvalid == 1) {
+        return null;
+      }
+      this.setState({ activePageInvalid: this.state.activePageInvalid - 1 });
+    } else {
+      this.setState({ activePageInvalid: this.state.activePageInvalid + 1 });
+    }
+    
   };
   render() {
     return (
@@ -308,9 +331,16 @@ class MakerUpload extends Component {
             <Table className="tableWidth" striped bordered hover responsive>
               <tbody>{this.renderUploadData()}</tbody>
             </Table>
+
+            {this.state.selectedFile ? (
+              <>
+                <div className="d-flex justify-content-end">
+                  Total Row : {this.state.data.length - 1}
+                </div>
+              </>
+            ) : null}
           </div>
 
-          
           {this.state.selectedFile ? (
             <>
               <div className="justify-content-center d-flex border">
@@ -333,6 +363,44 @@ class MakerUpload extends Component {
                 </Pagination>
               </div>
 
+            
+            </>
+          ) : null}
+
+          <div
+            style={{
+              height: "400px",
+              overflow: "auto",
+              paddingLeft: "20px",
+              paddingRight: "20px",
+              minHeight: "560px",
+            }}
+          >
+            <Table className="tableWidth" striped bordered hover responsive>
+              <tbody>{this.renderDataInvalid()}</tbody>
+            </Table>
+          </div>
+          {this.state.selectedFile ? (
+            <>
+              <div className="justify-content-center d-flex border">
+                <Pagination>
+                  <Pagination.Prev onClick={() => this.prevNextPage("prevInvalid")} />
+
+                  <Pagination.Item>
+                    Page {this.state.activePageInvalid}{" "}
+                    <input
+                      // value={this.state.activePage}
+                      onKeyPress={(e) => this.handleKeyPress(e)}
+                      className="pageInput"
+                      type=""
+                      name=""
+                      id=""
+                    />
+                  </Pagination.Item>
+
+                  <Pagination.Next onClick={() => this.prevNextPage("nextInvalid")} />
+                </Pagination>
+              </div>
               <div className="d-flex justify-content-center align-items-center">
                 <ButtonUI onClick={this.uploadBtnHandler} className="m-3">
                   Upload
