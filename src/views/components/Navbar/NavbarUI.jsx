@@ -1,9 +1,12 @@
 import React from "react";
 import "./NavbarUI.css";
+import Dropdown from "react-bootstrap/Dropdown";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutHandler } from "../../../redux/actions";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faPlusSquare } from "@fortawesome/free-regular-svg-icons";
 import {
   Navbar,
   NavbarBrand,
@@ -14,6 +17,7 @@ import {
   Form,
   FormControl,
   Button,
+  DropdownButton,
 } from "react-bootstrap";
 import ButtonUI from "../Button/Button";
 
@@ -42,17 +46,41 @@ class NavbarUI extends React.Component {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <div className="d-flex justify-content-end w-100">
-                <div className="px-2">User : {this.props.user.username}</div>
                 <div className="px-2">
-                  Group Menu : {this.props.user.userRole["roleName"].toUpperCase()}
+                  Group Menu :{" "}
+                  {this.props.user.userRole["roleName"].toUpperCase()}
                 </div>
-                <div>
-                  <Link to="/">
-                    <ButtonUI className="ml-2" onClick={this.logoutBtnHandler}>
-                      Logout
-                    </ButtonUI>
-                    {/* <button onClick={this.logoutBtnHandler}> Logout</button> */}
-                  </Link>
+                <div className="px-2">User :</div>
+
+                <div className="mr-5">
+                  <DropdownButton
+                    key="danger"
+                    id={`dropdown-variants-danger`}
+                    variant="danger"
+                    // drop="right"
+                    title={this.props.user.username}
+                  >
+                    {/* <FontAwesomeIcon icon={faUser} /> */}
+                    <Dropdown.Item eventKey="1">
+                      <Link to="/changepassword">
+                        <ButtonUI type="textual" style={{ padding: "0px" }}>
+                          Change Password
+                        </ButtonUI>
+                      </Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item eventKey="1">
+                      <Link to="/">
+                        <ButtonUI
+                          type="textual"
+                          style={{ padding: "0px" }}
+                          onClick={this.logoutBtnHandler}
+                        >
+                          Logout
+                        </ButtonUI>
+                      </Link>
+                    </Dropdown.Item>
+               
+                  </DropdownButton>
                 </div>
               </div>
             </Navbar.Collapse>

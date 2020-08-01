@@ -24,7 +24,7 @@ class MakerUpload extends Component {
     activePageInvalid: 1,
 
     lastPage: "",
-    // sameCif = [],
+    sameCif : [],
     cifToUpload: [],
     invalidData: [],
   };
@@ -84,7 +84,7 @@ class MakerUpload extends Component {
           }
         }
       }
-      if (isNaN(rowArr[0]) || !isNaN(rowArr[1])) {
+      if (isNaN(rowArr[0]) ||rowArr[0].length>14  || !isNaN(rowArr[1]) || rowArr[1].length>1 || rowArr[2].length>1 ) {
         if (!invalidIdxData.includes(arrNoHeader.indexOf(rowArr))) {
           invalidIdxData.push(arrNoHeader.indexOf(rowArr));
           this.setState({ invalidData: invalidIdxData });
@@ -92,9 +92,19 @@ class MakerUpload extends Component {
         continue;
       }
 
-      // arrNoHeader.find(val=>{
-      //   return val[0]==rowArr[0]
-      // })
+      let duplicateCount = arrNoHeader.filter(val=>{
+
+        return val[0]==rowArr[0]
+      })
+      console.log(duplicateCount);
+      
+
+      if(duplicateCount.length>1){
+        if (!invalidIdxData.includes(arrNoHeader.indexOf(rowArr))) {
+          invalidIdxData.push(arrNoHeader.indexOf(rowArr));
+          this.setState({ invalidData: invalidIdxData });
+        }
+      }
     }
     console.log("row salah");
     console.log(invalidIdxData);
@@ -216,8 +226,8 @@ class MakerUpload extends Component {
     let lastIdx = activePageInvalid * 10 - 1;
 
     return arrRender.map((val, idx, arr) => {
-      if (idx >= startIdx && idx <= lastIdx){
       if (invalidData.includes(idx)) {
+      if (idx >= startIdx && idx <= lastIdx){
         return (
           <tr>
             <td className="noTable">{idx+1}</td>
@@ -376,6 +386,16 @@ class MakerUpload extends Component {
               minHeight: "560px",
             }}
           >
+
+            {this.state.selectedFile?
+              <div className="d-flex pt-3">
+              <h5>
+              Invalid Data
+              </h5>
+            </div>
+            :null
+            }
+          
             <Table className="tableWidth" striped bordered hover responsive>
               <tbody>{this.renderDataInvalid()}</tbody>
             </Table>

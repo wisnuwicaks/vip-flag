@@ -13,7 +13,7 @@ import Cookie from "universal-cookie";
 import { userKeepLogin, cookieChecker } from "./redux/actions";
 import Welcome from "./views/Welcome";
 import MakerUpload from "./views/Maker/MakerUpload";
-import FileUploaded from "./views/Maker/FileUploaded";
+import UploadLog from "./views/Maker/UploadLog";
 
 import NeedToApprove from "./views/Maker/NeedToApprove";
 import CifReport from "./views/Maker/CifReport";
@@ -21,6 +21,8 @@ import CifReport from "./views/Maker/CifReport";
 import ViewUser from "./views/Admin/ViewUser";
 import CreateUser from "./views/Admin/CreateUser";
 import Sidebar from "./views/Sidebar/Sidebar";
+import ChangePassword from "./views/Maker/ChangePassword";
+
 
 const cookie = new Cookie();
 
@@ -65,9 +67,11 @@ class App extends Component {
       return (
         <>
           <Route exact path="/upload" component={MakerUpload} />
-          <Route exact path="/upload/log" component={FileUploaded} />
+          <Route exact path="/upload/log" component={UploadLog} />
           <Route exact path="/approval" component={NeedToApprove} />
           <Route exact path="/cifreport" component={CifReport} />
+          <Route exact path="/changepassword" component={ChangePassword} />
+
         </>
       );
     } else {

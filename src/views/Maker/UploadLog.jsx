@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import Axios from "axios";
 import { API_URL } from "../../constants/API";
 
-class FileUploaded extends Component {
+class UploadLog extends Component {
   state = {
     file: [],
   };
@@ -39,9 +39,7 @@ class FileUploaded extends Component {
             <td>{val.createdDate}</td>
             {val.approvalStatus ? <td>{val.approvalStatus}</td> : <td>No Status</td>}
             <td>
-              <ButtonUI type="text" onClick={() => alert("detail")}>
-                Detail
-              </ButtonUI>
+              {val.rowCount}
             </td>
             
           </tr>
@@ -66,7 +64,7 @@ class FileUploaded extends Component {
                   <td>File Name</td>
                   <td>Created Date</td>
                   <td>Approval Status</td>
-                  <td colSpan="3">Action</td>
+                  <td >Total Row</td>
                 </tr>
               </thead>
               <tbody>
@@ -90,4 +88,4 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(FileUploaded);
+export default connect(mapStateToProps, mapDispatchToProps)(UploadLog);
