@@ -54,32 +54,29 @@ class NavbarUI extends React.Component {
 
                 <div className="mr-5">
                   <DropdownButton
+                    alignRight
                     key="danger"
-                    id={`dropdown-variants-danger`}
+                    id="dropdown-variants-danger"
+                    // id="dropdown-menu-align-right"
                     variant="danger"
-                    // drop="right"
+                    size="sm"
                     title={this.props.user.username}
                   >
                     {/* <FontAwesomeIcon icon={faUser} /> */}
-                    <Dropdown.Item eventKey="1">
+                    <Dropdown.Item>
                       <Link to="/changepassword">
                         <ButtonUI type="textual" style={{ padding: "0px" }}>
                           Change Password
                         </ButtonUI>
                       </Link>
                     </Dropdown.Item>
-                    <Dropdown.Item eventKey="1">
+                    <Dropdown.Item onClick={this.logoutBtnHandler}>
                       <Link to="/">
-                        <ButtonUI
-                          type="textual"
-                          style={{ padding: "0px" }}
-                          onClick={this.logoutBtnHandler}
-                        >
+                        <ButtonUI type="textual" style={{ padding: "0px" }}>
                           Logout
                         </ButtonUI>
                       </Link>
                     </Dropdown.Item>
-               
                   </DropdownButton>
                 </div>
               </div>

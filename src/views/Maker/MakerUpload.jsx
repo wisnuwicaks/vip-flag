@@ -24,7 +24,7 @@ class MakerUpload extends Component {
     activePageInvalid: 1,
 
     lastPage: "",
-    sameCif : [],
+    sameCif: [],
     cifToUpload: [],
     invalidData: [],
   };
@@ -84,7 +84,13 @@ class MakerUpload extends Component {
           }
         }
       }
-      if (isNaN(rowArr[0]) ||rowArr[0].length>14  || !isNaN(rowArr[1]) || rowArr[1].length>1 || rowArr[2].length>1 ) {
+      if (
+        isNaN(rowArr[0]) ||
+        rowArr[0].length > 14 ||
+        !isNaN(rowArr[1]) ||
+        rowArr[1].length > 1 ||
+        rowArr[2].length > 1
+      ) {
         if (!invalidIdxData.includes(arrNoHeader.indexOf(rowArr))) {
           invalidIdxData.push(arrNoHeader.indexOf(rowArr));
           this.setState({ invalidData: invalidIdxData });
@@ -92,14 +98,12 @@ class MakerUpload extends Component {
         continue;
       }
 
-      let duplicateCount = arrNoHeader.filter(val=>{
-
-        return val[0]==rowArr[0]
-      })
+      let duplicateCount = arrNoHeader.filter((val) => {
+        return val[0] == rowArr[0];
+      });
       console.log(duplicateCount);
-      
 
-      if(duplicateCount.length>1){
+      if (duplicateCount.length > 1) {
         if (!invalidIdxData.includes(arrNoHeader.indexOf(rowArr))) {
           invalidIdxData.push(arrNoHeader.indexOf(rowArr));
           this.setState({ invalidData: invalidIdxData });
@@ -149,7 +153,7 @@ class MakerUpload extends Component {
     // })
 
     let formData = new FormData();
-
+    //axios untuk upload file excel ke db
     formData.append("file", selectedFile, selectedFile.name);
     Axios.post(
       `${API_URL}/files/uploadExcelFile/${data.length - 1}/${
@@ -217,7 +221,7 @@ class MakerUpload extends Component {
     });
   };
 
-  renderDataInvalid = () => {
+  renderInvalidTable = () => {
     const { data, invalidData, activePageInvalid } = this.state;
     let arrRender = [...data];
     arrRender.shift();
@@ -227,21 +231,21 @@ class MakerUpload extends Component {
 
     return arrRender.map((val, idx, arr) => {
       if (invalidData.includes(idx)) {
-      if (idx >= startIdx && idx <= lastIdx){
-        return (
-          <tr>
-            <td className="noTable">{idx+1}</td>
-            {val.map((val, index) => {
-              return (
-                <>
-                  <td>{val}</td>
-                </>
-              );
-            })}
-          </tr>
-        );
+        if (idx >= startIdx && idx <= lastIdx) {
+          return (
+            <tr>
+              <td className="noTable">{idx + 1}</td>
+              {val.map((val, index) => {
+                return (
+                  <>
+                    <td>{val}</td>
+                  </>
+                );
+              })}
+            </tr>
+          );
+        }
       }
-    }
     });
   };
 
@@ -257,10 +261,9 @@ class MakerUpload extends Component {
         return null;
       }
       this.setState({ activePage: this.state.activePage - 1 });
-    } else if(nextorprev == "next"){
+    } else if (nextorprev == "next") {
       this.setState({ activePage: this.state.activePage + 1 });
-    }
-    else if (nextorprev == "prevInvalid") {
+    } else if (nextorprev == "prevInvalid") {
       if (this.state.activePageInvalid == 1) {
         return null;
       }
@@ -268,7 +271,56 @@ class MakerUpload extends Component {
     } else {
       this.setState({ activePageInvalid: this.state.activePageInvalid + 1 });
     }
-    
+  };
+
+  renderInvalidData = () => {
+    return (
+      <>
+        <div className="d-flex pt-3">
+          <h5>Invalid Data</h5>
+        </div>
+        <Table className="tableWidth" striped bordered hover responsive>
+          <tbody>{this.renderInvalidTable()}</tbody>
+        </Table>
+        <>
+          <div className="justify-content-center d-flex border">
+            <Pagination>
+              <Pagination.Prev
+                onClick={() => this.prevNextPage("prevInvalid")}
+              />
+
+              <Pagination.Item>
+                Page {this.state.activePageInvalid}{" "}
+                <input
+                  // value={this.state.activePage}
+                  onKeyPress={(e) => this.handleKeyPress(e)}
+                  className="pageInput"
+                  type=""
+                  name=""
+                  id=""
+                />
+              </Pagination.Item>
+
+              <Pagination.Next
+                onClick={() => this.prevNextPage("nextInvalid")}
+              />
+            </Pagination>
+          </div>
+          <div className="d-flex justify-content-center align-items-center">
+            <ButtonUI onClick={this.uploadBtnHandler} className="m-3">
+              Upload
+            </ButtonUI>
+            <ButtonUI
+              onClick={() => this.cancelBtnHandler()}
+              type="outline"
+              className="m-3"
+            >
+              Cancel
+            </ButtonUI>
+          </div>
+        </>
+      </>
+    );
   };
   render() {
     return (
@@ -372,8 +424,6 @@ class MakerUpload extends Component {
                   <Pagination.Next onClick={() => this.prevNextPage("next")} />
                 </Pagination>
               </div>
-
-            
             </>
           ) : null}
 
@@ -386,55 +436,8 @@ class MakerUpload extends Component {
               minHeight: "560px",
             }}
           >
-
-            {this.state.selectedFile?
-              <div className="d-flex pt-3">
-              <h5>
-              Invalid Data
-              </h5>
-            </div>
-            :null
-            }
-          
-            <Table className="tableWidth" striped bordered hover responsive>
-              <tbody>{this.renderDataInvalid()}</tbody>
-            </Table>
+            {this.state.invalidData.length>0 ? this.renderInvalidData() : null}
           </div>
-          {this.state.selectedFile ? (
-            <>
-              <div className="justify-content-center d-flex border">
-                <Pagination>
-                  <Pagination.Prev onClick={() => this.prevNextPage("prevInvalid")} />
-
-                  <Pagination.Item>
-                    Page {this.state.activePageInvalid}{" "}
-                    <input
-                      // value={this.state.activePage}
-                      onKeyPress={(e) => this.handleKeyPress(e)}
-                      className="pageInput"
-                      type=""
-                      name=""
-                      id=""
-                    />
-                  </Pagination.Item>
-
-                  <Pagination.Next onClick={() => this.prevNextPage("nextInvalid")} />
-                </Pagination>
-              </div>
-              <div className="d-flex justify-content-center align-items-center">
-                <ButtonUI onClick={this.uploadBtnHandler} className="m-3">
-                  Upload
-                </ButtonUI>
-                <ButtonUI
-                  onClick={() => this.cancelBtnHandler()}
-                  type="outline"
-                  className="m-3"
-                >
-                  Cancel
-                </ButtonUI>
-              </div>
-            </>
-          ) : null}
         </div>
       </>
     );
