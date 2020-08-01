@@ -21,6 +21,7 @@ import CifReport from "./views/Maker/CifReport";
 import ViewUser from "./views/Admin/ViewUser";
 import CreateUser from "./views/Admin/CreateUser";
 import Sidebar from "./views/Sidebar/Sidebar";
+import changePassword from "../src/views/ChangePassword/changePassword"
 
 const cookie = new Cookie();
 
@@ -68,6 +69,7 @@ class App extends Component {
           <Route exact path="/upload/log" component={FileUploaded} />
           <Route exact path="/approval" component={NeedToApprove} />
           <Route exact path="/cifreport" component={CifReport} />
+          <Route exact path="/changepassword" component={changePassword} />
         </>
       );
     } else {
