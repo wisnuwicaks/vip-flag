@@ -62,6 +62,16 @@ export const userKeepLogin = (userData) => {
         console.log(res.data);
         
         if (res.data !== null) {
+          Axios.post(`${API_URL}/audit_login/loginlog/${userId}`)
+          .then(res=>{
+            console.log("login log generated");
+            console.log(res.data);
+            
+          })
+          .catch(err=>{
+            console.log(err);
+            
+          })
           dispatch({
             type: ON_LOGIN_SUCCESS,
             payload: res.data,
@@ -87,6 +97,17 @@ export const logoutHandler = (userId) => {
   .then(res=>{
       console.log(res);
       
+  })
+  .catch(err=>{
+    console.log(err);
+    
+  })
+
+  Axios.post(`${API_URL}/audit_logout/logoutlog/${userId}`)
+  .then(res=>{
+    console.log("logout log generated");
+    console.log(res.data);
+    
   })
   .catch(err=>{
     console.log(err);

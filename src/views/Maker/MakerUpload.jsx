@@ -102,10 +102,10 @@ class MakerUpload extends Component {
       }
       if (
         isNaN(rowArr[0]) ||
-        rowArr[0].length > 14 ||
+        rowArr[0].toString().length > 14 ||
         !isNaN(rowArr[1]) ||
-        rowArr[1].length > 1 ||
-        rowArr[2].length > 1
+        rowArr[1].toString().length > 1 ||
+        rowArr[2].toString().length > 1
       ) {
         if (!invalidIdxData.includes(arrNoHeader.indexOf(rowArr))) {
           invalidIdxData.push(arrNoHeader.indexOf(rowArr));
