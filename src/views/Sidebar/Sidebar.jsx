@@ -45,6 +45,9 @@ class Sidebar extends React.Component {
               <Link to="/cifreport">
                 <ButtonUI type="text">CIF Report</ButtonUI>
               </Link>
+              <Link to="/chart">
+                <ButtonUI type="text">Chart Report</ButtonUI>
+              </Link>
 
               {/* <>
                 <Link to="/checker/toApprove">

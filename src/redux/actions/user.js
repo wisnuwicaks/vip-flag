@@ -103,7 +103,7 @@ export const logoutHandler = (userId) => {
     
   })
 
-  Axios.post(`${API_URL}/audit_logout/logoutlog/${userId}`)
+  Axios.post(`${API_URL}/audit_login/logoutlog/${userId}`)
   .then(res=>{
     console.log("logout log generated");
     console.log(res.data);

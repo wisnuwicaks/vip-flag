@@ -22,6 +22,7 @@ import ViewUser from "./views/Admin/ViewUser";
 import CreateUser from "./views/Admin/CreateUser";
 import Sidebar from "./views/Sidebar/Sidebar";
 import ChangePassword from "./views/Maker/ChangePassword";
+import Chart from "./views/Maker/Chart";
 
 
 const cookie = new Cookie();
@@ -71,6 +72,8 @@ class App extends Component {
           <Route exact path="/approval" component={NeedToApprove} />
           <Route exact path="/cifreport" component={CifReport} />
           <Route exact path="/changepassword" component={ChangePassword} />
+          <Route exact path="/chart" component={Chart} />
+
          
         </>
       );
