@@ -17,7 +17,24 @@ class CifReport extends Component {
     activePage: 1,
   };
   componentDidMount() {
+    this.writeLog()
+
     this.getCifList();
+  }
+
+  writeLog = ()=>{
+    Axios.post(`${API_URL}/audit_access/accesslog`,{
+      userId:this.props.user.userId,
+      actionDescription:"Accessing Reporting Menu succeeded"
+    })
+    .then(res=>{
+      console.log(res.data);
+      
+    })
+    .catch(err=>{
+      console.log(err);
+      
+    })
   }
 
   getCifList = () => {

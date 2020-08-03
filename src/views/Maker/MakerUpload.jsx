@@ -29,6 +29,22 @@ class MakerUpload extends Component {
     invalidData: [],
   };
 
+  componentDidMount() {
+    this.writeLog();
+  }
+
+  writeLog = () => {
+    Axios.post(`${API_URL}/audit_access/accesslog`, {
+      userId: this.props.user.userId,
+      actionDescription: "Accessing Upload Menu succeeded",
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   // fileUploadHandler = (e) => {
   //   this.setState({ selectedFile: e.target.files[0] });
   //   console.log(this.state.selectedFile);
@@ -101,7 +117,7 @@ class MakerUpload extends Component {
       let duplicateCount = arrNoHeader.filter((val) => {
         return val[0] == rowArr[0];
       });
-      console.log(duplicateCount);
+      // console.log(duplicateCount);
 
       if (duplicateCount.length > 1) {
         if (!invalidIdxData.includes(arrNoHeader.indexOf(rowArr))) {
@@ -163,16 +179,47 @@ class MakerUpload extends Component {
     )
       .then((res) => {
         console.log(res.data);
+        this.postToTemporaryTable(res.data.fileId, res.data.createdDate)
         this.setState({ selectedFile: null });
         this.setState({ data: [] });
         this.setState({ rows: [] });
-
+    
         swal("Success Upload", "Thankyou", "success");
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  postToTemporaryTable = (fileId,createdDate)=>{
+    const {data} = this.state
+    let arrOfObj = []
+    let arrNoHeader = [...data]
+    arrNoHeader.shift()
+    arrNoHeader.forEach(row=>{
+    let objCif = {}
+
+    objCif = {
+      "cfcifn":row[0],
+      "cfvipi":row[1],
+      "cfvipc":row[2]
+    }
+     arrOfObj=[...arrOfObj,objCif] 
+    })
+
+    console.log("ini json dan file id");
+    console.log(fileId);
+    console.log(arrOfObj);
+    
+    Axios.post(`${API_URL}/cif_temporary/add_temporary_data/${this.props.user.userId}/${fileId}/${createdDate}`,arrOfObj)
+    .then(res=>{
+      console.log(res.data)
+    })
+    .catch(err=>{
+      console.log(err);
+      
+    })
+  }
   renderUploadData = () => {
     const { data, invalidData, activePage, selectedFile } = this.state;
 
@@ -423,7 +470,21 @@ class MakerUpload extends Component {
 
                   <Pagination.Next onClick={() => this.prevNextPage("next")} />
                 </Pagination>
+
               </div>
+              
+              <div className="d-flex justify-content-center align-items-center">
+                  <ButtonUI onClick={this.uploadBtnHandler} className="m-3">
+                    Upload
+                  </ButtonUI>
+                  <ButtonUI
+                    onClick={() => this.cancelBtnHandler()}
+                    type="outline"
+                    className="m-3"
+                  >
+                    Cancel
+                  </ButtonUI>
+                </div>
             </>
           ) : null}
 
@@ -436,7 +497,9 @@ class MakerUpload extends Component {
               minHeight: "560px",
             }}
           >
-            {this.state.invalidData.length>0 ? this.renderInvalidData() : null}
+            {this.state.invalidData.length > 0
+              ? this.renderInvalidData()
+              : null}
           </div>
         </div>
       </>

@@ -23,7 +23,7 @@ import ButtonUI from "../Button/Button";
 
 class NavbarUI extends React.Component {
   logoutBtnHandler = () => {
-    this.props.onLogout();
+    this.props.onLogout(this.props.user.userId);
     return <Redirect to="/" />;
   };
   render() {

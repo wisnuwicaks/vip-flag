@@ -13,7 +13,7 @@ class Sidebar extends React.Component {
     return (
       <>
         <div className="sb-header text-center">
-          <h5>Actions</h5>
+          <h5>User Menu</h5>
         </div>
         <div className="sb-body">
           {this.props.user.userRole["roleName"] === "admin" ? (

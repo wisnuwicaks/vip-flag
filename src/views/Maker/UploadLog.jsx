@@ -12,7 +12,24 @@ class UploadLog extends Component {
     file: [],
   };
   componentDidMount() {
+    this.writeLog()
     this.getFile();
+
+  }
+
+  writeLog = ()=>{
+    Axios.post(`${API_URL}/audit_access/accesslog`,{
+      userId:this.props.user.userId,
+      actionDescription:"Accessing Upload Log Menu succeeded"
+    })
+    .then(res=>{
+      console.log(res.data);
+      
+    })
+    .catch(err=>{
+      console.log(err);
+      
+    })
   }
 
   getFile = () => {

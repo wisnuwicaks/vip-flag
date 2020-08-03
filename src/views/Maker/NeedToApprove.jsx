@@ -15,7 +15,25 @@ class NeedToApprove extends Component {
     detailFile: [],
   };
   componentDidMount() {
+    this.writeLog()
+
     this.getFile();
+  }
+
+  
+  writeLog = ()=>{
+    Axios.post(`${API_URL}/audit_access/accesslog`,{
+      userId:this.props.user.userId,
+      actionDescription:"Accessing Approval Menu succeeded"
+    })
+    .then(res=>{
+      console.log(res.data);
+      
+    })
+    .catch(err=>{
+      console.log(err);
+      
+    })
   }
 
   getFile = () => {
@@ -84,6 +102,19 @@ class NeedToApprove extends Component {
       .then((res) => {
         console.log(res.data);
         swal("Approval Succes", "Thankyou", "success");
+        Axios.post(`${API_URL}/cif_temporary/delete_temporary_cif/${val.fileId}`)
+        .then(res=>{
+          console.log("berhasil delete temporary");
+          
+          console.log(res.data);
+          
+        })
+        .catch(err=>{
+          console.log("error delete temporary");
+          
+          console.log(err);
+          
+        })
         this.storeDataToTable(val);
 
         this.getFile();
@@ -179,7 +210,7 @@ class NeedToApprove extends Component {
   };
 
   rejectBtnHandler = (val) => {
-    Axios.post(`${API_URL}/files/reject/${val.fileId}`)
+    Axios.post(`${API_URL}/files/reject/${val.fileId}/${this.props.user.userId}`)
       .then((res) => {
         console.log(res.data);
         swal("Reject Success", "File Has been Rejected", "success");
@@ -260,7 +291,7 @@ class NeedToApprove extends Component {
                   <td>ApprovedBy</td>
                   <td>Created Date</td>
                   <td>Approval Date</td>
-                  <td>Row Count</td>
+                  <td>Total Row</td>
                   <td>Approval Status</td>
                   <td colSpan="3" className="text-center">
                     Action

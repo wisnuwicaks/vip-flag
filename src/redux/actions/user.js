@@ -80,8 +80,19 @@ export const userKeepLogin = (userData) => {
   };
 };
 
-export const logoutHandler = () => {
+export const logoutHandler = (userId) => {
+
   // alert("logout")
+  Axios.post(`${API_URL}/users/logout/${userId}`)
+  .then(res=>{
+      console.log(res);
+      
+  })
+  .catch(err=>{
+    console.log(err);
+    
+  })
+
   cookieObj.remove("authData", { path: "/" });
   return {
     type: ON_LOGOUT_SUCCESS,
