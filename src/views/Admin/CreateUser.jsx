@@ -113,6 +113,7 @@ class CreateUser extends React.Component {
                       this.inputHandler(e, "password", "registerForm")
                     }
                     placeholder="Password"
+                    type="password" 
                   ></InputUI>
                 </div>
               </div>

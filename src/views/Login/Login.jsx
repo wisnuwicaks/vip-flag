@@ -7,7 +7,7 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginHandler } from "../../redux/actions";
 import Cookie from "universal-cookie";
-
+import {Form,  FormGroup,  FormControl} from "react-bootstrap"
 const cookie = new Cookie();
 
 class Login extends React.Component {
@@ -15,6 +15,7 @@ class Login extends React.Component {
     isLogin: false,
     username: "",
     password: "",
+    showPassword: false
   };
 
  
@@ -42,6 +43,23 @@ class Login extends React.Component {
     // }
   };
 
+  checkBoxHandler = (e, field) => {
+    const { checked } = e.target;
+    this.setState({
+        [field]: checked,
+      
+    });
+  };
+
+  showPasswordState = (e) => {
+    const { checked } = e.target;
+    if (checked) {
+      this.setState({ showPassword: "text" });
+    } else {
+      this.setState({ showPassword: "password" });
+    }
+  };
+
   render() {
     if (this.props.user.userId > 0) {
 
@@ -61,12 +79,30 @@ class Login extends React.Component {
               onChange={(e) => this.inputHandler(e, "username")}
             />
             <InputUI
-              value={this.state.password}
+              
               className="mt-4"
               style={{ width: "90%" }}
               placeholder="Password"
               onChange={(e) => this.inputHandler(e, "password")}
+              type={
+                this.state.showPassword
+                  ? "text"
+                  : "password"
+              }
+              value={this.state.password}
+              onChange={(e) =>
+                this.inputHandler(e, "password")
+              }
             />
+                  <Form.Group>
+                    <Form.Check
+                      onChange={(e) =>
+                        this.checkBoxHandler(e, "showPassword")
+                      }
+                      type="checkbox"
+                      label="Show Password"
+                    />
+                  </Form.Group>
             <p className="mt-3 content-sm">Forget Password</p>
 
             <Link
