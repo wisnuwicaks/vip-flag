@@ -32,7 +32,14 @@ class Login extends React.Component {
       username: this.state.username,
       password: this.state.password,
     };
-    this.props.onLogin(userData);
+    var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+    // var strongRegex = new RegExp("^(?=.*[A-Z])(?=.*[0-9])");
+
+    // if (this.state.password.match(strongRegex)){
+      this.props.onLogin(userData);
+    // } else {
+    //   alert("Please Change password")
+    // }
   };
 
   render() {
