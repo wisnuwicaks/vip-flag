@@ -98,7 +98,26 @@ class NeedToApprove extends Component {
   };
 
   approveBtnHandler = (val) => {
-    Axios.post(`${API_URL}/cifapprove/file/${this.props.user.userId}`, val)
+    swal({
+      title: "Masukan jumlah row excel",
+      text: "Pastikan jumlah row excel sudah sesuai",
+      content: "input",
+      buttons: true,
+      dangerMode: true,
+    }).then((value) => {
+      if (value) {
+        this.approveFileWithMessage(val, value);
+      }
+    });
+
+    
+  };
+
+  approveFileWithMessage = (val,message)=>{
+    let fileData = {...val,
+    checksumStatus :message
+    }
+    Axios.post(`${API_URL}/cifapprove/file/${this.props.user.userId}`, fileData)
       .then((res) => {
         console.log(res.data);
         swal("Approval Succes", "Thankyou", "success");
@@ -124,7 +143,7 @@ class NeedToApprove extends Component {
 
         console.log(err);
       });
-  };
+  }
 
   storeDataToTable = (fileApproved) => {
     const {createdDate,createdBy} = fileApproved
@@ -241,14 +260,11 @@ class NeedToApprove extends Component {
             <td>
               {val.approvalStatus == "" ? "No Status" : val.approvalStatus}
             </td>
-            {/* <td>
-              <ButtonUI type="text" onClick={() => this.storeDataToTable(val)}>
-                Detail
-              </ButtonUI>
-            </td> */}
+      <td>{val.checksumStatus}</td>
+    
 
             {val.approvalStatus ? <td colSpan="2">
-              Approve
+              Approved
             </td> : (
               <>
                 <td>
@@ -293,6 +309,7 @@ class NeedToApprove extends Component {
                   <td>Approval Date</td>
                   <td>Total Row</td>
                   <td>Approval Status</td>
+                  <td>Checksum Status</td>
                   <td colSpan="3" className="text-center">
                     Action
                   </td>
