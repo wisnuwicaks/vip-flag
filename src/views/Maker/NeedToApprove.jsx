@@ -15,26 +15,23 @@ class NeedToApprove extends Component {
     detailFile: [],
   };
   componentDidMount() {
-    this.writeLog()
+    this.writeLog();
 
     this.getFile();
   }
 
-  
-  writeLog = ()=>{
-    Axios.post(`${API_URL}/audit_access/accesslog`,{
-      userId:this.props.user.userId,
-      actionDescription:"Accessing Approval Menu succeeded"
+  writeLog = () => {
+    Axios.post(`${API_URL}/audit_access/accesslog`, {
+      userId: this.props.user.userId,
+      actionDescription: "Accessing Approval Menu succeeded",
     })
-    .then(res=>{
-      console.log(res.data);
-      
-    })
-    .catch(err=>{
-      console.log(err);
-      
-    })
-  }
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   getFile = () => {
     Axios.get(`${API_URL}/files/null_status/${this.props.user.userId}/`)
@@ -109,31 +106,44 @@ class NeedToApprove extends Component {
         this.approveFileWithMessage(val, value);
       }
     });
-
-    
   };
 
-  approveFileWithMessage = (val,message)=>{
-    let fileData = {...val,
-    checksumStatus :message
-    }
+  approveFileWithMessage = (val, message) => {
+    let fileData = { ...val, checksumStatus: message };
     Axios.post(`${API_URL}/cifapprove/file/${this.props.user.userId}`, fileData)
       .then((res) => {
+       console.log("ini res data approve file");
         console.log(res.data);
+
+        Axios.post(
+          `${API_URL}/audit_changes/checker_log/${res.data.fileId}/${this.props.user.userId}`
+        )
+          .then((res) => {
+            console.log("berhasil generate checker log");
+
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log("gagal generate checker log");
+
+            console.log(err);
+          });
+
         swal("Approval Succes", "Thankyou", "success");
-        Axios.post(`${API_URL}/cif_temporary/delete_temporary_cif/${val.fileId}`)
-        .then(res=>{
-          console.log("berhasil delete temporary");
-          
-          console.log(res.data);
-          
-        })
-        .catch(err=>{
-          console.log("error delete temporary");
-          
-          console.log(err);
-          
-        })
+
+        Axios.post(
+          `${API_URL}/cif_temporary/delete_temporary_cif/${val.fileId}`
+        )
+          .then((res) => {
+            console.log("berhasil delete temporary");
+
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log("error delete temporary");
+
+            console.log(err);
+          });
         this.storeDataToTable(val);
 
         this.getFile();
@@ -143,18 +153,17 @@ class NeedToApprove extends Component {
 
         console.log(err);
       });
-  }
+  };
 
   storeDataToTable = (fileApproved) => {
-    const {createdDate,createdBy} = fileApproved
-    let myFile = {createdDate}
+    const { createdDate, createdBy } = fileApproved;
+    let myFile = { createdDate };
     var oReq = new XMLHttpRequest();
     oReq.open("GET", fileApproved.linkDirectory, true);
     oReq.responseType = "arraybuffer";
     let arrDetail = [];
 
     let formData = new FormData();
-
 
     oReq.onload = function (e) {
       var arraybuffer = oReq.response;
@@ -172,28 +181,26 @@ class NeedToApprove extends Component {
       var cfb = XLSX.read(bstr, { type: "binary" });
 
       cfb.SheetNames.forEach((sheetName, index) => {
-        
         // Obtain The Current Row As CSV
         var fieldsObjs = XLSX.utils.sheet_to_json(cfb.Sheets[sheetName]);
         // console.log(JSON.stringify(fieldsObjs));
-        let lowerArr = []
-        for(let fileApproved of fieldsObjs){
-          let newObj = {}
+        let lowerArr = [];
+        for (let fileApproved of fieldsObjs) {
+          let newObj = {};
 
-          for(let key in fileApproved){
+          for (let key in fileApproved) {
             // console.log(key);
-            
-            let keyLower = key.toLowerCase()
-          // console.log(keyLower);
-            newObj[key.toLowerCase()]=fileApproved[key]
+
+            let keyLower = key.toLowerCase();
+            // console.log(keyLower);
+            newObj[key.toLowerCase()] = fileApproved[key];
             // console.log(newObj);
-          
-          }       
-          
-          lowerArr = [...lowerArr, newObj]
+          }
+
+          lowerArr = [...lowerArr, newObj];
         }
         console.log("inninn");
-        
+
         console.log(lowerArr);
 
         // formData.append(
@@ -204,13 +211,12 @@ class NeedToApprove extends Component {
         //   "listData",
         //   JSON.stringify(lowerArr)
         // )
-          
+
         console.log(formData);
-        
-        
 
         Axios.post(
-          `${API_URL}/cifapprove/cif_storetable/${createdDate}`,lowerArr
+          `${API_URL}/cifapprove/cif_storetable/${createdDate}`,
+          lowerArr
           // JSON.stringify(fieldsObjs)
         )
           .then((res) => {
@@ -229,7 +235,9 @@ class NeedToApprove extends Component {
   };
 
   rejectBtnHandler = (val) => {
-    Axios.post(`${API_URL}/files/reject/${val.fileId}/${this.props.user.userId}`)
+    Axios.post(
+      `${API_URL}/files/reject/${val.fileId}/${this.props.user.userId}`
+    )
       .then((res) => {
         console.log(res.data);
         swal("Reject Success", "File Has been Rejected", "success");
@@ -260,12 +268,11 @@ class NeedToApprove extends Component {
             <td>
               {val.approvalStatus == "" ? "No Status" : val.approvalStatus}
             </td>
-      <td>{val.checksumStatus}</td>
-    
+            <td>{val.checksumStatus}</td>
 
-            {val.approvalStatus ? <td colSpan="2">
-              Approved
-            </td> : (
+            {val.approvalStatus ? (
+              <td colSpan="2">Approved</td>
+            ) : (
               <>
                 <td>
                   <ButtonUI

@@ -21,6 +21,9 @@ class Sidebar extends React.Component {
               <Link to="/viewuser">
                 <ButtonUI type="text">View user</ButtonUI>
               </Link>
+              <Link to="/audittrail">
+                <ButtonUI type="text">Audit Trail</ButtonUI>
+              </Link>
               <Link to="/createuser">
                 <ButtonUI type="text">Create user</ButtonUI>
               </Link>

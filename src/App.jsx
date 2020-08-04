@@ -19,6 +19,8 @@ import NeedToApprove from "./views/Maker/NeedToApprove";
 import CifReport from "./views/Maker/CifReport";
 
 import ViewUser from "./views/Admin/ViewUser";
+import AuditTrail from "./views/Admin/AuditTrail";
+
 import CreateUser from "./views/Admin/CreateUser";
 import Sidebar from "./views/Sidebar/Sidebar";
 import ChangePassword from "./views/Maker/ChangePassword";
@@ -53,6 +55,8 @@ class App extends Component {
         <>
           <Route exact path="/viewuser" component={ViewUser} />
           <Route exact path="/createuser" component={CreateUser} />
+          <Route exact path="/audittrail" component={AuditTrail} />
+
         </>
       );
     } else {

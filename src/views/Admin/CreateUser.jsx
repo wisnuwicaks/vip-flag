@@ -13,6 +13,8 @@ class CreateUser extends React.Component {
       lastName: "",
       username: "",
       password: "",
+      email: "",
+
       role: "user",
 
     },
@@ -26,6 +28,7 @@ class CreateUser extends React.Component {
         lastName: "",
         username: "",
         password: "",
+        email: "",
         role: "user",
      
       }
@@ -85,6 +88,20 @@ class CreateUser extends React.Component {
               </div>
             </div>
             <div className="main-body-input">
+
+            <div style={{ flex: "2" }}>Email</div>
+              <div style={{ flex: "6" }}>
+                <div className="custom-file row">
+                  <InputUI
+                  value={this.state.registerForm["email"]}
+
+                    onChange={(e) =>
+                      this.inputHandler(e, "email", "registerForm")
+                    }
+                    placeholder="Email"
+                  ></InputUI>
+                </div>
+              </div>
               <div style={{ flex: "2" }}>Username</div>
               <div style={{ flex: "6" }}>
                 <div className="custom-file row">

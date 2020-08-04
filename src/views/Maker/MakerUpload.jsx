@@ -178,12 +178,27 @@ class MakerUpload extends Component {
       formData
     )
       .then((res) => {
+        console.log("ini res data upload file");
+
         console.log(res.data);
+
         this.postToTemporaryTable(res.data.fileId, res.data.createdDate)
         this.setState({ selectedFile: null });
         this.setState({ data: [] });
         this.setState({ rows: [] });
-    
+        Axios.post(
+          `${API_URL}/audit_changes/maker_log/${res.data.fileId}/${this.props.user.userId}`
+        )
+          .then((res) => {
+            console.log("berhasil generate maker log");
+
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log("gagal generate maker log");
+
+            console.log(err);
+          });
         swal("Success Upload", "Thankyou", "success");
       })
       .catch((err) => {

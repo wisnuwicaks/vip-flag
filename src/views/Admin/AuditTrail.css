@@ -1,0 +1,10 @@
+.tabActive{
+    font-weight: bolder !important;
+    border-top-left-radius: 5px ;
+    border-top-right-radius: 5px ;
+    border-top: 1px solid gainsboro;
+    border-left: 1px solid gainsboro;
+    border-right: 1px solid gainsboro;
+
+
+  }

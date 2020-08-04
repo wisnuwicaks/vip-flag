@@ -7,6 +7,7 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginHandler } from "../../redux/actions";
 import Cookie from "universal-cookie";
+import { Form, FormGroup, FormControl } from "react-bootstrap";
 
 const cookie = new Cookie();
 
@@ -15,9 +16,8 @@ class Login extends React.Component {
     isLogin: false,
     username: "",
     password: "",
+    showPassword: false,
   };
-
- 
 
   inputHandler = (e, field) => {
     const { value } = e.target;
@@ -32,12 +32,36 @@ class Login extends React.Component {
       username: this.state.username,
       password: this.state.password,
     };
+    var strongRegex = new RegExp(
+      "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
+    );
+    // var strongRegex = new RegExp("^(?=.*[A-Z])(?=.*[0-9])");
+
+    // if (this.state.password.match(strongRegex)){
     this.props.onLogin(userData);
+    // } else {
+    //   alert("Please Change password")
+    // }
+  };
+
+  checkBoxHandler = (e, field) => {
+    const { checked } = e.target;
+    this.setState({
+      [field]: checked,
+    });
+  };
+
+  showPasswordState = (e) => {
+    const { checked } = e.target;
+    if (checked) {
+      this.setState({ showPassword: "text" });
+    } else {
+      this.setState({ showPassword: "password" });
+    }
   };
 
   render() {
     if (this.props.user.userId > 0) {
-
       alert(this.props.user.userId);
       return <Redirect to="/welcome" />;
     } else {
@@ -59,8 +83,19 @@ class Login extends React.Component {
               style={{ width: "90%" }}
               placeholder="Password"
               onChange={(e) => this.inputHandler(e, "password")}
+              type={this.state.showPassword ? "text" : "password"}
             />
-            <p className="mt-3 content-sm">Forget Password</p>
+            <Form.Group className="" style={{alignSelf:"start", padding:"25px"}}>
+              <Form.Check
+                onChange={(e) => this.checkBoxHandler(e, "showPassword")}
+                type="checkbox"
+                label="Show Password"
+              />
+            </Form.Group>
+            <a style={{fontSize:"15px"}} className="mt-1 content-sm" href="">
+            Forget Password
+            </a>
+            <p ></p>
 
             <Link
               to="/welcome"

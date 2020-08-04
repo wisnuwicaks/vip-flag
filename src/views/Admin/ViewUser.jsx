@@ -37,6 +37,7 @@ class ViewUser extends React.Component {
           <td>{idx+1}</td>
             <td>{val.userId}</td>
             <td>{val.username}</td>
+            <td>{val.email}</td>
             <td>{val.firstName}</td>
             <td>{val.lastName}</td>
             <td>{val.lastEntry}</td>
@@ -88,6 +89,7 @@ class ViewUser extends React.Component {
                 <th>No</th>
                 <th>User ID</th>
                 <th>Username</th>
+                <th>Email</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Last Entry</th>

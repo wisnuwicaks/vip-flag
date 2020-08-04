@@ -28,6 +28,14 @@ export const loginHandler = (userData) => {
       .then((res) => {
         console.log(res.data);
         if (res.data !== null) {
+          Axios.post(`${API_URL}/audit_login/loginlog/${res.data.userId}`)
+            .then((res) => {
+              console.log("login log generated");
+              console.log(res.data);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
           console.log("data login");
           console.log(res.data);
           dispatch({
@@ -49,34 +57,37 @@ export const loginHandler = (userData) => {
 };
 
 export const userKeepLogin = (userData) => {
-
   console.log(userData.id);
-  
+
   return (dispatch) => {
-    const {userId} = userData
+    const { userId } = userData;
     console.log(userId);
-    
+
     Axios.get(`${API_URL}/users/${userId}`)
       .then((res) => {
-        console.log("ini then : ");
+        console.log("ini then res data keep login : ");
         console.log(res.data);
-        
+
         if (res.data !== null) {
+          console.log("res data not undifined");
+
+          console.log(res.data);
+
           Axios.post(`${API_URL}/audit_login/loginlog/${userId}`)
-          .then(res=>{
-            console.log("login log generated");
-            console.log(res.data);
-            
-          })
-          .catch(err=>{
-            console.log(err);
-            
-          })
+            .then((res) => {
+              console.log("keep login log generated");
+              console.log(res.data);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
           dispatch({
             type: ON_LOGIN_SUCCESS,
             payload: res.data,
           });
         } else {
+          console.log("ini login fail");
+
           dispatch({
             type: ON_LOGIN_FAIL,
             payload: "Username or password was wrong",
@@ -84,35 +95,30 @@ export const userKeepLogin = (userData) => {
         }
       })
       .catch((err) => {
-        alert("err")
+        alert("err");
         console.log(err);
       });
   };
 };
 
 export const logoutHandler = (userId) => {
-
   // alert("logout")
   Axios.post(`${API_URL}/users/logout/${userId}`)
-  .then(res=>{
+    .then((res) => {
       console.log(res);
-      
-  })
-  .catch(err=>{
-    console.log(err);
-    
-  })
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 
   Axios.post(`${API_URL}/audit_login/logoutlog/${userId}`)
-  .then(res=>{
-    console.log("logout log generated");
-    console.log(res.data);
-    
-  })
-  .catch(err=>{
-    console.log(err);
-    
-  })
+    .then((res) => {
+      console.log("logout log generated");
+      console.log(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 
   cookieObj.remove("authData", { path: "/" });
   return {
@@ -121,11 +127,10 @@ export const logoutHandler = (userId) => {
 };
 
 export const registerHandler = (userData) => {
- 
   return (dispatch) => {
     Axios.get(`${API_URL}/users/username/${userData.username}`)
       .then((res) => {
-        if (res.data !=="") {
+        if (res.data !== "") {
           swal("Regitration Failed", "Username already used", "success");
 
           dispatch({
@@ -144,7 +149,7 @@ export const registerHandler = (userData) => {
             })
             .catch((err) => {
               console.log("ini err register");
-              
+
               console.log(err);
             });
         }

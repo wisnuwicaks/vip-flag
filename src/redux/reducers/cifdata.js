@@ -3,7 +3,7 @@ const init_state = {
   };  
   
   export default (state = init_state, action) => {
-    console.log("ini di reducer");
+
     console.log(action.payload);
 
     
