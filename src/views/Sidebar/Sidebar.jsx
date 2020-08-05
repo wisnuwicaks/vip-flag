@@ -23,6 +23,11 @@ class Sidebar extends React.Component {
                 <ButtonUI
                   type="text"
                   onClick={() => this.props.sidebarActive("viewuser")}
+                  className={
+                    this.props.user.menuActive == "viewuser"
+                      ? "menuActive"
+                      : null
+                  }
                 >
                   View user
                 </ButtonUI>

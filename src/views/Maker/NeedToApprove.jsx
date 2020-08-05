@@ -99,6 +99,10 @@ class NeedToApprove extends Component {
       title: "Masukan jumlah row excel",
       text: "Pastikan jumlah row excel sudah sesuai",
       content: "input",
+      attributes: {
+        placeholder: "Masukkan jumlah row disini",
+        // type: "password",
+      },
       buttons: true,
       dangerMode: true,
     }).then((value) => {
