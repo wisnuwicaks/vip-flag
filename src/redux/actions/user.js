@@ -160,8 +160,17 @@ export const registerHandler = (userData) => {
   };
 };
 
+
+export const sidebarActive = (menuActive) => {
+  return {
+    type: "MENU_ACTIVE",
+    payload: menuActive,
+  };
+};
+
 export const cookieChecker = () => {
   return {
     type: "COOKIE_CHECK",
+    
   };
 };

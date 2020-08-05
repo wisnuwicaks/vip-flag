@@ -1,13 +1,14 @@
 import userTypes from "../types/user";
 
-const { ON_LOGIN_FAIL, 
-  ON_LOGIN_SUCCESS, 
+const {
+  ON_LOGIN_FAIL,
+  ON_LOGIN_SUCCESS,
   ON_LOGOUT_SUCCESS,
   ON_REGISTER_FAIL,
   ON_REGISTER_SUCCESS,
   ITEMS_ON_TABLE_CHANGE,
   ON_CART_UPDATE,
-  ON_WISHLIST_UPDATE 
+  ON_WISHLIST_UPDATE,
 } = userTypes;
 
 const init_state = {
@@ -16,14 +17,21 @@ const init_state = {
   role: {},
   errMsg: "",
   cookieChecked: true,
-};  
+  menuActive :""
+};
 
 export default (state = init_state, action) => {
   switch (action.type) {
     case ON_LOGIN_SUCCESS:
-      
       console.log("action,payload:" + action.payload);
-      const { username,firstName,lastName, userRole,userId,password } = action.payload;
+      const {
+        username,
+        firstName,
+        lastName,
+        userRole,
+        userId,
+        password,
+      } = action.payload;
       console.log("username:" + username);
       return {
         ...state,
@@ -33,16 +41,19 @@ export default (state = init_state, action) => {
         userId,
         cookieChecked: true,
       };
-      
+
     case ON_LOGIN_FAIL:
-      return { ...state, errMsg: action.payload,cookieChecked:true };
+      return { ...state, errMsg: action.payload, cookieChecked: true };
     case ON_REGISTER_FAIL:
-      return { ...state, errMsg: action.payload, cookieChecked:true };
+      return { ...state, errMsg: action.payload, cookieChecked: true };
     case ON_LOGOUT_SUCCESS:
-      return { ...init_state, cookieChecked:true };
+      return { ...init_state, cookieChecked: true };
+
+    case "MENU_ACTIVE":
+      return { ...state, menuActive: action.payload };
     case "COOKIE_CHECK":
       return { ...state, cookieChecked: true };
     default:
-      return { ...state, };
+      return { ...state };
   }
 };

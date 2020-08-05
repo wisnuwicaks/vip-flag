@@ -12,13 +12,27 @@ class Welcome extends React.Component {
     if (this.props.user.userRole["roleName"] === "admin") {
       return (
         <>
-          <h6>Selamat Datang di halaman Admin</h6>
+          <div className="" style={{ height: "480px" }}>
+            <img
+              src="https://i.ibb.co/cLSKgJd/background-1-crop.png"
+              alt=""
+              width="100%"
+            />
+          </div>
         </>
       );
     } else {
       return (
         <>
-          <h6>Selamat Datang !!</h6>
+          <div className="" style={{ height: "480px" }}>
+            <img
+              src="https://i.ibb.co/cLSKgJd/background-1-crop.png"
+              alt=""
+              // height="800px"
+              // style={{position:"fixed"}}
+              width="100%"
+            />
+          </div>
         </>
       );
     }
@@ -29,9 +43,7 @@ class Welcome extends React.Component {
         <div className="main-header">
           <h5>Welcome {this.props.user.username}</h5>
         </div>
-        <div className="main-body p-4">
-          {this.bodyRender()}
-        </div>
+        <div className="main-body">{this.bodyRender()}</div>
       </>
     );
   }

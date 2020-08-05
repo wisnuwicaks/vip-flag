@@ -17,3 +17,9 @@
   padding: 8px;
   height: 100%;
 }
+
+.menuActive{
+  color:red;
+  font-weight: 1000
+  /* text-shadow: 1px 0.5px #ff0000; */
+}
