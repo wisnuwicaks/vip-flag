@@ -78,7 +78,7 @@ class Login extends React.Component {
               onChange={(e) => this.inputHandler(e, "username")}
             />
             <InputUI
-              value={this.state.password}
+              
               className="mt-4"
               style={{ width: "90%" }}
               placeholder="Password"
