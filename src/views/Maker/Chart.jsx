@@ -143,44 +143,45 @@ class Chart extends Component {
     let date = new Date();
 
     var dd = String(date.getDate()).padStart(2, "0");
-    var mm = String(date.getMonth() + 1).padStart(2, "0"); //January is 0!
+    var mm = String(date.getMonth() + 1); //January is 0!
     var yyyy = date.getFullYear();
-
+    console.log(mm + "sebelum");
+    
     switch (mm) {
-      case "0":
+      case "1":
         mm = "Januari";
         break;
-      case "01":
+      case "2":
         mm = "Februari";
         break;
-      case "02":
+      case "3":
         mm = "Maret";
         break;
-      case "03":
+      case "4":
         mm = "April";
         break;
-      case "04":
+      case "5":
         mm = "Mei";
         break;
-      case "05":
+      case "6":
         mm = "Juni";
         break;
-      case "06":
+      case "7":
         mm = "Juli";
         break;
-      case "07":
+      case "8":
         mm = "Agustus";
         break;
-      case "08":
+      case "9":
         mm = "September";
         break;
-      case "09":
+      case "10":
         mm = "Oktober";
         break;
-      case "10":
+      case "11":
         mm = "November";
         break;
-      case "11":
+      case "12":
         mm = "Desember";
         break;
     }
@@ -194,13 +195,13 @@ class Chart extends Component {
     } else if (reportPeriode == "week") {
       return (
         <>
-          <h6>Report : This Week</h6>
+          <h6>Weekly Report</h6>
         </>
       );
     } else {
       return (
         <>
-          <h6>Weekly Report : {mm + " " + yyyy}</h6>
+          <h6>Monthly Report : {mm + " " + yyyy}</h6>
         </>
       );
     }
@@ -222,6 +223,7 @@ class Chart extends Component {
             <div className="w-25 pt-2 pb-2">
               <Form.Label>Report Periode</Form.Label>
               <Form.Control
+                custom
                 as="select"
                 onChange={(e) => this.setOptionPeriode(e)}
               >
