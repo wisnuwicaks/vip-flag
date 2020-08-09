@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "../Main.css";
 import "./CifReport.css";
 
+import { Form } from "react-bootstrap";
 import { connect } from "react-redux";
 import Axios from "axios";
 
@@ -11,6 +12,7 @@ import { Pie, Doughnut } from "react-chartjs-2";
 
 class Chart extends Component {
   state = {
+    reportPeriode:"today",
     downgradeUpgrade: {
       labels: ["Upgrade", "Downgrade"],
       datasets: [
@@ -72,15 +74,13 @@ class Chart extends Component {
         res.data.forEach((val) => {
           let { cfvipc } = val;
 
-       
-
           if (val.cfvipi.toUpperCase() == "Y") {
             updownData[0] += 1;
             if (!labelSubCodeCount.hasOwnProperty(cfvipc)) {
               labelSubCodeArr.push(cfvipc.toString());
               labelSubCodeCount[cfvipc] = 1;
-              colorSubCode.push("#"+
-                Math.floor(Math.random() * 16777215).toString(16)
+              colorSubCode.push(
+                "#" + Math.floor(Math.random() * 16777215).toString(16)
               );
             } else {
               labelSubCodeCount[cfvipc] += 1;
@@ -134,8 +134,58 @@ class Chart extends Component {
       });
   };
 
-  renderCifList = () => {};
+  renderDate = () => {
+    const {reportPeriode} = this.state
+    let date = new Date();
 
+    var dd = String(date.getDate()).padStart(2, "0");
+    var mm = String(date.getMonth() + 1).padStart(2, "0"); //January is 0!
+    var yyyy = date.getFullYear();
+
+    switch(mm) {
+      case "0": mm = "Januari"; break;
+      case "01": mm = "Februari"; break;
+      case "02": mm = "Maret"; break;
+      case "03": mm = "April"; break;
+      case "04": mm = "Mei"; break;
+      case "05": mm = "Juni"; break;
+      case "06": mm = "Juli"; break;
+      case "07": mm = "Agustus"; break;
+      case "08": mm = "September"; break;
+      case "09": mm = "Oktober"; break;
+      case "10": mm = "November"; break;
+      case "11": mm = "Desember"; break;
+     }
+   date = dd + "/" + mm + "/" + yyyy;
+   if(reportPeriode=="today"){
+    return (
+      <>
+              <h6>Today Report : {dd + " " + mm + " " + yyyy}</h6>
+
+      </>
+    )
+   }else if(reportPeriode=="week"){
+    return (
+      <>
+              <h6>Report : This Week</h6>
+
+      </>
+    )
+   }else{
+    return (
+      <>
+              <h6>Weekly Report : {mm +" "+ yyyy}</h6>
+
+      </>
+    )
+   }
+
+  };
+
+  setOptionPeriode =(e)=>{
+    alert(e.target.value)
+    this.setState({reportPeriode:e.target.value})
+  }
   render() {
     return (
       <>
@@ -145,6 +195,17 @@ class Chart extends Component {
         </div>
         <div className="main-body">
           <div className="main-body-show-body">
+            <div className="w-25 pt-2 pb-2">
+              <Form.Label>Report Periode</Form.Label>
+              <Form.Control as="select" onChange={(e)=>this.setOptionPeriode(e)}>
+                <option value="today">Today</option>
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
+              </Form.Control>
+            </div>
+            <center>
+              {this.renderDate()}
+            </center>
             <Pie
               data={this.state.downgradeUpgrade}
               width={100}
@@ -161,9 +222,7 @@ class Chart extends Component {
                 },
               }}
             />
-          <div className="pt-5">
-
-          </div>
+            <div className="pt-5"></div>
             <Pie
               data={this.state.subcodeChart}
               width={100}

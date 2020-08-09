@@ -98,11 +98,15 @@ class NeedToApprove extends Component {
     swal({
       title: "Masukan jumlah row excel",
       text: "Pastikan jumlah row excel sudah sesuai",
-      content: "input",
-      attributes: {
-        placeholder: "Masukkan jumlah row disini",
-        // type: "password",
+      content: {
+        element: "input",
+        attributes: {
+          placeholder: "Input jumlah row excel",
+          
+        },
       },
+     
+   
       buttons: true,
       dangerMode: true,
     }).then((value) => {
@@ -160,7 +164,7 @@ class NeedToApprove extends Component {
   };
 
   storeDataToTable = (fileApproved) => {
-    const { createdDate, createdBy } = fileApproved;
+    const { createdDate, createdBy,fileId } = fileApproved;
     let myFile = { createdDate };
     var oReq = new XMLHttpRequest();
     oReq.open("GET", fileApproved.linkDirectory, true);
@@ -219,7 +223,7 @@ class NeedToApprove extends Component {
         console.log(formData);
 
         Axios.post(
-          `${API_URL}/cifapprove/cif_storetable/${createdDate}`,
+          `${API_URL}/cifapprove/cif_storetable/${fileId}/${createdDate}`,
           lowerArr
           // JSON.stringify(fieldsObjs)
         )
@@ -320,7 +324,7 @@ class NeedToApprove extends Component {
                   <td>Approval Date</td>
                   <td>Total Row</td>
                   <td>Approval Status</td>
-                  <td>Checksum Status</td>
+                  <td>Checkcount Status</td>
                   <td colSpan="3" className="text-center">
                     Action
                   </td>
