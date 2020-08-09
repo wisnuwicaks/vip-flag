@@ -26,7 +26,7 @@ class MakerUpload extends Component {
     lastPage: "",
     sameCif: [],
     cifToUpload: [],
-    invalidData: [],
+    invalidDataIdx: [],
   };
 
   componentDidMount() {
@@ -58,7 +58,7 @@ class MakerUpload extends Component {
 
   fileUploadHandler = (event) => {
     this.setState({ activePage: 1 });
-    this.setState({ invalidData: [] });
+    this.setState({ invalidDataIdx: [] });
     let fileObj = event.target.files[0];
 
     this.setState({ selectedFile: event.target.files[0] });
@@ -96,7 +96,7 @@ class MakerUpload extends Component {
           arrNoHeader[arrNoHeader.indexOf(rowArr)][cel] = "Empty row";
           if (!invalidIdxData.includes(arrNoHeader.indexOf(rowArr))) {
             invalidIdxData.push(arrNoHeader.indexOf(rowArr));
-            this.setState({ invalidData: invalidIdxData });
+            this.setState({ invalidDataIdx: invalidIdxData });
           }
         }
       }
@@ -109,7 +109,7 @@ class MakerUpload extends Component {
       ) {
         if (!invalidIdxData.includes(arrNoHeader.indexOf(rowArr))) {
           invalidIdxData.push(arrNoHeader.indexOf(rowArr));
-          this.setState({ invalidData: invalidIdxData });
+          this.setState({ invalidDataIdx: invalidIdxData });
         }
         continue;
       }
@@ -122,7 +122,7 @@ class MakerUpload extends Component {
       if (duplicateCount.length > 1) {
         if (!invalidIdxData.includes(arrNoHeader.indexOf(rowArr))) {
           invalidIdxData.push(arrNoHeader.indexOf(rowArr));
-          this.setState({ invalidData: invalidIdxData });
+          this.setState({ invalidDataIdx: invalidIdxData });
         }
       }
     }
@@ -131,7 +131,7 @@ class MakerUpload extends Component {
   };
 
   uploadBtnHandler = () => {
-    const { data, cifToUpload, selectedFile, invalidData } = this.state;
+    const { data, cifToUpload, selectedFile, invalidDataIdx } = this.state;
     let cifObj = {};
     let arrObj = [];
 
@@ -142,7 +142,7 @@ class MakerUpload extends Component {
         "error"
       );
     }
-    if (invalidData.length > 0) {
+    if (invalidDataIdx.length > 0) {
       return swal("Excel row not Valid", "Please check row format", "error");
     }
     for (let rowArr of data) {
@@ -236,7 +236,7 @@ class MakerUpload extends Component {
     })
   }
   renderUploadData = () => {
-    const { data, invalidData, activePage, selectedFile } = this.state;
+    const { data, invalidDataIdx, activePage, selectedFile } = this.state;
 
     let arrBaru = [...data];
     let arrPage = [];
@@ -249,9 +249,9 @@ class MakerUpload extends Component {
 
     return arrBaru.map((val, idx, arr) => {
       if (idx >= startIdx && idx <= lastIdx) {
-        if (invalidData.includes(idx)) {
+        if (invalidDataIdx.includes(idx)) {
           return (
-            // <tr className={invalidData.includes(idx)? "trInvalid":null}>
+            // <tr className={invalidDataIdx.includes(idx)? "trInvalid":null}>
             <tr style={{ color: "red" }}>
               <td className="noTable">{idx + 1}</td>
 
@@ -266,7 +266,7 @@ class MakerUpload extends Component {
           );
         }
         return (
-          // <tr className={invalidData.includes(idx)? "trInvalid":null}>
+          // <tr className={invalidDataIdx.includes(idx)? "trInvalid":null}>
           <tr>
             <td className="noTable">{idx + 1}</td>
 
@@ -284,19 +284,26 @@ class MakerUpload extends Component {
   };
 
   renderInvalidTable = () => {
-    const { data, invalidData, activePageInvalid } = this.state;
+    const { data, invalidDataIdx, activePageInvalid } = this.state;
     let arrRender = [...data];
+    let invalidRow = []
     arrRender.shift();
 
     let startIdx = activePageInvalid * 10 - 10;
     let lastIdx = activePageInvalid * 10 - 1;
 
-    return arrRender.map((val, idx, arr) => {
-      if (invalidData.includes(idx)) {
+    arrRender.map((val, idx, arr) => {
+      if (invalidDataIdx.includes(idx)) {
+        invalidRow.push(val)
+      }
+    })
+
+    return invalidRow.map((val, idx, arr) => {
+      
         if (idx >= startIdx && idx <= lastIdx) {
           return (
             <tr>
-              <td className="noTable">{idx + 1}</td>
+              <td className="noTable">{invalidDataIdx[idx]+1}</td>
               {val.map((val, index) => {
                 return (
                   <>
@@ -307,7 +314,7 @@ class MakerUpload extends Component {
             </tr>
           );
         }
-      }
+      
     });
   };
 
@@ -341,6 +348,20 @@ class MakerUpload extends Component {
         <div className="d-flex pt-3">
           <h5>Invalid Data</h5>
         </div>
+        <div style={{ }}>
+            <Table className="tableWidth">
+              {this.state.selectedFile ? (
+                <thead>
+                  <tr>
+                    <th className="noTable">No</th>
+                    <th>CFCIFN</th>
+                    <th>CFVIPI</th>
+                    <th>CFVIPC</th>
+                  </tr>
+                </thead>
+              ) : null}
+            </Table>
+          </div>
         <Table className="tableWidth" striped bordered hover responsive>
           <tbody>{this.renderInvalidTable()}</tbody>
         </Table>
@@ -368,18 +389,7 @@ class MakerUpload extends Component {
               />
             </Pagination>
           </div>
-          <div className="d-flex justify-content-center align-items-center">
-            <ButtonUI onClick={this.uploadBtnHandler} className="m-3">
-              Upload
-            </ButtonUI>
-            <ButtonUI
-              onClick={() => this.cancelBtnHandler()}
-              type="outline"
-              className="m-3"
-            >
-              Cancel
-            </ButtonUI>
-          </div>
+         
         </>
       </>
     );
@@ -488,7 +498,7 @@ class MakerUpload extends Component {
 
               </div>
               
-              <div className="d-flex justify-content-center align-items-center">
+              {/* <div className="d-flex justify-content-center align-items-center">
                   <ButtonUI onClick={this.uploadBtnHandler} className="m-3">
                     Upload
                   </ButtonUI>
@@ -499,7 +509,7 @@ class MakerUpload extends Component {
                   >
                     Cancel
                   </ButtonUI>
-                </div>
+                </div> */}
             </>
           ) : null}
 
@@ -512,10 +522,29 @@ class MakerUpload extends Component {
               minHeight: "560px",
             }}
           >
-            {this.state.invalidData.length > 0
+            {this.state.invalidDataIdx.length > 0
               ? this.renderInvalidData()
               : null}
+            {this.state.selectedFile?
+               <div className="d-flex justify-content-center align-items-center">
+               <ButtonUI onClick={this.uploadBtnHandler} className="m-3">
+                 Upload
+               </ButtonUI>
+               <ButtonUI
+                 onClick={() => this.cancelBtnHandler()}
+                 type="outline"
+                 className="m-3"
+               >
+                 Cancel
+               </ButtonUI>
+             </div>
+
+             :
+             null
+            }
           </div>
+
+     
         </div>
       </>
     );

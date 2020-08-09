@@ -12,17 +12,21 @@ import { Pie, Doughnut } from "react-chartjs-2";
 
 class Chart extends Component {
   state = {
-    reportPeriode:"today",
+    reportPeriode: "today",
     downgradeUpgrade: {
       labels: ["Upgrade", "Downgrade"],
       datasets: [
         {
           label: "DowngradeUpgrade",
-          backgroundColor: ["#00A6B4", "#6800B4"],
-          hoverBackgroundColor: ["#003350", "#35014F"],
+          backgroundColor: ["#d71e0c ", "#6800B4"],
+          hoverBackgroundColor: ["#9f2316", "#35014F"],
           data: [65, 59],
+          
         },
       ],
+      options:{
+        cutoutPercentage :0
+      }
     },
 
     subcodeChart: {
@@ -119,8 +123,8 @@ class Chart extends Component {
             datasets: [
               {
                 label: "DowngradeUpgrade",
-                backgroundColor: ["#BD000A", "#FFFDD"],
-                hoverBackgroundColor: ["#003350", "#35014F"],
+                backgroundColor: ["#d71e0c", " #afacab"],
+                hoverBackgroundColor: ["#9f2316", "#8f8c8c"],
                 data: updownData,
               },
             ],
@@ -135,57 +139,77 @@ class Chart extends Component {
   };
 
   renderDate = () => {
-    const {reportPeriode} = this.state
+    const { reportPeriode } = this.state;
     let date = new Date();
 
     var dd = String(date.getDate()).padStart(2, "0");
     var mm = String(date.getMonth() + 1).padStart(2, "0"); //January is 0!
     var yyyy = date.getFullYear();
 
-    switch(mm) {
-      case "0": mm = "Januari"; break;
-      case "01": mm = "Februari"; break;
-      case "02": mm = "Maret"; break;
-      case "03": mm = "April"; break;
-      case "04": mm = "Mei"; break;
-      case "05": mm = "Juni"; break;
-      case "06": mm = "Juli"; break;
-      case "07": mm = "Agustus"; break;
-      case "08": mm = "September"; break;
-      case "09": mm = "Oktober"; break;
-      case "10": mm = "November"; break;
-      case "11": mm = "Desember"; break;
-     }
-   date = dd + "/" + mm + "/" + yyyy;
-   if(reportPeriode=="today"){
-    return (
-      <>
-              <h6>Today Report : {dd + " " + mm + " " + yyyy}</h6>
-
-      </>
-    )
-   }else if(reportPeriode=="week"){
-    return (
-      <>
-              <h6>Report : This Week</h6>
-
-      </>
-    )
-   }else{
-    return (
-      <>
-              <h6>Weekly Report : {mm +" "+ yyyy}</h6>
-
-      </>
-    )
-   }
-
+    switch (mm) {
+      case "0":
+        mm = "Januari";
+        break;
+      case "01":
+        mm = "Februari";
+        break;
+      case "02":
+        mm = "Maret";
+        break;
+      case "03":
+        mm = "April";
+        break;
+      case "04":
+        mm = "Mei";
+        break;
+      case "05":
+        mm = "Juni";
+        break;
+      case "06":
+        mm = "Juli";
+        break;
+      case "07":
+        mm = "Agustus";
+        break;
+      case "08":
+        mm = "September";
+        break;
+      case "09":
+        mm = "Oktober";
+        break;
+      case "10":
+        mm = "November";
+        break;
+      case "11":
+        mm = "Desember";
+        break;
+    }
+    date = dd + "/" + mm + "/" + yyyy;
+    if (reportPeriode == "today") {
+      return (
+        <>
+          <h6>Today Report : {dd + " " + mm + " " + yyyy}</h6>
+        </>
+      );
+    } else if (reportPeriode == "week") {
+      return (
+        <>
+          <h6>Report : This Week</h6>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <h6>Weekly Report : {mm + " " + yyyy}</h6>
+        </>
+      );
+    }
   };
 
-  setOptionPeriode =(e)=>{
-    alert(e.target.value)
-    this.setState({reportPeriode:e.target.value})
-  }
+  setOptionPeriode = (e) => {
+
+    this.setState({ reportPeriode: e.target.value });
+  };
   render() {
     return (
       <>
@@ -197,20 +221,23 @@ class Chart extends Component {
           <div className="main-body-show-body">
             <div className="w-25 pt-2 pb-2">
               <Form.Label>Report Periode</Form.Label>
-              <Form.Control as="select" onChange={(e)=>this.setOptionPeriode(e)}>
+              <Form.Control
+                as="select"
+                onChange={(e) => this.setOptionPeriode(e)}
+              >
                 <option value="today">Today</option>
                 <option value="week">This Week</option>
                 <option value="month">This Month</option>
               </Form.Control>
             </div>
-            <center>
-              {this.renderDate()}
-            </center>
+            <center>{this.renderDate()}</center>
             <Pie
               data={this.state.downgradeUpgrade}
               width={100}
               height={30}
               options={{
+                // rotation:0.5,
+                // cutoutPercentage:50,
                 title: {
                   display: true,
                   text: "Perbandingan Upgrade dan Downgrade",
@@ -228,6 +255,7 @@ class Chart extends Component {
               width={100}
               height={30}
               options={{
+                
                 title: {
                   display: true,
                   text: "Subcode Upgrade",
