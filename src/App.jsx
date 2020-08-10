@@ -56,6 +56,7 @@ class App extends Component {
           <Route exact path="/viewuser" component={ViewUser} />
           <Route exact path="/createuser" component={CreateUser} />
           <Route exact path="/audittrail" component={AuditTrail} />
+          <Route exact path="/changepassword" component={ChangePassword} />
 
         </>
       );

@@ -30,11 +30,11 @@ class Chart extends Component {
     },
 
     subcodeChart: {
-      labels: ["Upgrade", "Downgrade"],
+      labels: [],
       datasets: [
         {
           label: "SubCode",
-          backgroundColor: ["#00A6B4", "#6800B4"],
+          backgroundColor: [],
           // hoverBackgroundColor: ["#003350", "#35014F"],
           data: [65, 59],
         },

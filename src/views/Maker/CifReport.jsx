@@ -79,7 +79,13 @@ class CifReport extends Component {
               <td>{val.createdDate}</td>
               <td>{val.approvalDate}</td>
               <td>{val.approvalStatus}</td>
-              <td>{val.fileId}</td>
+
+              <td>
+                <a href={val.file}>
+                {val.file.substring(val.file.lastIndexOf('/')+1)}
+                </a>
+               
+                </td>
 
             </tr>
           </>
@@ -126,7 +132,7 @@ class CifReport extends Component {
                     <td>Created Date</td>
                     <td>Approval Date</td>
                     <td>Approval Status</td>
-                    <td>File ID</td>
+                    <td>File</td>
 
                   </tr>
                 </thead>

@@ -5,6 +5,7 @@ import ButtonUI from "../components/Button/Button";
 import InputUI from "../components/Input/Input";
 import { registerHandler,loginHandler } from "../../redux/actions";
 import {connect} from "react-redux"
+import swal from "sweetalert";
 
 class CreateUser extends React.Component {
   state = {
@@ -43,7 +44,7 @@ class CreateUser extends React.Component {
      if (password.match(strongRegex)){
     this.props.registerHandler(this.state.registerForm)
       } else {
-      alert("Please Change password")
+      swal("Silahkan masukkan password yg sesuai","password minimal 8 karakter, terdapat lowercase, uppercase, simbol, dan angka", "error" )
     }
   }
   inputHandler = (e, field, form) => {
@@ -130,7 +131,7 @@ class CreateUser extends React.Component {
                       this.inputHandler(e, "password", "registerForm")
                     }
                     placeholder="Password"
-                    type="password" 
+                    type="text" 
                   ></InputUI>
                 </div>
               </div>

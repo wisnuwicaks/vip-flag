@@ -118,7 +118,7 @@ class NeedToApprove extends Component {
 
   approveFileWithMessage = (val, message) => {
     let fileData = { ...val, checksumStatus: message };
-    Axios.post(`${API_URL}/cifapprove/file/${this.props.user.userId}`, fileData)
+    Axios.post(`${API_URL}/cifapprove/file/${this.props.user.userId}/${fileData.fileId}`, fileData)
       .then((res) => {
        console.log("ini res data approve file");
         console.log(res.data);
@@ -164,10 +164,10 @@ class NeedToApprove extends Component {
   };
 
   storeDataToTable = (fileApproved) => {
-    const { createdDate, createdBy,fileId } = fileApproved;
+    const { createdDate, createdBy,fileId,linkDirectory } = fileApproved;
     let myFile = { createdDate };
     var oReq = new XMLHttpRequest();
-    oReq.open("GET", fileApproved.linkDirectory, true);
+    oReq.open("GET", linkDirectory, true);
     oReq.responseType = "arraybuffer";
     let arrDetail = [];
 
@@ -223,7 +223,7 @@ class NeedToApprove extends Component {
         console.log(formData);
 
         Axios.post(
-          `${API_URL}/cifapprove/cif_storetable/${fileId}/${createdDate}`,
+          `${API_URL}/cifapprove/cif_storetable/${fileId}/${createdDate}?url=${linkDirectory}`,
           lowerArr
           // JSON.stringify(fieldsObjs)
         )
