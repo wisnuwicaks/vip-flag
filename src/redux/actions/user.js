@@ -26,6 +26,8 @@ export const loginHandler = (userData) => {
       },
     })
       .then((res) => {
+      
+   
         console.log(res.data);
         if (res.data !== null) {
           Axios.post(`${API_URL}/audit_login/loginlog/${res.data.userId}`)
@@ -51,6 +53,8 @@ export const loginHandler = (userData) => {
         }
       })
       .catch((err) => {
+        swal("Login Failed", "Username or password was wrong", "error");
+
         console.log(err);
       });
   };

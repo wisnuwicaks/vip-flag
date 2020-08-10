@@ -17,25 +17,23 @@ class CifReport extends Component {
     activePage: 1,
   };
   componentDidMount() {
-    this.writeLog()
+    this.writeLog();
 
     this.getCifList();
   }
 
-  writeLog = ()=>{
-    Axios.post(`${API_URL}/audit_access/accesslog`,{
-      userId:this.props.user.userId,
-      actionDescription:"Accessing Reporting Menu succeeded"
+  writeLog = () => {
+    Axios.post(`${API_URL}/audit_access/accesslog`, {
+      userId: this.props.user.userId,
+      actionDescription: "Accessing Reporting Menu succeeded",
     })
-    .then(res=>{
-      console.log(res.data);
-      
-    })
-    .catch(err=>{
-      console.log(err);
-      
-    })
-  }
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   getCifList = () => {
     Axios.get(`${API_URL}/cifapprove/all_approved`)
@@ -68,7 +66,7 @@ class CifReport extends Component {
     console.log(arrRender);
 
     return cifApproved.map((val, idx) => {
-      if(idx >= startIdx && idx <= lastIdx){
+      if (idx >= startIdx && idx <= lastIdx) {
         return (
           <>
             <tr>
@@ -82,16 +80,13 @@ class CifReport extends Component {
 
               <td>
                 <a href={val.file}>
-                {val.file.substring(val.file.lastIndexOf('/')+1)}
+                  {val.file.substring(val.file.lastIndexOf("/") + 1)}
                 </a>
-               
-                </td>
-
+              </td>
             </tr>
           </>
         );
       }
-     
     });
   };
 
@@ -122,8 +117,8 @@ class CifReport extends Component {
                 minHeight: "560px",
               }}
             >
-              <Table >
-                <thead style={{position:"sticky"}}>
+              <Table>
+                <thead style={{ position: "sticky" }}>
                   <tr>
                     <td>No</td>
                     <td>CFCIFN</td>
@@ -133,7 +128,6 @@ class CifReport extends Component {
                     <td>Approval Date</td>
                     <td>Approval Status</td>
                     <td>File</td>
-
                   </tr>
                 </thead>
                 <tbody>{this.renderCifList()}</tbody>
